@@ -1,0 +1,169 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  EDITOR
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  name      String
+  role      Role     @default(ADMIN)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("users")
+}
+
+model About {
+  id          String   @id @default(uuid())
+  title       String
+  subtitle    String?
+  bio         String   @db.Text
+  heroImage   String?
+  resumeUrl   String?
+  location    String?
+  email       String?
+  phone       String?
+  githubUrl   String?
+  linkedinUrl String?
+  twitterUrl  String?
+  isPublished Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("about")
+}
+
+model Skill {
+  id          String   @id @default(uuid())
+  name        String
+  category    String   // e.g. "Frontend", "Backend", "Database", "Tools"
+  proficiency Int      @default(80) // 1 - 100
+  icon        String?
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("skills")
+}
+
+model Project {
+  id          String   @id @default(uuid())
+  title       String
+  slug        String   @unique
+  description String   @db.Text
+  content     String?  @db.Text
+  coverImage  String?
+  tags        String[] @default([])
+  demoUrl     String?
+  githubUrl   String?
+  isFeatured  Boolean  @default(false)
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("projects")
+}
+
+model Blog {
+  id          String   @id @default(uuid())
+  title       String
+  slug        String   @unique
+  excerpt     String   @db.Text
+  content     String   @db.Text
+  coverImage  String?
+  tags        String[] @default([])
+  isPublished Boolean  @default(false)
+  publishedAt DateTime?
+  views       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("blogs")
+}
+
+model Experience {
+  id          String   @id @default(uuid())
+  role        String
+  company     String
+  companyUrl  String?
+  location    String?
+  startDate   String
+  endDate     String?
+  isCurrent   Boolean  @default(false)
+  description String   @db.Text
+  highlights  String[] @default([])
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("experience")
+}
+
+model Testimonial {
+  id          String   @id @default(uuid())
+  authorName  String
+  authorRole  String
+  company     String?
+  avatarUrl   String?
+  content     String   @db.Text
+  rating      Int      @default(5)
+  order       Int      @default(0)
+  isApproved  Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("testimonials")
+}
+
+model Service {
+  id          String   @id @default(uuid())
+  title       String
+  description String   @db.Text
+  icon        String?
+  features    String[] @default([])
+  order       Int      @default(0)
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("services")
+}
+
+model Message {
+  id        String   @id @default(uuid())
+  name      String
+  email     String
+  subject   String?
+  message   String   @db.Text
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@map("messages")
+}
+
+model Media {
+  id           String   @id @default(uuid())
+  filename     String
+  originalName String
+  mimeType     String
+  size         Int
+  url          String
+  path         String
+  createdAt    DateTime @default(now())
+
+  @@map("media")
+}
