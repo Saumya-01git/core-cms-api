@@ -99,7 +99,78 @@ function Toast({ toast, onClose }) {
   );
 }
 
-// --- Login Screen (Day 5) ---
+// --- Password Strength Evaluator & Rules ---
+function evaluatePassword(pwd = '') {
+  const rules = [
+    { id: 'length', label: 'At least 8 characters (8+)', met: pwd.length >= 8 },
+    { id: 'upper', label: 'One uppercase letter (A-Z)', met: /[A-Z]/.test(pwd) },
+    { id: 'lower', label: 'One lowercase letter (a-z)', met: /[a-z]/.test(pwd) },
+    { id: 'number', label: 'One numeric digit (0-9)', met: /[0-9]/.test(pwd) },
+    { id: 'special', label: 'One special symbol (!@#$%^&*)', met: /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~`]/.test(pwd) }
+  ];
+  const passedCount = rules.filter(r => r.met).length;
+  let strengthLabel = 'Very Weak';
+  let barColor = 'bg-rose-500';
+  if (passedCount === 5) {
+    strengthLabel = 'Strong & Compliant';
+    barColor = 'bg-emerald-400';
+  } else if (passedCount >= 4) {
+    strengthLabel = 'Good';
+    barColor = 'bg-indigo-400';
+  } else if (passedCount >= 3) {
+    strengthLabel = 'Moderate';
+    barColor = 'bg-amber-400';
+  } else if (passedCount >= 2) {
+    strengthLabel = 'Weak';
+    barColor = 'bg-orange-500';
+  }
+  return { rules, passedCount, isValid: passedCount === 5, strengthLabel, barColor };
+}
+
+function PasswordStrengthWidget({ password = '', showDetails = true }) {
+  if (!password) return null;
+  const { rules, passedCount, isValid, strengthLabel, barColor } = evaluatePassword(password);
+  const percent = Math.min(100, Math.round((passedCount / 5) * 100));
+
+  return (
+    <div className="mt-3 p-3.5 rounded-xl bg-slate-950/80 border border-slate-800 text-xs space-y-2">
+      <div className="flex items-center justify-between font-mono">
+        <span className="text-slate-400 text-[11px]">Security Strength:</span>
+        <span className={`font-bold text-[11px] ${isValid ? 'text-emerald-400' : 'text-amber-300'}`}>
+          {strengthLabel} ({passedCount}/5)
+        </span>
+      </div>
+
+      {/* Strength Bar */}
+      <div className="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
+        <div
+          className={`h-full ${barColor} transition-all duration-300`}
+          style={{ width: `${percent}%` }}
+        ></div>
+      </div>
+
+      {/* Rules Checklist */}
+      {showDetails && (
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 pt-1">
+          {rules.map(r => (
+            <div key={r.id} className="flex items-center gap-1.5 text-[11px]">
+              <span className={`w-3.5 h-3.5 rounded-full flex items-center justify-center text-[9px] font-bold flex-shrink-0 ${
+                r.met ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/40' : 'bg-slate-800 text-slate-500 border border-slate-700'
+              }`}>
+                {r.met ? '✓' : '○'}
+              </span>
+              <span className={r.met ? 'text-slate-200' : 'text-slate-500'}>
+                {r.label}
+              </span>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+// --- Login Screen with Demo Access & Security Policies ---
 function LoginScreen() {
   const { login } = useAuth();
   const [email, setEmail] = useState('');
@@ -107,12 +178,11 @@ function LoginScreen() {
   const [error, setError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleLoginSubmit = async (targetEmail, targetPassword) => {
     setError('');
     setIsSubmitting(true);
     try {
-      await login(email, password);
+      await login(targetEmail, targetPassword);
     } catch (err) {
       setError(err.message || 'Failed to authenticate');
     } finally {
@@ -120,19 +190,81 @@ function LoginScreen() {
     }
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    handleLoginSubmit(email, password);
+  };
+
+  const handleDemoInstantAccess = () => {
+    setEmail('admin@portfolio.local');
+    setPassword('Admin@123456');
+    handleLoginSubmit('admin@portfolio.local', 'Admin@123456');
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden bg-gradient-to-br from-[#070b14] via-[#0b1329] to-[#070b14]">
       <div className="absolute top-1/4 -left-32 w-96 h-96 bg-indigo-600/20 rounded-full blur-[128px] pointer-events-none"></div>
       <div className="absolute bottom-1/4 -right-32 w-96 h-96 bg-violet-600/20 rounded-full blur-[128px] pointer-events-none"></div>
 
-      <div className="w-full max-w-md relative z-10">
+      <div className="w-full max-w-lg relative z-10 space-y-6">
+        {/* Main Login Card */}
         <div className="glass-panel p-8 sm:p-10 rounded-3xl shadow-2xl border border-white/10">
-          <div className="flex flex-col items-center mb-8 text-center">
-            <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-indigo-600 to-violet-500 flex items-center justify-center shadow-lg shadow-indigo-500/30 mb-4">
+          <div className="flex flex-col items-center mb-6 text-center">
+            <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-indigo-600 to-violet-500 flex items-center justify-center shadow-lg shadow-indigo-500/30 mb-3">
               <span className="text-2xl font-bold text-white tracking-wider">⚡</span>
             </div>
             <h1 className="text-2xl font-extrabold tracking-tight text-white">Core CMS Admin</h1>
-            <p className="text-slate-400 text-sm mt-1">Sign in to manage your headless portfolio</p>
+            <p className="text-slate-400 text-xs sm:text-sm mt-1">Headless Content Architecture & Role-Based Control</p>
+          </div>
+
+          {/* Demo Access Callout Banner */}
+          <div className="mb-6 p-4 rounded-2xl bg-indigo-950/40 border border-indigo-500/30 space-y-3">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span className="text-xs font-bold uppercase tracking-wider text-indigo-300">Demo Access Mode</span>
+              </div>
+              <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 font-semibold">
+                Evaluation Access
+              </span>
+            </div>
+            
+            <p className="text-xs text-slate-300 leading-relaxed">
+              Exploring this portfolio CMS engine? Use the pre-configured administrator credentials below:
+            </p>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs font-mono">
+              <div className="p-2 rounded-xl bg-slate-900/90 border border-indigo-500/20">
+                <span className="text-[10px] text-slate-400 block font-sans">Username:</span>
+                <span className="text-indigo-300 font-bold select-all">admin@portfolio.local</span>
+              </div>
+              <div className="p-2 rounded-xl bg-slate-900/90 border border-indigo-500/20">
+                <span className="text-[10px] text-slate-400 block font-sans">Password:</span>
+                <span className="text-indigo-300 font-bold select-all">Admin@123456</span>
+              </div>
+            </div>
+
+            <div className="flex gap-2 pt-1">
+              <button
+                type="button"
+                onClick={handleDemoInstantAccess}
+                disabled={isSubmitting}
+                className="flex-1 py-2.5 px-3 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-xs shadow-md shadow-emerald-600/20 transition flex items-center justify-center gap-1.5 cursor-pointer disabled:opacity-50"
+              >
+                <span>⚡</span>
+                <span>One-Click Demo Access</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setEmail('admin@portfolio.local');
+                  setPassword('Admin@123456');
+                }}
+                className="py-2.5 px-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white font-semibold text-xs border border-slate-700 transition cursor-pointer"
+              >
+                Fill Fields
+              </button>
+            </div>
           </div>
 
           {error && (
@@ -142,10 +274,10 @@ function LoginScreen() {
             </div>
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-5">
+          <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">
-                Admin Email
+                Administrator Email
               </label>
               <input
                 type="email"
@@ -153,13 +285,13 @@ function LoginScreen() {
                 value={email}
                 onChange={e => setEmail(e.target.value)}
                 placeholder="admin@portfolio.local"
-                className="w-full px-4 py-3 rounded-xl bg-slate-900/80 border border-slate-700/60 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 text-slate-100 placeholder-slate-500 text-sm outline-none transition"
+                className="w-full px-4 py-3 rounded-xl bg-slate-900/80 border border-slate-700/60 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 text-slate-100 placeholder-slate-500 text-sm outline-none transition font-mono"
               />
             </div>
 
             <div>
               <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">
-                Password
+                Admin Password
               </label>
               <input
                 type="password"
@@ -167,30 +299,33 @@ function LoginScreen() {
                 value={password}
                 onChange={e => setPassword(e.target.value)}
                 placeholder="••••••••••••"
-                className="w-full px-4 py-3 rounded-xl bg-slate-900/80 border border-slate-700/60 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 text-slate-100 placeholder-slate-500 text-sm outline-none transition"
+                className="w-full px-4 py-3 rounded-xl bg-slate-900/80 border border-slate-700/60 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 text-slate-100 placeholder-slate-500 text-sm outline-none transition font-mono"
               />
+              {/* Real-time strength evaluator */}
+              <PasswordStrengthWidget password={password} showDetails={false} />
             </div>
 
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full py-3.5 px-4 rounded-xl font-semibold text-sm bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white shadow-lg shadow-indigo-600/30 transition duration-200 disabled:opacity-50 flex items-center justify-center gap-2"
+              className="w-full py-3.5 px-4 rounded-xl font-semibold text-sm bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white shadow-lg shadow-indigo-600/30 transition duration-200 disabled:opacity-50 flex items-center justify-center gap-2 cursor-pointer mt-2"
             >
-              {isSubmitting ? 'Verifying credentials...' : 'Access CMS Dashboard →'}
+              {isSubmitting ? 'Verifying authentication...' : 'Sign In with Credentials →'}
             </button>
           </form>
 
-          <div className="mt-8 pt-6 border-t border-slate-800 text-center">
-            <button
-              type="button"
-              onClick={() => {
-                setEmail('admin@portfolio.local');
-                setPassword('Admin@123456');
-              }}
-              className="text-xs text-indigo-400 hover:text-indigo-300 bg-indigo-500/10 hover:bg-indigo-500/20 px-3 py-1.5 rounded-lg border border-indigo-500/20 transition"
-            >
-              Fill Default Seed Credentials
-            </button>
+          {/* Password Security Rules Box */}
+          <div className="mt-6 pt-5 border-t border-slate-800">
+            <div className="flex items-center gap-1.5 text-[11px] font-mono text-slate-400 mb-2">
+              <span>🛡️</span>
+              <span className="font-bold text-slate-300 uppercase tracking-wider">Password Security Standards</span>
+            </div>
+            <ul className="text-[11px] text-slate-400 space-y-1 list-disc list-inside">
+              <li>Minimum 8 characters length</li>
+              <li>Includes uppercase (A-Z) & lowercase (a-z) letters</li>
+              <li>Includes numeric digits (0-9) & special symbols (!@#$...)</li>
+              <li>Stored with 10 bcrypt salt rounds and verified via stateless JWT</li>
+            </ul>
           </div>
         </div>
       </div>
@@ -2037,6 +2172,201 @@ function MediaScreen({ showToast }) {
   );
 }
 
+// --- Security & Password Management Screen ---
+function SecurityScreen({ showToast }) {
+  const { user, apiFetch } = useAuth();
+  const [currentPassword, setCurrentPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [showCurrent, setShowCurrent] = useState(false);
+  const [showNew, setShowNew] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [statusMsg, setStatusMsg] = useState(null);
+
+  const newEvaluation = evaluatePassword(newPassword);
+  const passwordsMatch = newPassword.length > 0 && newPassword === confirmPassword;
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setStatusMsg(null);
+
+    if (!newEvaluation.isValid) {
+      setStatusMsg({ type: 'error', text: 'New password must satisfy all 5 strength requirements.' });
+      return;
+    }
+
+    if (newPassword !== confirmPassword) {
+      setStatusMsg({ type: 'error', text: 'New password and confirmation do not match.' });
+      return;
+    }
+
+    setIsSubmitting(true);
+    try {
+      const res = await apiFetch('/auth/change-password', {
+        method: 'PUT',
+        body: JSON.stringify({ currentPassword, newPassword })
+      });
+      const data = await res.json();
+      if (!res.ok || !data.success) {
+        throw new Error(data.message || 'Failed to change password');
+      }
+
+      showToast('Admin password changed successfully! Account is secured.', 'success');
+      setStatusMsg({ type: 'success', text: 'Password successfully updated in database.' });
+      setCurrentPassword('');
+      setNewPassword('');
+      setConfirmPassword('');
+    } catch (err) {
+      setStatusMsg({ type: 'error', text: err.message });
+      showToast(err.message, 'error');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  return (
+    <div className="max-w-4xl mx-auto space-y-8 animate-fadeIn">
+      {/* Header */}
+      <div>
+        <h2 className="text-2xl font-extrabold text-white tracking-tight flex items-center gap-3">
+          <span className="text-2xl">🔒</span>
+          <span>Security & Authentication Settings</span>
+        </h2>
+        <p className="text-sm text-slate-400 mt-1">
+          Manage your administrator credentials, enforce password policy rules, and update login authentication keys.
+        </p>
+      </div>
+
+      {/* Account Info Card */}
+      <div className="glass-panel p-6 rounded-2xl border border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <span className="text-[10px] font-mono uppercase tracking-wider text-indigo-400 font-bold block mb-1">
+            Active Admin Account
+          </span>
+          <h3 className="text-lg font-bold text-white">{user?.name || 'Administrator'}</h3>
+          <p className="text-xs text-slate-400 font-mono mt-0.5">{user?.email}</p>
+        </div>
+        <div className="flex items-center gap-2">
+          <span className="px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 text-xs font-bold font-mono">
+            Role: {user?.role || 'ADMIN'}
+          </span>
+          <span className="px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/30 text-indigo-300 text-xs font-bold font-mono">
+            JWT: Active
+          </span>
+        </div>
+      </div>
+
+      {/* Change Password Card */}
+      <div className="glass-panel p-6 sm:p-8 rounded-3xl border border-white/10 space-y-6">
+        <div className="border-b border-slate-800 pb-4">
+          <h3 className="text-lg font-bold text-white">Change Account Password</h3>
+          <p className="text-xs text-slate-400 mt-1">
+            Enforces strict enterprise security: minimum 8 characters with mixed casing, digits, and special characters.
+          </p>
+        </div>
+
+        {statusMsg && (
+          <div className={`p-4 rounded-xl text-xs sm:text-sm font-medium flex items-center gap-3 border ${
+            statusMsg.type === 'error'
+              ? 'bg-rose-500/10 border-rose-500/30 text-rose-300'
+              : 'bg-emerald-500/10 border-emerald-500/30 text-emerald-300'
+          }`}>
+            <span>{statusMsg.type === 'error' ? '⚠️' : '✅'}</span>
+            <span>{statusMsg.text}</span>
+          </div>
+        )}
+
+        <form onSubmit={handleSubmit} className="space-y-6">
+          {/* Current Password */}
+          <div>
+            <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">
+              Current Admin Password
+            </label>
+            <div className="relative">
+              <input
+                type={showCurrent ? "text" : "password"}
+                required
+                value={currentPassword}
+                onChange={e => setCurrentPassword(e.target.value)}
+                placeholder="Enter your current password"
+                className="w-full px-4 py-3 rounded-xl bg-slate-900/80 border border-slate-700/60 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 text-slate-100 placeholder-slate-500 text-sm outline-none transition pr-16 font-mono"
+              />
+              <button
+                type="button"
+                onClick={() => setShowCurrent(!showCurrent)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white text-xs font-mono px-2 py-1"
+              >
+                {showCurrent ? "Hide" : "Show"}
+              </button>
+            </div>
+          </div>
+
+          {/* New Password */}
+          <div>
+            <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">
+              New Password
+            </label>
+            <div className="relative">
+              <input
+                type={showNew ? "text" : "password"}
+                required
+                value={newPassword}
+                onChange={e => setNewPassword(e.target.value)}
+                placeholder="Enter new strong password"
+                className="w-full px-4 py-3 rounded-xl bg-slate-900/80 border border-slate-700/60 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 text-slate-100 placeholder-slate-500 text-sm outline-none transition pr-16 font-mono"
+              />
+              <button
+                type="button"
+                onClick={() => setShowNew(!showNew)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white text-xs font-mono px-2 py-1"
+              >
+                {showNew ? "Hide" : "Show"}
+              </button>
+            </div>
+            {/* Real-Time Password Strength Widget */}
+            <PasswordStrengthWidget password={newPassword} showDetails={true} />
+          </div>
+
+          {/* Confirm New Password */}
+          <div>
+            <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">
+              Confirm New Password
+            </label>
+            <input
+              type="password"
+              required
+              value={confirmPassword}
+              onChange={e => setConfirmPassword(e.target.value)}
+              placeholder="Re-enter new password"
+              className="w-full px-4 py-3 rounded-xl bg-slate-900/80 border border-slate-700/60 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 text-slate-100 placeholder-slate-500 text-sm outline-none transition font-mono"
+            />
+            {confirmPassword.length > 0 && (
+              <p className={`text-[11px] mt-1.5 flex items-center gap-1.5 font-medium ${
+                passwordsMatch ? 'text-emerald-400' : 'text-rose-400'
+              }`}>
+                <span>{passwordsMatch ? '✓ Passwords match' : '✕ Passwords do not match'}</span>
+              </p>
+            )}
+          </div>
+
+          <div className="pt-4 border-t border-slate-800 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <span className="text-[11px] text-slate-500 font-mono">
+              Changes immediately update the database with 10 bcrypt salt rounds.
+            </span>
+            <button
+              type="submit"
+              disabled={isSubmitting || !newEvaluation.isValid || !passwordsMatch}
+              className="px-6 py-3 rounded-xl font-semibold text-sm bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white shadow-lg shadow-indigo-600/30 transition duration-200 disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-2 cursor-pointer"
+            >
+              {isSubmitting ? 'Securing Account...' : 'Update Password 🔒'}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+}
+
 // --- Main Admin Layout ---
 function AdminLayout() {
   const { user, logout } = useAuth();
@@ -2059,6 +2389,7 @@ function AdminLayout() {
     { id: 'services', label: 'Services', icon: '🛠️' },
     { id: 'messages', label: 'Inquiries', icon: '📬' },
     { id: 'media', label: 'Media Library', icon: '🖼️' },
+    { id: 'security', label: 'Security & Password', icon: '🔒' },
   ];
 
   return (
@@ -2099,8 +2430,8 @@ function AdminLayout() {
           </nav>
         </div>
 
-        <div className="p-3 rounded-2xl bg-slate-900/80 border border-white/5">
-          <div className="flex items-center justify-between mb-2">
+        <div className="p-3 rounded-2xl bg-slate-900/80 border border-white/5 space-y-2">
+          <div className="flex items-center justify-between mb-1">
             <div className="truncate mr-2">
               <p className="text-xs font-bold text-white truncate">{user?.name || 'Admin'}</p>
               <p className="text-[10px] text-slate-400 truncate">{user?.email}</p>
@@ -2109,9 +2440,22 @@ function AdminLayout() {
               {user?.role || 'ADMIN'}
             </span>
           </div>
+
+          <button
+            onClick={() => setView('security')}
+            className={`w-full py-1.5 rounded-lg text-xs font-semibold flex items-center justify-center gap-1.5 transition ${
+              view === 'security'
+                ? 'bg-indigo-600 text-white'
+                : 'bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-300'
+            }`}
+          >
+            <span>🔒</span>
+            <span>Security Settings</span>
+          </button>
+
           <button
             onClick={logout}
-            className="w-full mt-2 py-1.5 rounded-lg text-xs font-semibold bg-rose-500/10 hover:bg-rose-500/20 text-rose-300 transition"
+            className="w-full py-1.5 rounded-lg text-xs font-semibold bg-rose-500/10 hover:bg-rose-500/20 text-rose-300 transition"
           >
             Log Out
           </button>
@@ -2126,6 +2470,13 @@ function AdminLayout() {
             <span className="text-sm font-bold text-white capitalize">{view}</span>
           </div>
           <div className="flex items-center gap-3">
+            <button
+              onClick={() => setView('security')}
+              className="text-xs font-semibold text-slate-300 hover:text-white px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 flex items-center gap-1.5 transition cursor-pointer"
+            >
+              <span>🔒</span>
+              <span>Change Password</span>
+            </button>
             <a
               href="/"
               target="_blank"
@@ -2147,6 +2498,7 @@ function AdminLayout() {
           {view === 'services' && <ServicesScreen showToast={showToast} />}
           {view === 'messages' && <MessagesScreen showToast={showToast} />}
           {view === 'media' && <MediaScreen showToast={showToast} />}
+          {view === 'security' && <SecurityScreen showToast={showToast} />}
         </div>
       </main>
     </div>

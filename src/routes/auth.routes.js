@@ -1,5 +1,5 @@
 const express = require('express');
-const { login, refreshToken, getMe, updateMe } = require('../controllers/auth.controller');
+const { login, refreshToken, getMe, updateMe, changePassword } = require('../controllers/auth.controller');
 const { authenticate } = require('../middleware/auth.middleware');
 
 const router = express.Router();
@@ -11,6 +11,7 @@ router.post('/refresh', refreshToken);
 // Protected routes (Requires Bearer token)
 router.get('/me', authenticate, getMe);
 router.put('/me', authenticate, updateMe);
+router.put('/change-password', authenticate, changePassword);
 
 module.exports = router;
 

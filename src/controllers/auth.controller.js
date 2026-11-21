@@ -131,6 +131,92 @@ const getMe = async (req, res) => {
 };
 
 /**
+ * Helper to validate password strength against security rules:
+ * - Minimum 8 characters
+ * - At least one uppercase letter (A-Z)
+ * - At least one lowercase letter (a-z)
+ * - At least one digit (0-9)
+ * - At least one special symbol (!@#$%^&*...)
+ */
+const validatePasswordStrength = (pwd) => {
+  if (!pwd || typeof pwd !== 'string') return { valid: false, message: 'Password is required' };
+  if (pwd.length < 8) return { valid: false, message: 'Password must be at least 8 characters long.' };
+  if (!/[A-Z]/.test(pwd)) return { valid: false, message: 'Password must include at least one uppercase letter (A-Z).' };
+  if (!/[a-z]/.test(pwd)) return { valid: false, message: 'Password must include at least one lowercase letter (a-z).' };
+  if (!/[0-9]/.test(pwd)) return { valid: false, message: 'Password must include at least one number (0-9).' };
+  if (!/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~`]/.test(pwd)) {
+    return { valid: false, message: 'Password must include at least one special symbol (!@#$%^&*...).' };
+  }
+  return { valid: true };
+};
+
+/**
+ * @desc    Change current user password with verification and strength rules
+ * @route   PUT /api/auth/change-password
+ * @access  Private
+ */
+const changePassword = async (req, res, next) => {
+  try {
+    const { currentPassword, newPassword } = req.body;
+
+    if (!currentPassword || !newPassword) {
+      return res.status(400).json({
+        success: false,
+        message: 'Both current password and new password are required.'
+      });
+    }
+
+    const user = await prisma.user.findUnique({
+      where: { id: req.user.id }
+    });
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: 'User account not found.'
+      });
+    }
+
+    const isCurrentValid = await bcrypt.compare(currentPassword, user.password);
+    if (!isCurrentValid) {
+      return res.status(401).json({
+        success: false,
+        message: 'Current password is incorrect.'
+      });
+    }
+
+    const strength = validatePasswordStrength(newPassword);
+    if (!strength.valid) {
+      return res.status(400).json({
+        success: false,
+        message: strength.message
+      });
+    }
+
+    const isSame = await bcrypt.compare(newPassword, user.password);
+    if (isSame) {
+      return res.status(400).json({
+        success: false,
+        message: 'New password cannot be the same as your current password.'
+      });
+    }
+
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    await prisma.user.update({
+      where: { id: user.id },
+      data: { password: hashedPassword }
+    });
+
+    res.json({
+      success: true,
+      message: 'Password changed successfully. Your account is secured with the new password.'
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+/**
  * @desc    Update current user profile
  * @route   PUT /api/auth/me
  * @access  Private
@@ -142,10 +228,11 @@ const updateMe = async (req, res, next) => {
 
     if (name) updateData.name = name.trim();
     if (password) {
-      if (password.length < 6) {
+      const strength = validatePasswordStrength(password);
+      if (!strength.valid) {
         return res.status(400).json({
           success: false,
-          message: 'Password must be at least 6 characters long.'
+          message: strength.message
         });
       }
       updateData.password = await bcrypt.hash(password, 10);
@@ -177,6 +264,8 @@ module.exports = {
   login,
   refreshToken,
   getMe,
-  updateMe
+  updateMe,
+  changePassword,
+  validatePasswordStrength
 };
 
