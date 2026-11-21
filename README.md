@@ -107,11 +107,9 @@ npm run db:studio
 - [x] **Day 2: CMS Authentication System** (`Day 2 completed -> CMS Authentication System with JWT and route protection`)
 - [x] **Day 3: CMS Content Models & CRUD APIs** (`Day 3 completed -> CMS Content Models and CRUD APIs`)
 - [x] **Day 4: File Upload System (Multer & Media API)** (`Day 4 completed -> File Upload System with Multer and Media API`)
-- [ ] **Day 5: Admin Panel UI (Auth & Dashboard)**
-- [ ] **Day 4: File Upload System (Multer & Media API)**
-- [ ] **Day 5: Admin Panel UI (Auth & Dashboard)**
-- [ ] **Day 6: CMS CRUD Screens (About, Skills, Projects)**
-- [ ] **Day 7: CMS Screens (Blogs, Experience, Testimonials, Services)**
+- [x] **Day 5: Admin Panel UI (Auth & Dashboard)** (`Day 5 completed -> Admin Panel UI Setup with Auth and Dashboard`)
+- [x] **Day 6: CMS CRUD Screens (About, Skills, Projects)** (`Day 6 completed -> CMS CRUD Screens for About, Skills, Projects`)
+- [x] **Day 7: Remaining CMS Screens & UI Polish** (`Day 7 completed -> Remaining CMS Screens Blogs, Experience, Testimonials, Services, Media & Messages`)
 - [ ] **Day 8: Portfolio Frontend Setup (Next.js + Tailwind)**
 - [ ] **Day 9: Fetch Content From CMS (Dynamic Rendering)**
 - [ ] **Day 10: Additional Sections & Experience Timeline**

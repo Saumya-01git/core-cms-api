@@ -46,10 +46,18 @@ app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 // Static directory for uploaded media
 app.use('/uploads', express.static(path.resolve(config.uploadDir)));
 
+// Static directory for Custom Headless CMS Admin Panel UI
+const adminStaticPath = path.resolve(__dirname, '../admin');
+app.use('/admin', express.static(adminStaticPath));
+app.get('/admin/*', (req, res) => {
+  res.sendFile(path.join(adminStaticPath, 'index.html'));
+});
+
 // Root welcome route
 app.get('/', (req, res) => {
   res.json({
     message: 'Welcome to Core CMS REST API',
+    adminPanel: '/admin',
     documentation: '/api',
     health: '/api/health'
   });
