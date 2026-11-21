@@ -10,8 +10,9 @@ const notFoundHandler = require('./middleware/notFoundHandler');
 
 const app = express();
 
-// Security HTTP headers
+// Security HTTP headers - disable CSP for admin panel CDN scripts and Babel eval
 app.use(helmet({
+  contentSecurityPolicy: false,
   crossOriginResourcePolicy: { policy: 'cross-origin' }
 }));
 
