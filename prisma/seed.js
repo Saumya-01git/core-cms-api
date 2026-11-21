@@ -28,14 +28,14 @@ async function main() {
     console.log(`✅ Default admin created: ${adminEmail}`);
   }
 
-  // 2. Seed / Update About Profile from Resume
+  // 2. Seed / Update About Profile from Resume (Sanitized for Privacy)
   const aboutData = {
     title: 'Full-Stack Engineer & Cyber Security Specialist',
-    subtitle: 'B.Tech CSE (Cyber Security) @ VIT Chennai (CGPA 8.97). Engineering resilient cloud systems, cryptographic protocols, and reactive web applications.',
+    subtitle: 'B.Tech CSE (Cyber Security) @ VIT Chennai. Engineering resilient cloud systems, cryptographic protocols, and reactive web applications.',
     bio: 'Full-Stack Software Engineer with specialized focus on Web Development, Cyber Security, and Cryptography. Proven experience engineering scalable enterprise web modules at Labmentix, authoring LLM benchmarking datasets at GirlScript Summer of Code (GSSoC 2026), and developing novel privacy-preserving search frameworks (DASP/ASPE). Passionate about secure RESTful APIs, PostgreSQL relational modeling, and clean user interfaces.',
-    location: 'VIT Chennai / Muzaffarpur, India',
-    email: 'saumyagarg55555@gmail.com',
-    phone: '+91 9142134544',
+    location: 'Chennai / Remote',
+    email: 'contact@saumya.dev',
+    phone: '+91 98765 43210',
     githubUrl: 'https://github.com/Saumya-01git',
     linkedinUrl: 'https://linkedin.com',
     twitterUrl: 'https://x.com',
