@@ -7,15 +7,13 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <!-- Tailwind CSS via CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Lucide Icons -->
-  <script src="https://unpkg.com/lucide@latest"></script>
-  <!-- React & ReactDOM (Production UMD) -->
-  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-  <!-- Babel Standalone for in-browser JSX parsing -->
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  
+  <!-- Locally Vendored Libraries (Instant local loading, zero CDN/network failure) -->
+  <script src="/admin/vendor/tailwind.js"></script>
+  <script src="/admin/vendor/react.min.js"></script>
+  <script src="/admin/vendor/react-dom.min.js"></script>
+  <script src="/admin/vendor/babel.min.js"></script>
+
   <script>
     tailwind.config = {
       darkMode: 'class',
@@ -79,8 +77,12 @@
   </style>
 </head>
 <body class="min-h-screen text-slate-100 antialiased selection:bg-indigo-500 selection:text-white">
-  <div id="root"></div>
+  <div id="root">
+    <div class="min-h-screen flex flex-col items-center justify-center bg-[#090d16] text-slate-300">
+      <div class="w-12 h-12 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin mb-4"></div>
+      <p class="font-mono text-sm tracking-wide text-indigo-300">Starting Core CMS Admin Interface...</p>
+    </div>
+  </div>
   <script type="text/babel" src="/admin/app.jsx"></script>
 </body>
 </html>
-
