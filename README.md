@@ -88,6 +88,14 @@ npm run db:studio
 | `POST` | `/api/auth/refresh` | Issue new JWT access token | Public |
 | `GET` | `/api/auth/me` | Fetch active authenticated profile | Private (Bearer) |
 | `PUT` | `/api/auth/me` | Update admin profile & credentials | Private (Bearer) |
+| `GET, PUT` | `/api/about` | Read & update portfolio bio and profile | Public / Admin |
+| `GET, POST, PUT, DELETE` | `/api/skills` | Manage skills with proficiency & icons | Public / Admin |
+| `GET, POST, PUT, DELETE` | `/api/projects` | Project showcase with slugs & tags | Public / Admin |
+| `GET, POST, PUT, DELETE` | `/api/blogs` | Tech blog posts with views tracking | Public / Admin |
+| `GET, POST, PUT, DELETE` | `/api/experience` | Work history & education timeline | Public / Admin |
+| `GET, POST, PUT, DELETE` | `/api/testimonials` | Client reviews & endorsements | Public / Admin |
+| `GET, POST, PUT, DELETE` | `/api/services` | Service offerings & features | Public / Admin |
+| `POST, GET, PATCH, DELETE`| `/api/contact` | Public contact submission & inbox | Public / Admin |
 
 ---
 
@@ -95,7 +103,8 @@ npm run db:studio
 
 - [x] **Day 1: Backend + Database Setup** (`Day 1 completed -> backend setup and database connection`)
 - [x] **Day 2: CMS Authentication System** (`Day 2 completed -> CMS Authentication System with JWT and route protection`)
-- [ ] **Day 3: CMS Content Models & CRUD APIs**
+- [x] **Day 3: CMS Content Models & CRUD APIs** (`Day 3 completed -> CMS Content Models and CRUD APIs`)
+- [ ] **Day 4: File Upload System (Multer & Media API)**
 - [ ] **Day 4: File Upload System (Multer & Media API)**
 - [ ] **Day 5: Admin Panel UI (Auth & Dashboard)**
 - [ ] **Day 6: CMS CRUD Screens (About, Skills, Projects)**
