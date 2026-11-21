@@ -31,3 +31,4 @@ databases:
     region: oregon
     databaseName: core_cms_db
     user: postgres
+
