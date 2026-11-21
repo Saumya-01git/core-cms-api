@@ -84,13 +84,17 @@ npm run db:studio
 | `GET` | `/` | Welcome message & API discovery | Public |
 | `GET` | `/api` | API index listing endpoints | Public |
 | `GET` | `/api/health` | System health, uptime & DB latency | Public |
+| `POST` | `/api/auth/login` | Admin login & JWT token generation | Public |
+| `POST` | `/api/auth/refresh` | Issue new JWT access token | Public |
+| `GET` | `/api/auth/me` | Fetch active authenticated profile | Private (Bearer) |
+| `PUT` | `/api/auth/me` | Update admin profile & credentials | Private (Bearer) |
 
 ---
 
 ## 🗓 14-Day Roadmap Tracker
 
 - [x] **Day 1: Backend + Database Setup** (`Day 1 completed -> backend setup and database connection`)
-- [ ] **Day 2: CMS Authentication System (JWT & Middleware)**
+- [x] **Day 2: CMS Authentication System** (`Day 2 completed -> CMS Authentication System with JWT and route protection`)
 - [ ] **Day 3: CMS Content Models & CRUD APIs**
 - [ ] **Day 4: File Upload System (Multer & Media API)**
 - [ ] **Day 5: Admin Panel UI (Auth & Dashboard)**
