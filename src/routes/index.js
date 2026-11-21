@@ -9,6 +9,7 @@ const experienceRoutes = require('./experience.routes');
 const testimonialsRoutes = require('./testimonials.routes');
 const servicesRoutes = require('./services.routes');
 const contactRoutes = require('./contact.routes');
+const uploadRoutes = require('./upload.routes');
 
 const router = express.Router();
 
@@ -23,6 +24,7 @@ router.use('/experience', experienceRoutes);
 router.use('/testimonials', testimonialsRoutes);
 router.use('/services', servicesRoutes);
 router.use('/contact', contactRoutes);
+router.use('/upload', uploadRoutes);
 
 // Base API index info
 router.get('/', (req, res) => {

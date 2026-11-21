@@ -97,6 +97,8 @@ npm run db:studio
 | `GET, POST, PUT, DELETE` | `/api/services` | Service offerings & features | Public / Admin |
 | `POST, GET, PATCH, DELETE`| `/api/contact` | Public contact submission & inbox | Public / Admin |
 
+| `POST, GET, DELETE`      | `/api/upload` | Media upload (single/multi) & file manager | Private (Bearer) |
+
 ---
 
 ## 🗓 14-Day Roadmap Tracker
@@ -104,7 +106,8 @@ npm run db:studio
 - [x] **Day 1: Backend + Database Setup** (`Day 1 completed -> backend setup and database connection`)
 - [x] **Day 2: CMS Authentication System** (`Day 2 completed -> CMS Authentication System with JWT and route protection`)
 - [x] **Day 3: CMS Content Models & CRUD APIs** (`Day 3 completed -> CMS Content Models and CRUD APIs`)
-- [ ] **Day 4: File Upload System (Multer & Media API)**
+- [x] **Day 4: File Upload System (Multer & Media API)** (`Day 4 completed -> File Upload System with Multer and Media API`)
+- [ ] **Day 5: Admin Panel UI (Auth & Dashboard)**
 - [ ] **Day 4: File Upload System (Multer & Media API)**
 - [ ] **Day 5: Admin Panel UI (Auth & Dashboard)**
 - [ ] **Day 6: CMS CRUD Screens (About, Skills, Projects)**
