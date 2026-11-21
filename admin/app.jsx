@@ -391,129 +391,137 @@ function DashboardScreen({ setView }) {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-[350px]">
-        <div className="w-8 h-8 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin"></div>
+      <div className="flex items-center justify-center min-h-[400px]">
+        <div className="w-12 h-12 border-4 border-[#C2AFF0] border-t-transparent rounded-full animate-spin"></div>
       </div>
     );
   }
 
   const statCards = [
-    { label: 'Projects', val: stats.projects, icon: '💼', view: 'projects' },
-    { label: 'Blogs / Articles', val: stats.blogs, sub: `${stats.blogViews} views`, icon: '✍️', view: 'blogs' },
-    { label: 'Skills', val: stats.skills, icon: '⚡', view: 'skills' },
-    { label: 'Testimonials', val: stats.testimonials, icon: '⭐', view: 'testimonials' },
+    { label: 'Showcase Projects', val: stats.projects, icon: '💼', view: 'projects' },
+    { label: 'Technical Articles', val: stats.blogs, sub: `${stats.blogViews} total reads`, icon: '✍️', view: 'blogs' },
+    { label: 'Core Skills', val: stats.skills, icon: '⚡', view: 'skills' },
+    { label: 'Endorsements', val: stats.testimonials, icon: '⭐', view: 'testimonials' },
     { label: 'Inbound Inquiries', val: stats.messages, sub: `${stats.unreadMessages} unread`, icon: '📬', view: 'messages', badge: stats.unreadMessages },
     { label: 'Services', val: stats.services, icon: '🛠️', view: 'services' }
   ];
 
   return (
-    <div className="space-y-8">
-      <div className="glass-panel p-6 sm:p-8 rounded-3xl border border-white/10 relative overflow-hidden bg-gradient-to-r from-indigo-900/30 via-slate-900/40 to-slate-900/30">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+    <div className="space-y-10 animate-fadeIn">
+      {/* Hero Welcome Banner */}
+      <div className="glass-panel p-8 sm:p-12 rounded-3xl border border-[#2D5D7B]/40 relative overflow-hidden shadow-2xl">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-xs font-semibold mb-3">
-              <span>●</span> Live Headless API Connected
+            <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-[#9191E9]/20 border border-[#9191E9]/35 text-[#C2AFF0] text-sm font-bold font-mono mb-4">
+              <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+              <span>Live Headless API Online</span>
             </div>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">Portfolio Control Center</h2>
-            <p className="text-slate-400 text-sm mt-1 max-w-xl">
-              All portfolio content is stored in PostgreSQL and delivered to your frontend via clean REST APIs.
+            <h2 className="font-heading text-3xl sm:text-5xl font-extrabold text-white tracking-tight leading-tight">
+              Portfolio <span className="text-gradient-aurora">Control Center</span>
+            </h2>
+            <p className="text-slate-300 text-base sm:text-lg mt-2.5 max-w-2xl leading-relaxed">
+              All portfolio content is secured in PostgreSQL and served in real-time to your reactive client via clean REST APIs.
             </p>
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex flex-wrap items-center gap-4">
             <button
               onClick={() => setView('projects')}
-              className="px-4 py-2.5 rounded-xl text-sm font-semibold bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-600/20 transition"
+              className="px-6 py-3.5 rounded-2xl text-base font-extrabold bg-gradient-to-r from-[#9191E9] via-[#8585E6] to-[#457EAC] hover:from-[#9d9df0] hover:to-[#5590c2] text-white shadow-xl shadow-[#9191E9]/30 hover:scale-[1.02] transition cursor-pointer"
             >
               + Add Project
             </button>
             <button
               onClick={() => setView('blogs')}
-              className="px-4 py-2.5 rounded-xl text-sm font-semibold bg-slate-800 hover:bg-slate-700 text-slate-200 border border-white/10 transition"
+              className="px-6 py-3.5 rounded-2xl text-base font-bold bg-[#1c3041] hover:bg-[#253f56] text-slate-200 border border-[#2D5D7B]/50 transition cursor-pointer"
             >
-              ✍️ Write Blog
+              ✍️ Write Article
             </button>
           </div>
         </div>
       </div>
 
-      <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+      {/* Grid of Big Stat Cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-7">
         {statCards.map((card, i) => (
           <div
             key={i}
             onClick={() => setView(card.view)}
-            className="glass-card p-5 sm:p-6 rounded-2xl hover:border-indigo-500/50 transition cursor-pointer group"
+            className="glass-card p-7 sm:p-8 rounded-3xl border border-[#2D5D7B]/40 hover:border-[#C2AFF0]/60 transition duration-300 cursor-pointer group shadow-xl hover:-translate-y-1"
           >
-            <div className="flex items-center justify-between mb-3">
-              <span className="text-2xl">{card.icon}</span>
+            <div className="flex items-center justify-between mb-4">
+              <span className="text-3xl sm:text-4xl">{card.icon}</span>
               {card.badge > 0 && (
-                <span className="px-2 py-0.5 rounded-full text-xs font-bold bg-rose-500 text-white animate-pulse">
+                <span className="px-3 py-1 rounded-full text-xs sm:text-sm font-bold bg-rose-500 text-white animate-pulse shadow-md">
                   {card.badge} New
                 </span>
               )}
             </div>
-            <p className="text-slate-400 text-xs font-medium uppercase tracking-wider">{card.label}</p>
-            <p className="text-3xl font-extrabold text-white mt-1 group-hover:text-indigo-400 transition">{card.val}</p>
-            {card.sub && <p className="text-xs text-slate-400 mt-2">{card.sub}</p>}
+            <p className="text-slate-300 text-sm sm:text-base font-bold uppercase tracking-wider font-mono">{card.label}</p>
+            <p className="font-heading text-4xl sm:text-6xl font-extrabold text-white mt-2 group-hover:text-[#C2AFF0] transition">{card.val}</p>
+            {card.sub && <p className="text-sm text-[#9191E9] mt-3 font-medium">{card.sub}</p>}
           </div>
         ))}
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="glass-panel p-6 rounded-2xl border border-white/10">
-          <h3 className="font-bold text-white text-base mb-4 flex items-center gap-2">
+      {/* Database Health & Recent Inquiries */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="glass-panel p-8 sm:p-9 rounded-3xl border border-[#2D5D7B]/40 shadow-xl space-y-5">
+          <h3 className="font-heading font-extrabold text-white text-xl sm:text-2xl flex items-center gap-3">
             <span>🩺</span> System Health & Database
           </h3>
-          <div className="space-y-3">
-            <div className="flex items-center justify-between p-3 rounded-xl bg-slate-900/60 border border-white/5 text-sm">
-              <span className="text-slate-400">Database Engine</span>
-              <span className="text-slate-200 font-medium">PostgreSQL via Prisma</span>
+          <div className="space-y-4">
+            <div className="flex items-center justify-between p-4 sm:p-5 rounded-2xl bg-[#142330]/80 border border-[#2D5D7B]/50 text-base">
+              <span className="text-slate-300 font-semibold">Database Engine</span>
+              <span className="text-white font-bold font-mono">PostgreSQL via Prisma</span>
             </div>
-            <div className="flex items-center justify-between p-3 rounded-xl bg-slate-900/60 border border-white/5 text-sm">
-              <span className="text-slate-400">Database Latency</span>
-              <span className="text-emerald-400 font-mono font-medium">{health.latencyMs} ms</span>
+            <div className="flex items-center justify-between p-4 sm:p-5 rounded-2xl bg-[#142330]/80 border border-[#2D5D7B]/50 text-base">
+              <span className="text-slate-300 font-semibold">Database Latency</span>
+              <span className="text-emerald-400 font-mono font-bold text-lg">{health.latencyMs} ms</span>
             </div>
-            <div className="flex items-center justify-between p-3 rounded-xl bg-slate-900/60 border border-white/5 text-sm">
-              <span className="text-slate-400">API Gateway</span>
-              <span className="text-indigo-400 font-mono text-xs">/api (Express.js)</span>
+            <div className="flex items-center justify-between p-4 sm:p-5 rounded-2xl bg-[#142330]/80 border border-[#2D5D7B]/50 text-base">
+              <span className="text-slate-300 font-semibold">API Gateway</span>
+              <span className="text-[#C2AFF0] font-mono font-bold text-base">/api (Express.js)</span>
             </div>
           </div>
         </div>
 
-        <div className="glass-panel p-6 rounded-2xl border border-white/10">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="font-bold text-white text-base flex items-center gap-2">
-              <span>📬</span> Recent Inquiries
-            </h3>
-            <button
-              onClick={() => setView('messages')}
-              className="text-xs text-indigo-400 hover:text-indigo-300 font-semibold"
-            >
-              View All &rarr;
-            </button>
-          </div>
-          {recentMessages.length === 0 ? (
-            <div className="text-center py-8 text-slate-500 text-sm">
-              No inquiries yet. Submissions from the contact form will show up here.
+        <div className="glass-panel p-8 sm:p-9 rounded-3xl border border-[#2D5D7B]/40 shadow-xl flex flex-col justify-between">
+          <div>
+            <div className="flex items-center justify-between mb-5">
+              <h3 className="font-heading font-extrabold text-white text-xl sm:text-2xl flex items-center gap-3">
+                <span>📬</span> Recent Inquiries
+              </h3>
+              <button
+                onClick={() => setView('messages')}
+                className="text-sm sm:text-base text-[#C2AFF0] hover:text-white font-bold transition"
+              >
+                View All &rarr;
+              </button>
             </div>
-          ) : (
-            <div className="space-y-2.5">
-              {recentMessages.map(msg => (
-                <div
-                  key={msg.id}
-                  onClick={() => setView('messages')}
-                  className="p-3 rounded-xl bg-slate-900/60 hover:bg-slate-800/80 border border-white/5 transition cursor-pointer flex items-center justify-between"
-                >
-                  <div className="truncate mr-3">
-                    <p className="text-sm font-semibold text-slate-200 truncate">{msg.name}</p>
-                    <p className="text-xs text-slate-400 truncate">{msg.subject || msg.message}</p>
+            {recentMessages.length === 0 ? (
+              <div className="text-center py-12 text-slate-400 text-base">
+                No inquiries yet. Submissions from the contact form will show up here.
+              </div>
+            ) : (
+              <div className="space-y-3">
+                {recentMessages.map(msg => (
+                  <div
+                    key={msg.id}
+                    onClick={() => setView('messages')}
+                    className="p-4 rounded-2xl bg-[#142330]/80 hover:bg-[#1a2d3d] border border-[#2D5D7B]/40 transition cursor-pointer flex items-center justify-between"
+                  >
+                    <div className="truncate mr-3">
+                      <p className="text-base font-bold text-white truncate">{msg.name}</p>
+                      <p className="text-sm text-slate-400 truncate mt-0.5">{msg.subject || msg.message}</p>
+                    </div>
+                    {!msg.isRead && (
+                      <span className="w-3 h-3 rounded-full bg-rose-500 flex-shrink-0 animate-pulse"></span>
+                    )}
                   </div>
-                  {!msg.isRead && (
-                    <span className="w-2 h-2 rounded-full bg-rose-500 flex-shrink-0"></span>
-                  )}
-                </div>
-              ))}
-            </div>
-          )}
+                ))}
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>
@@ -558,125 +566,146 @@ function AboutScreen({ showToast }) {
     }
   };
 
-  if (loading) return <div className="text-center py-12 text-slate-400">Loading About profile...</div>;
+  if (loading) return <div className="text-center py-16 text-slate-300 text-lg">Loading About profile...</div>;
 
   return (
-    <div className="space-y-6 max-w-4xl">
-      <div className="flex items-center justify-between">
-        <div>
-          <h2 className="text-2xl font-bold text-white">About & Bio Profile</h2>
-          <p className="text-sm text-slate-400">Manage hero intro, biography, and social links</p>
-        </div>
+    <div className="space-y-8 max-w-5xl animate-fadeIn">
+      <div>
+        <h2 className="font-heading text-3xl sm:text-5xl font-extrabold text-white tracking-tight flex items-center gap-3">
+          <span>👤</span>
+          <span>About & <span className="text-gradient-aurora">Bio Profile</span></span>
+        </h2>
+        <p className="text-base sm:text-lg text-slate-300 mt-2 max-w-2xl leading-relaxed">
+          Manage your hero introduction, biography narrative, contact coordinates, and social profile links.
+        </p>
       </div>
 
-      <form onSubmit={handleSubmit} className="glass-panel p-6 sm:p-8 rounded-3xl border border-white/10 space-y-6">
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+      <form onSubmit={handleSubmit} className="glass-panel p-8 sm:p-12 rounded-3xl border border-[#2D5D7B]/40 space-y-8 shadow-2xl">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           <div>
-            <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">Headline Title</label>
+            <label className="block text-sm sm:text-base font-bold uppercase tracking-wider text-slate-200 mb-2.5">
+              Headline Title
+            </label>
             <input
               type="text"
               value={data.title || ''}
               onChange={e => setData({ ...data, title: e.target.value })}
-              placeholder="Full Stack Engineer & Architect"
-              className="w-full px-4 py-2.5 rounded-xl bg-slate-900/80 border border-slate-700 text-sm text-white outline-none focus:border-indigo-500"
+              placeholder="Full Stack Engineer & Cyber Security Specialist"
+              className="w-full px-5 py-4 rounded-2xl bg-[#142330]/90 border border-[#2D5D7B]/60 focus:border-[#C2AFF0] focus:ring-2 focus:ring-[#C2AFF0]/20 text-white placeholder-slate-500 text-base sm:text-lg outline-none transition"
             />
           </div>
           <div>
-            <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">Subtitle</label>
+            <label className="block text-sm sm:text-base font-bold uppercase tracking-wider text-slate-200 mb-2.5">
+              Subtitle
+            </label>
             <input
               type="text"
               value={data.subtitle || ''}
               onChange={e => setData({ ...data, subtitle: e.target.value })}
-              placeholder="Building resilient cloud systems"
-              className="w-full px-4 py-2.5 rounded-xl bg-slate-900/80 border border-slate-700 text-sm text-white outline-none focus:border-indigo-500"
+              placeholder="Engineering resilient web architectures & cryptographic systems"
+              className="w-full px-5 py-4 rounded-2xl bg-[#142330]/90 border border-[#2D5D7B]/60 focus:border-[#C2AFF0] focus:ring-2 focus:ring-[#C2AFF0]/20 text-white placeholder-slate-500 text-base sm:text-lg outline-none transition"
             />
           </div>
         </div>
 
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">Full Biography</label>
+          <label className="block text-sm sm:text-base font-bold uppercase tracking-wider text-slate-200 mb-2.5">
+            Full Biography Narrative
+          </label>
           <textarea
             rows="5"
             value={data.bio || ''}
             onChange={e => setData({ ...data, bio: e.target.value })}
-            placeholder="Tell your story, expertise and passions..."
-            className="w-full px-4 py-3 rounded-xl bg-slate-900/80 border border-slate-700 text-sm text-white outline-none focus:border-indigo-500"
+            placeholder="Tell your story, engineering passions, and architectural philosophy..."
+            className="w-full px-5 py-4 rounded-2xl bg-[#142330]/90 border border-[#2D5D7B]/60 focus:border-[#C2AFF0] focus:ring-2 focus:ring-[#C2AFF0]/20 text-white placeholder-slate-500 text-base sm:text-lg outline-none transition leading-relaxed"
           ></textarea>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
           <div>
-            <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">Location</label>
+            <label className="block text-sm sm:text-base font-bold uppercase tracking-wider text-slate-200 mb-2.5">
+              Location
+            </label>
             <input
               type="text"
               value={data.location || ''}
               onChange={e => setData({ ...data, location: e.target.value })}
-              placeholder="San Francisco / Bengaluru"
-              className="w-full px-4 py-2.5 rounded-xl bg-slate-900/80 border border-slate-700 text-sm text-white outline-none focus:border-indigo-500"
+              placeholder="Chennai, India"
+              className="w-full px-5 py-3.5 rounded-2xl bg-[#142330]/90 border border-[#2D5D7B]/60 focus:border-[#C2AFF0] text-white text-base outline-none transition"
             />
           </div>
           <div>
-            <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">Public Email</label>
+            <label className="block text-sm sm:text-base font-bold uppercase tracking-wider text-slate-200 mb-2.5">
+              Public Email
+            </label>
             <input
               type="email"
               value={data.email || ''}
               onChange={e => setData({ ...data, email: e.target.value })}
-              placeholder="dev@example.com"
-              className="w-full px-4 py-2.5 rounded-xl bg-slate-900/80 border border-slate-700 text-sm text-white outline-none focus:border-indigo-500"
+              placeholder="saumya.dev@portfolio.local"
+              className="w-full px-5 py-3.5 rounded-2xl bg-[#142330]/90 border border-[#2D5D7B]/60 focus:border-[#C2AFF0] text-white text-base outline-none transition"
             />
           </div>
           <div>
-            <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">Resume / CV URL</label>
+            <label className="block text-sm sm:text-base font-bold uppercase tracking-wider text-slate-200 mb-2.5">
+              Resume URL / Path
+            </label>
             <input
               type="text"
               value={data.resumeUrl || ''}
               onChange={e => setData({ ...data, resumeUrl: e.target.value })}
-              placeholder="/uploads/resume.pdf or drive link"
-              className="w-full px-4 py-2.5 rounded-xl bg-slate-900/80 border border-slate-700 text-sm text-white outline-none focus:border-indigo-500"
+              placeholder="/uploads/resume.pdf"
+              className="w-full px-5 py-3.5 rounded-2xl bg-[#142330]/90 border border-[#2D5D7B]/60 focus:border-[#C2AFF0] text-white text-base outline-none transition"
             />
           </div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
           <div>
-            <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">GitHub Profile</label>
+            <label className="block text-sm sm:text-base font-bold uppercase tracking-wider text-slate-200 mb-2.5">
+              GitHub Profile
+            </label>
             <input
               type="text"
               value={data.githubUrl || ''}
               onChange={e => setData({ ...data, githubUrl: e.target.value })}
               placeholder="https://github.com/..."
-              className="w-full px-4 py-2.5 rounded-xl bg-slate-900/80 border border-slate-700 text-sm text-white outline-none focus:border-indigo-500"
+              className="w-full px-5 py-3.5 rounded-2xl bg-[#142330]/90 border border-[#2D5D7B]/60 focus:border-[#C2AFF0] text-white text-base outline-none transition"
             />
           </div>
           <div>
-            <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">LinkedIn Profile</label>
+            <label className="block text-sm sm:text-base font-bold uppercase tracking-wider text-slate-200 mb-2.5">
+              LinkedIn Profile
+            </label>
             <input
               type="text"
               value={data.linkedinUrl || ''}
               onChange={e => setData({ ...data, linkedinUrl: e.target.value })}
               placeholder="https://linkedin.com/in/..."
-              className="w-full px-4 py-2.5 rounded-xl bg-slate-900/80 border border-slate-700 text-sm text-white outline-none focus:border-indigo-500"
+              className="w-full px-5 py-3.5 rounded-2xl bg-[#142330]/90 border border-[#2D5D7B]/60 focus:border-[#C2AFF0] text-white text-base outline-none transition"
             />
           </div>
           <div>
-            <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">Twitter / X Profile</label>
+            <label className="block text-sm sm:text-base font-bold uppercase tracking-wider text-slate-200 mb-2.5">
+              Twitter / X Profile
+            </label>
             <input
               type="text"
               value={data.twitterUrl || ''}
               onChange={e => setData({ ...data, twitterUrl: e.target.value })}
               placeholder="https://x.com/..."
-              className="w-full px-4 py-2.5 rounded-xl bg-slate-900/80 border border-slate-700 text-sm text-white outline-none focus:border-indigo-500"
+              className="w-full px-5 py-3.5 rounded-2xl bg-[#142330]/90 border border-[#2D5D7B]/60 focus:border-[#C2AFF0] text-white text-base outline-none transition"
             />
           </div>
         </div>
 
-        <div className="pt-4 flex justify-end">
+        <div className="pt-6 border-t border-[#2D5D7B]/40 flex justify-end">
           <button
             type="submit"
             disabled={saving}
-            className="px-6 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-sm shadow-lg shadow-indigo-600/30 transition disabled:opacity-50"
+            className="px-8 py-4 rounded-2xl bg-gradient-to-r from-[#9191E9] via-[#8585E6] to-[#457EAC] hover:from-[#9d9df0] hover:to-[#5590c2] text-white font-extrabold text-base shadow-xl shadow-[#9191E9]/30 hover:scale-[1.02] transition cursor-pointer disabled:opacity-50"
           >
-            {saving ? 'Saving...' : 'Save Profile Changes'}
+            {saving ? 'Saving...' : 'Save Profile Changes 💾'}
           </button>
         </div>
       </form>
@@ -751,50 +780,55 @@ function SkillsScreen({ showToast }) {
   };
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
+    <div className="space-y-8 animate-fadeIn">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-2xl font-bold text-white">Skills Inventory</h2>
-          <p className="text-sm text-slate-400">Manage technical competencies and proficiency levels</p>
+          <h2 className="font-heading text-3xl sm:text-5xl font-extrabold text-white tracking-tight flex items-center gap-3">
+            <span>⚡</span>
+            <span>Skills & <span className="text-gradient-aurora">Competencies</span></span>
+          </h2>
+          <p className="text-base sm:text-lg text-slate-300 mt-2 max-w-2xl leading-relaxed">
+            Manage your technical competencies, frameworks, security toolkits, and proficiency meters.
+          </p>
         </div>
         <button
           onClick={() => openModal()}
-          className="px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-sm shadow-lg shadow-indigo-600/30 transition"
+          className="px-6 py-3.5 rounded-2xl bg-gradient-to-r from-[#9191E9] via-[#8585E6] to-[#457EAC] hover:from-[#9d9df0] hover:to-[#5590c2] text-white font-extrabold text-base shadow-xl shadow-[#9191E9]/30 hover:scale-[1.02] transition cursor-pointer self-start sm:self-auto"
         >
           + Add Skill
         </button>
       </div>
 
       {loading ? (
-        <div className="text-center py-12 text-slate-400">Loading skills...</div>
+        <div className="text-center py-16 text-slate-300 text-lg">Loading skills...</div>
       ) : skills.length === 0 ? (
-        <div className="glass-panel p-12 text-center rounded-3xl text-slate-500">
+        <div className="glass-panel p-16 text-center rounded-3xl text-slate-400 text-lg">
           No skills added yet. Click "+ Add Skill" to create one.
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {skills.map(s => (
-            <div key={s.id} className="glass-card p-5 rounded-2xl flex flex-col justify-between group">
+            <div key={s.id} className="glass-card p-6 sm:p-7 rounded-3xl border border-[#2D5D7B]/40 hover:border-[#C2AFF0]/60 transition duration-300 flex flex-col justify-between group shadow-xl">
               <div>
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-xs font-semibold px-2 py-0.5 rounded-md bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
+                <div className="flex items-center justify-between mb-3">
+                  <span className="text-xs sm:text-sm font-bold px-3 py-1 rounded-full bg-[#9191E9]/20 text-[#C2AFF0] border border-[#9191E9]/35 font-mono">
                     {s.category}
                   </span>
-                  <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition">
-                    <button onClick={() => openModal(s)} className="text-xs text-slate-400 hover:text-white">Edit</button>
-                    <button onClick={() => handleDelete(s.id)} className="text-xs text-rose-400 hover:text-rose-300">Delete</button>
+                  <div className="flex items-center gap-3">
+                    <button onClick={() => openModal(s)} className="text-sm font-bold text-slate-300 hover:text-white transition">Edit</button>
+                    <button onClick={() => handleDelete(s.id)} className="text-sm font-bold text-rose-400 hover:text-rose-300 transition">Delete</button>
                   </div>
                 </div>
-                <h4 className="font-bold text-white text-base mt-1">{s.name}</h4>
+                <h4 className="font-heading font-extrabold text-white text-xl sm:text-2xl mt-2">{s.name}</h4>
               </div>
 
-              <div className="mt-4">
-                <div className="flex justify-between text-xs text-slate-400 mb-1">
+              <div className="mt-6">
+                <div className="flex justify-between text-sm text-slate-300 mb-2 font-mono">
                   <span>Proficiency</span>
-                  <span className="font-mono">{s.proficiency}%</span>
+                  <span className="font-bold text-[#C2AFF0]">{s.proficiency}%</span>
                 </div>
-                <div className="w-full h-2 rounded-full bg-slate-800 overflow-hidden">
-                  <div className="h-full bg-gradient-to-r from-indigo-500 to-violet-500 rounded-full" style={{ width: `${s.proficiency}%` }}></div>
+                <div className="w-full h-3 rounded-full bg-slate-900 overflow-hidden border border-[#2D5D7B]/40">
+                  <div className="h-full bg-gradient-to-r from-[#9191E9] via-[#8585E6] to-[#457EAC] rounded-full transition-all duration-500" style={{ width: `${s.proficiency}%` }}></div>
                 </div>
               </div>
             </div>
@@ -803,57 +837,60 @@ function SkillsScreen({ showToast }) {
       )}
 
       {modalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
-          <div className="glass-panel p-6 sm:p-8 rounded-3xl border border-white/10 w-full max-w-md">
-            <h3 className="text-lg font-bold text-white mb-4">{editingId ? 'Edit Skill' : 'Add New Skill'}</h3>
-            <form onSubmit={handleSave} className="space-y-4">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-md">
+          <div className="glass-panel p-8 sm:p-10 rounded-3xl border border-[#2D5D7B]/50 w-full max-w-lg shadow-2xl animate-fadeIn">
+            <h3 className="font-heading text-2xl sm:text-3xl font-extrabold text-white mb-6 border-b border-[#2D5D7B]/40 pb-4">
+              {editingId ? 'Edit Technical Skill' : 'Add New Technical Skill'}
+            </h3>
+            <form onSubmit={handleSave} className="space-y-6">
               <div>
-                <label className="block text-xs font-semibold uppercase text-slate-300 mb-1">Skill Name</label>
+                <label className="block text-sm sm:text-base font-bold uppercase tracking-wider text-slate-200 mb-2">Skill Name</label>
                 <input
                   type="text"
                   required
                   value={formData.name}
                   onChange={e => setFormData({ ...formData, name: e.target.value })}
-                  placeholder="e.g. React.js, PostgreSQL"
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-sm text-white outline-none focus:border-indigo-500"
+                  placeholder="e.g. React.js, PostgreSQL, Docker, Wireshark"
+                  className="w-full px-5 py-3.5 rounded-2xl bg-[#142330]/90 border border-[#2D5D7B]/60 focus:border-[#C2AFF0] text-white text-base outline-none transition"
                 />
               </div>
               <div>
-                <label className="block text-xs font-semibold uppercase text-slate-300 mb-1">Category</label>
+                <label className="block text-sm sm:text-base font-bold uppercase tracking-wider text-slate-200 mb-2">Category</label>
                 <select
                   value={formData.category}
                   onChange={e => setFormData({ ...formData, category: e.target.value })}
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-sm text-white outline-none focus:border-indigo-500"
+                  className="w-full px-5 py-3.5 rounded-2xl bg-[#142330]/90 border border-[#2D5D7B]/60 focus:border-[#C2AFF0] text-white text-base outline-none transition"
                 >
-                  <option value="Frontend">Frontend</option>
-                  <option value="Backend">Backend</option>
-                  <option value="Database">Database</option>
-                  <option value="DevOps & Cloud">DevOps & Cloud</option>
-                  <option value="Tools & Architecture">Tools & Architecture</option>
+                  <option value="Frontend">Frontend Development</option>
+                  <option value="Backend">Backend & REST APIs</option>
+                  <option value="Database">Database & Caching</option>
+                  <option value="DevOps & Cloud">DevOps & Cloud Infrastructure</option>
+                  <option value="Security & Systems">Security & Cryptographic Systems</option>
+                  <option value="Tools & Architecture">Architecture & Engineering Tools</option>
                 </select>
               </div>
               <div>
-                <label className="block text-xs font-semibold uppercase text-slate-300 mb-1">Proficiency ({formData.proficiency}%)</label>
+                <label className="block text-sm sm:text-base font-bold uppercase tracking-wider text-slate-200 mb-2">Proficiency Level ({formData.proficiency}%)</label>
                 <input
                   type="range"
                   min="1"
                   max="100"
                   value={formData.proficiency}
                   onChange={e => setFormData({ ...formData, proficiency: parseInt(e.target.value, 10) })}
-                  className="w-full accent-indigo-500 cursor-pointer"
+                  className="w-full accent-[#9191E9] cursor-pointer h-2 bg-slate-800 rounded-lg"
                 />
               </div>
-              <div className="flex justify-end gap-3 pt-3">
+              <div className="flex justify-end gap-4 pt-4 border-t border-[#2D5D7B]/40">
                 <button
                   type="button"
                   onClick={() => setModalOpen(false)}
-                  className="px-4 py-2 rounded-xl text-sm font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700"
+                  className="px-6 py-3 rounded-2xl text-base font-bold bg-[#1c3041] text-slate-300 hover:bg-[#253f56] transition cursor-pointer"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 rounded-xl text-sm font-semibold bg-indigo-600 hover:bg-indigo-500 text-white"
+                  className="px-7 py-3 rounded-2xl text-base font-extrabold bg-gradient-to-r from-[#9191E9] via-[#8585E6] to-[#457EAC] text-white shadow-lg transition cursor-pointer"
                 >
                   Save Skill
                 </button>
@@ -941,53 +978,58 @@ function ProjectsScreen({ showToast }) {
   };
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
+    <div className="space-y-8 animate-fadeIn">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-2xl font-bold text-white">Project Showcase</h2>
-          <p className="text-sm text-slate-400">Curate portfolio work with live previews, tags, and links</p>
+          <h2 className="font-heading text-3xl sm:text-5xl font-extrabold text-white tracking-tight flex items-center gap-3">
+            <span>💼</span>
+            <span>Showcase <span className="text-gradient-aurora">Projects</span></span>
+          </h2>
+          <p className="text-base sm:text-lg text-slate-300 mt-2 max-w-2xl leading-relaxed">
+            Curate engineering projects with live interactive previews, tech stacks, GitHub repos, and featured flags.
+          </p>
         </div>
         <button
           onClick={() => openModal()}
-          className="px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-sm shadow-lg shadow-indigo-600/30 transition"
+          className="px-6 py-3.5 rounded-2xl bg-gradient-to-r from-[#9191E9] via-[#8585E6] to-[#457EAC] hover:from-[#9d9df0] hover:to-[#5590c2] text-white font-extrabold text-base shadow-xl shadow-[#9191E9]/30 hover:scale-[1.02] transition cursor-pointer self-start sm:self-auto"
         >
           + Add Project
         </button>
       </div>
 
       {loading ? (
-        <div className="text-center py-12 text-slate-400">Loading projects...</div>
+        <div className="text-center py-16 text-slate-300 text-lg">Loading projects...</div>
       ) : projects.length === 0 ? (
-        <div className="glass-panel p-12 text-center rounded-3xl text-slate-500">
+        <div className="glass-panel p-16 text-center rounded-3xl text-slate-400 text-lg">
           No projects created yet. Click "+ Add Project" to showcase your work.
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
           {projects.map(p => (
-            <div key={p.id} className="glass-card rounded-2xl overflow-hidden flex flex-col justify-between group border border-white/5 hover:border-indigo-500/40 transition">
+            <div key={p.id} className="glass-card rounded-3xl overflow-hidden flex flex-col justify-between group border border-[#2D5D7B]/40 hover:border-[#C2AFF0]/60 transition duration-300 shadow-xl">
               <div>
                 {p.coverImage ? (
-                  <img src={p.coverImage} alt={p.title} className="w-full h-44 object-cover" />
+                  <img src={p.coverImage} alt={p.title} className="w-full h-48 object-cover" />
                 ) : (
-                  <div className="w-full h-36 bg-gradient-to-br from-indigo-900/40 to-slate-900 flex items-center justify-center text-3xl">
+                  <div className="w-full h-48 bg-gradient-to-br from-[#2D5D7B]/50 via-[#172735] to-[#457EAC]/30 flex items-center justify-center text-4xl">
                     🚀
                   </div>
                 )}
-                <div className="p-5">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="font-mono text-xs text-indigo-400">/{p.slug}</span>
+                <div className="p-6 sm:p-7">
+                  <div className="flex items-center justify-between mb-3">
+                    <span className="font-mono text-sm text-[#C2AFF0] font-bold">/{p.slug}</span>
                     {p.isFeatured && (
-                      <span className="px-2 py-0.5 rounded text-xs font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30">
-                        Featured
+                      <span className="px-3 py-1 rounded-full text-xs font-bold bg-amber-500/20 text-amber-300 border border-amber-500/35 font-mono">
+                        ★ Featured
                       </span>
                     )}
                   </div>
-                  <h3 className="font-bold text-white text-lg">{p.title}</h3>
-                  <p className="text-xs text-slate-400 mt-2 line-clamp-3">{p.description}</p>
+                  <h3 className="font-heading font-extrabold text-white text-xl sm:text-2xl mt-1">{p.title}</h3>
+                  <p className="text-base text-slate-300 mt-2.5 line-clamp-3 leading-relaxed">{p.description}</p>
 
-                  <div className="flex flex-wrap gap-1.5 mt-3">
+                  <div className="flex flex-wrap gap-2 mt-4">
                     {(p.tags || []).map((t, idx) => (
-                      <span key={idx} className="text-[10px] px-2 py-0.5 rounded-md bg-slate-800 text-slate-300 border border-white/5">
+                      <span key={idx} className="text-xs px-2.5 py-1 rounded-lg bg-[#142330]/90 text-slate-200 border border-[#2D5D7B]/40 font-mono">
                         {t}
                       </span>
                     ))}
@@ -995,14 +1037,14 @@ function ProjectsScreen({ showToast }) {
                 </div>
               </div>
 
-              <div className="p-5 pt-0 border-t border-white/5 flex items-center justify-between text-xs">
-                <div className="flex items-center gap-3">
-                  {p.demoUrl && <a href={p.demoUrl} target="_blank" className="text-indigo-400 hover:underline">Demo ↗</a>}
-                  {p.githubUrl && <a href={p.githubUrl} target="_blank" className="text-slate-400 hover:underline">GitHub ↗</a>}
+              <div className="p-6 sm:p-7 pt-0 border-t border-[#2D5D7B]/30 flex items-center justify-between text-base">
+                <div className="flex items-center gap-4">
+                  {p.demoUrl && <a href={p.demoUrl} target="_blank" className="text-[#C2AFF0] hover:text-white font-bold transition">Live Demo ↗</a>}
+                  {p.githubUrl && <a href={p.githubUrl} target="_blank" className="text-slate-300 hover:text-white font-bold transition">GitHub ↗</a>}
                 </div>
                 <div className="flex items-center gap-3">
-                  <button onClick={() => openModal(p)} className="text-slate-300 hover:text-white font-medium">Edit</button>
-                  <button onClick={() => handleDelete(p.id)} className="text-rose-400 hover:text-rose-300 font-medium">Delete</button>
+                  <button onClick={() => openModal(p)} className="text-sm sm:text-base font-bold text-slate-300 hover:text-white transition">Edit</button>
+                  <button onClick={() => handleDelete(p.id)} className="text-sm sm:text-base font-bold text-rose-400 hover:text-rose-300 transition">Delete</button>
                 </div>
               </div>
             </div>
@@ -1011,107 +1053,111 @@ function ProjectsScreen({ showToast }) {
       )}
 
       {modalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm overflow-y-auto">
-          <div className="glass-panel p-6 sm:p-8 rounded-3xl border border-white/10 w-full max-w-xl my-8">
-            <h3 className="text-lg font-bold text-white mb-4">{editingId ? 'Edit Project' : 'Create New Project'}</h3>
-            <form onSubmit={handleSave} className="space-y-4">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-md overflow-y-auto">
+          <div className="glass-panel p-8 sm:p-10 rounded-3xl border border-[#2D5D7B]/50 w-full max-w-2xl my-8 shadow-2xl animate-fadeIn">
+            <h3 className="font-heading text-2xl sm:text-3xl font-extrabold text-white mb-6 border-b border-[#2D5D7B]/40 pb-4">
+              {editingId ? 'Edit Project' : 'Create New Project'}
+            </h3>
+            <form onSubmit={handleSave} className="space-y-6">
               <div>
-                <label className="block text-xs font-semibold uppercase text-slate-300 mb-1">Title</label>
+                <label className="block text-sm sm:text-base font-bold uppercase tracking-wider text-slate-200 mb-2">Project Title</label>
                 <input
                   type="text"
                   required
                   value={formData.title}
                   onChange={e => setFormData({ ...formData, title: e.target.value })}
-                  placeholder="e.g. Next-Gen Portfolio Engine"
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-sm text-white outline-none focus:border-indigo-500"
+                  placeholder="e.g. Next-Gen Cyber Security Threat Monitor"
+                  className="w-full px-5 py-3.5 rounded-2xl bg-[#142330]/90 border border-[#2D5D7B]/60 focus:border-[#C2AFF0] text-white text-base outline-none transition"
                 />
               </div>
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 <div>
-                  <label className="block text-xs font-semibold uppercase text-slate-300 mb-1">Slug (auto-generated if empty)</label>
+                  <label className="block text-sm sm:text-base font-bold uppercase tracking-wider text-slate-200 mb-2">Slug</label>
                   <input
                     type="text"
                     value={formData.slug}
                     onChange={e => setFormData({ ...formData, slug: e.target.value })}
-                    placeholder="portfolio-engine"
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-sm text-white outline-none focus:border-indigo-500"
+                    placeholder="cyber-threat-monitor"
+                    className="w-full px-5 py-3.5 rounded-2xl bg-[#142330]/90 border border-[#2D5D7B]/60 focus:border-[#C2AFF0] text-white text-base outline-none transition font-mono"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold uppercase text-slate-300 mb-1">Cover Image URL</label>
+                  <label className="block text-sm sm:text-base font-bold uppercase tracking-wider text-slate-200 mb-2">Cover Image URL</label>
                   <input
                     type="text"
                     value={formData.coverImage}
                     onChange={e => setFormData({ ...formData, coverImage: e.target.value })}
                     placeholder="/uploads/... or https://..."
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-sm text-white outline-none focus:border-indigo-500"
+                    className="w-full px-5 py-3.5 rounded-2xl bg-[#142330]/90 border border-[#2D5D7B]/60 focus:border-[#C2AFF0] text-white text-base outline-none transition"
                   />
                 </div>
               </div>
               <div>
-                <label className="block text-xs font-semibold uppercase text-slate-300 mb-1">Short Description</label>
+                <label className="block text-sm sm:text-base font-bold uppercase tracking-wider text-slate-200 mb-2">Brief Summary</label>
                 <textarea
                   rows="3"
                   required
                   value={formData.description}
                   onChange={e => setFormData({ ...formData, description: e.target.value })}
-                  placeholder="Brief summary of problem solved, architecture, and impact..."
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-sm text-white outline-none focus:border-indigo-500"
+                  placeholder="High-level engineering overview..."
+                  className="w-full px-5 py-3.5 rounded-2xl bg-[#142330]/90 border border-[#2D5D7B]/60 focus:border-[#C2AFF0] text-white text-base outline-none transition leading-relaxed"
                 ></textarea>
               </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                <div>
+                  <label className="block text-sm sm:text-base font-bold uppercase tracking-wider text-slate-200 mb-2">Demo URL</label>
+                  <input
+                    type="text"
+                    value={formData.demoUrl}
+                    onChange={e => setFormData({ ...formData, demoUrl: e.target.value })}
+                    placeholder="https://..."
+                    className="w-full px-5 py-3.5 rounded-2xl bg-[#142330]/90 border border-[#2D5D7B]/60 focus:border-[#C2AFF0] text-white text-base outline-none transition"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm sm:text-base font-bold uppercase tracking-wider text-slate-200 mb-2">GitHub URL</label>
+                  <input
+                    type="text"
+                    value={formData.githubUrl}
+                    onChange={e => setFormData({ ...formData, githubUrl: e.target.value })}
+                    placeholder="https://github.com/..."
+                    className="w-full px-5 py-3.5 rounded-2xl bg-[#142330]/90 border border-[#2D5D7B]/60 focus:border-[#C2AFF0] text-white text-base outline-none transition"
+                  />
+                </div>
+              </div>
               <div>
-                <label className="block text-xs font-semibold uppercase text-slate-300 mb-1">Tags (comma separated)</label>
+                <label className="block text-sm sm:text-base font-bold uppercase tracking-wider text-slate-200 mb-2">Tech Stack Tags (comma separated)</label>
                 <input
                   type="text"
                   value={formData.tags}
                   onChange={e => setFormData({ ...formData, tags: e.target.value })}
-                  placeholder="React, Next.js, Node.js, Prisma"
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-sm text-white outline-none focus:border-indigo-500"
+                  placeholder="React, TypeScript, TailwindCSS, PostgreSQL, Docker"
+                  className="w-full px-5 py-3.5 rounded-2xl bg-[#142330]/90 border border-[#2D5D7B]/60 focus:border-[#C2AFF0] text-white text-base outline-none transition font-mono"
                 />
               </div>
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-xs font-semibold uppercase text-slate-300 mb-1">Live Demo Link</label>
-                  <input
-                    type="url"
-                    value={formData.demoUrl}
-                    onChange={e => setFormData({ ...formData, demoUrl: e.target.value })}
-                    placeholder="https://..."
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-sm text-white outline-none focus:border-indigo-500"
-                  />
-                </div>
-                <div>
-                  <label className="block text-xs font-semibold uppercase text-slate-300 mb-1">GitHub Repo Link</label>
-                  <input
-                    type="url"
-                    value={formData.githubUrl}
-                    onChange={e => setFormData({ ...formData, githubUrl: e.target.value })}
-                    placeholder="https://github.com/..."
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-sm text-white outline-none focus:border-indigo-500"
-                  />
-                </div>
-              </div>
-              <div className="flex items-center gap-2 pt-2">
+              <div className="flex items-center gap-3">
                 <input
                   type="checkbox"
-                  id="isFeatured"
+                  id="projFeatured"
                   checked={formData.isFeatured}
                   onChange={e => setFormData({ ...formData, isFeatured: e.target.checked })}
-                  className="w-4 h-4 rounded text-indigo-600 focus:ring-indigo-500"
+                  className="w-5 h-5 accent-[#9191E9] rounded cursor-pointer"
                 />
-                <label htmlFor="isFeatured" className="text-sm text-slate-300">Feature this project prominently on homepage</label>
+                <label htmlFor="projFeatured" className="text-base font-bold text-white cursor-pointer">
+                  Feature this project on the portfolio homepage
+                </label>
               </div>
-              <div className="flex justify-end gap-3 pt-4 border-t border-slate-800">
+              <div className="flex justify-end gap-4 pt-4 border-t border-[#2D5D7B]/40">
                 <button
                   type="button"
                   onClick={() => setModalOpen(false)}
-                  className="px-4 py-2 rounded-xl text-sm font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700"
+                  className="px-6 py-3 rounded-2xl text-base font-bold bg-[#1c3041] text-slate-300 hover:bg-[#253f56] transition cursor-pointer"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2 rounded-xl text-sm font-semibold bg-indigo-600 hover:bg-indigo-500 text-white"
+                  className="px-7 py-3 rounded-2xl text-base font-extrabold bg-gradient-to-r from-[#9191E9] via-[#8585E6] to-[#457EAC] text-white shadow-lg transition cursor-pointer"
                 >
                   Save Project
                 </button>
@@ -1197,49 +1243,54 @@ function BlogsScreen({ showToast }) {
   };
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
+    <div className="space-y-8 animate-fadeIn">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-2xl font-bold text-white">Articles & Blog Posts</h2>
-          <p className="text-sm text-slate-400">Share technical insights and tutorials</p>
+          <h2 className="font-heading text-3xl sm:text-5xl font-extrabold text-white tracking-tight flex items-center gap-3">
+            <span>✍️</span>
+            <span>Articles & <span className="text-gradient-aurora">Technical Blogs</span></span>
+          </h2>
+          <p className="text-base sm:text-lg text-slate-300 mt-2 max-w-2xl leading-relaxed">
+            Write, publish, and distribute engineering deep-dives, architectural case studies, and tutorials.
+          </p>
         </div>
         <button
           onClick={() => openModal()}
-          className="px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-sm shadow-lg shadow-indigo-600/30 transition"
+          className="px-6 py-3.5 rounded-2xl bg-gradient-to-r from-[#9191E9] via-[#8585E6] to-[#457EAC] hover:from-[#9d9df0] hover:to-[#5590c2] text-white font-extrabold text-base shadow-xl shadow-[#9191E9]/30 hover:scale-[1.02] transition cursor-pointer self-start sm:self-auto"
         >
           ✍️ Write Article
         </button>
       </div>
 
       {loading ? (
-        <div className="text-center py-12 text-slate-400">Loading articles...</div>
+        <div className="text-center py-16 text-slate-300 text-lg">Loading articles...</div>
       ) : blogs.length === 0 ? (
-        <div className="glass-panel p-12 text-center rounded-3xl text-slate-500">
+        <div className="glass-panel p-16 text-center rounded-3xl text-slate-400 text-lg">
           No articles written yet. Click "Write Article" to publish your first post.
         </div>
       ) : (
-        <div className="space-y-4">
+        <div className="space-y-5">
           {blogs.map(b => (
-            <div key={b.id} className="glass-panel p-5 sm:p-6 rounded-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-4 border border-white/5 hover:border-indigo-500/40 transition">
-              <div className="space-y-1 max-w-2xl">
-                <div className="flex items-center gap-3">
-                  <span className={`text-xs px-2 py-0.5 rounded font-semibold ${
-                    b.isPublished ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : 'bg-slate-800 text-slate-400'
+            <div key={b.id} className="glass-panel p-6 sm:p-8 rounded-3xl flex flex-col sm:flex-row sm:items-center justify-between gap-6 border border-[#2D5D7B]/40 hover:border-[#C2AFF0]/60 transition duration-300 shadow-xl">
+              <div className="space-y-2 max-w-3xl">
+                <div className="flex items-center gap-3 font-mono">
+                  <span className={`text-xs sm:text-sm px-3 py-1 rounded-full font-bold ${
+                    b.isPublished ? 'bg-emerald-500/15 text-emerald-300 border border-emerald-500/35' : 'bg-slate-800 text-slate-400 border border-slate-700'
                   }`}>
                     {b.isPublished ? 'Published' : 'Draft'}
                   </span>
-                  <span className="text-xs text-slate-400 font-mono">/{b.slug}</span>
-                  <span className="text-xs text-slate-400">👁️ {b.views || 0} reads</span>
+                  <span className="text-sm text-[#C2AFF0] font-bold">/{b.slug}</span>
+                  <span className="text-sm text-slate-400">👁️ {b.views || 0} reads</span>
                 </div>
-                <h3 className="font-bold text-white text-lg">{b.title}</h3>
-                <p className="text-xs text-slate-400 line-clamp-2">{b.excerpt}</p>
+                <h3 className="font-heading font-extrabold text-white text-xl sm:text-2xl mt-1">{b.title}</h3>
+                <p className="text-base text-slate-300 line-clamp-2 leading-relaxed">{b.excerpt}</p>
               </div>
 
-              <div className="flex items-center gap-3 self-end sm:self-center">
-                <button onClick={() => openModal(b)} className="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs font-semibold text-slate-200">
+              <div className="flex items-center gap-4 self-end sm:self-center">
+                <button onClick={() => openModal(b)} className="px-5 py-2.5 rounded-xl bg-[#22394c] hover:bg-[#2c4a63] text-sm sm:text-base font-bold text-slate-200 border border-[#457EAC]/30 transition cursor-pointer">
                   Edit
                 </button>
-                <button onClick={() => handleDelete(b.id)} className="px-3 py-1.5 rounded-lg bg-rose-500/10 hover:bg-rose-500/20 text-xs font-semibold text-rose-300">
+                <button onClick={() => handleDelete(b.id)} className="px-5 py-2.5 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 text-sm sm:text-base font-bold text-rose-300 border border-rose-500/25 transition cursor-pointer">
                   Delete
                 </button>
               </div>
@@ -1249,85 +1300,78 @@ function BlogsScreen({ showToast }) {
       )}
 
       {modalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm overflow-y-auto">
-          <div className="glass-panel p-6 sm:p-8 rounded-3xl border border-white/10 w-full max-w-2xl my-8">
-            <h3 className="text-lg font-bold text-white mb-4">{editingId ? 'Edit Article' : 'Write New Article'}</h3>
-            <form onSubmit={handleSave} className="space-y-4">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-md overflow-y-auto">
+          <div className="glass-panel p-8 sm:p-10 rounded-3xl border border-[#2D5D7B]/50 w-full max-w-2xl my-8 shadow-2xl animate-fadeIn">
+            <h3 className="font-heading text-2xl sm:text-3xl font-extrabold text-white mb-6 border-b border-[#2D5D7B]/40 pb-4">
+              {editingId ? 'Edit Article' : 'Compose New Article'}
+            </h3>
+            <form onSubmit={handleSave} className="space-y-6">
               <div>
-                <label className="block text-xs font-semibold uppercase text-slate-300 mb-1">Title</label>
+                <label className="block text-sm sm:text-base font-bold uppercase tracking-wider text-slate-200 mb-2">Article Title</label>
                 <input
                   type="text"
                   required
                   value={formData.title}
                   onChange={e => setFormData({ ...formData, title: e.target.value })}
-                  placeholder="e.g. Architecting a Zero-Lockin Headless CMS"
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-sm text-white outline-none focus:border-indigo-500"
+                  placeholder="e.g. Modern Web Security & Zero-Trust Architecture"
+                  className="w-full px-5 py-3.5 rounded-2xl bg-[#142330]/90 border border-[#2D5D7B]/60 focus:border-[#C2AFF0] text-white text-base outline-none transition"
                 />
               </div>
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-xs font-semibold uppercase text-slate-300 mb-1">Custom Slug</label>
-                  <input
-                    type="text"
-                    value={formData.slug}
-                    onChange={e => setFormData({ ...formData, slug: e.target.value })}
-                    placeholder="architecting-headless-cms"
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-sm text-white outline-none focus:border-indigo-500"
-                  />
-                </div>
-                <div>
-                  <label className="block text-xs font-semibold uppercase text-slate-300 mb-1">Cover Image URL</label>
-                  <input
-                    type="text"
-                    value={formData.coverImage}
-                    onChange={e => setFormData({ ...formData, coverImage: e.target.value })}
-                    placeholder="/uploads/..."
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-sm text-white outline-none focus:border-indigo-500"
-                  />
-                </div>
+              <div>
+                <label className="block text-sm sm:text-base font-bold uppercase tracking-wider text-slate-200 mb-2">Slug</label>
+                <input
+                  type="text"
+                  value={formData.slug}
+                  onChange={e => setFormData({ ...formData, slug: e.target.value })}
+                  placeholder="modern-web-security"
+                  className="w-full px-5 py-3.5 rounded-2xl bg-[#142330]/90 border border-[#2D5D7B]/60 focus:border-[#C2AFF0] text-white text-base outline-none transition font-mono"
+                />
               </div>
               <div>
-                <label className="block text-xs font-semibold uppercase text-slate-300 mb-1">Short Excerpt / Teaser</label>
+                <label className="block text-sm sm:text-base font-bold uppercase tracking-wider text-slate-200 mb-2">Excerpt Summary</label>
                 <textarea
                   rows="2"
+                  required
                   value={formData.excerpt}
                   onChange={e => setFormData({ ...formData, excerpt: e.target.value })}
-                  placeholder="Quick summary shown on previews..."
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-sm text-white outline-none focus:border-indigo-500"
+                  placeholder="Short engaging teaser..."
+                  className="w-full px-5 py-3.5 rounded-2xl bg-[#142330]/90 border border-[#2D5D7B]/60 focus:border-[#C2AFF0] text-white text-base outline-none transition leading-relaxed"
                 ></textarea>
               </div>
               <div>
-                <label className="block text-xs font-semibold uppercase text-slate-300 mb-1">Article Body (Markdown)</label>
+                <label className="block text-sm sm:text-base font-bold uppercase tracking-wider text-slate-200 mb-2">Full Content (Markdown supported)</label>
                 <textarea
                   rows="8"
                   required
                   value={formData.content}
                   onChange={e => setFormData({ ...formData, content: e.target.value })}
-                  placeholder="# Introduction\nWrite your thoughts, code snippets, and explanations here..."
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 font-mono text-xs text-white outline-none focus:border-indigo-500"
+                  placeholder="Write your article markdown..."
+                  className="w-full px-5 py-3.5 rounded-2xl bg-[#142330]/90 border border-[#2D5D7B]/60 focus:border-[#C2AFF0] text-white text-base outline-none transition font-mono text-sm leading-relaxed"
                 ></textarea>
               </div>
-              <div className="flex items-center gap-2 pt-2">
+              <div className="flex items-center gap-3">
                 <input
                   type="checkbox"
-                  id="isPublished"
+                  id="blogPublished"
                   checked={formData.isPublished}
                   onChange={e => setFormData({ ...formData, isPublished: e.target.checked })}
-                  className="w-4 h-4 rounded text-indigo-600 focus:ring-indigo-500"
+                  className="w-5 h-5 accent-[#9191E9] rounded cursor-pointer"
                 />
-                <label htmlFor="isPublished" className="text-sm text-slate-300">Publish immediately to public portfolio</label>
+                <label htmlFor="blogPublished" className="text-base font-bold text-white cursor-pointer">
+                  Publish publicly on the portfolio
+                </label>
               </div>
-              <div className="flex justify-end gap-3 pt-4 border-t border-slate-800">
+              <div className="flex justify-end gap-4 pt-4 border-t border-[#2D5D7B]/40">
                 <button
                   type="button"
                   onClick={() => setModalOpen(false)}
-                  className="px-4 py-2 rounded-xl text-sm font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700"
+                  className="px-6 py-3 rounded-2xl text-base font-bold bg-[#1c3041] text-slate-300 hover:bg-[#253f56] transition cursor-pointer"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2 rounded-xl text-sm font-semibold bg-indigo-600 hover:bg-indigo-500 text-white"
+                  className="px-7 py-3 rounded-2xl text-base font-extrabold bg-gradient-to-r from-[#9191E9] via-[#8585E6] to-[#457EAC] text-white shadow-lg transition cursor-pointer"
                 >
                   Save Article
                 </button>
@@ -1415,54 +1459,65 @@ function ExperienceScreen({ showToast }) {
   };
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
+    <div className="space-y-8 animate-fadeIn">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-2xl font-bold text-white">Experience & Career Timeline</h2>
-          <p className="text-sm text-slate-400">Work history, roles, responsibilities, and achievements</p>
+          <h2 className="font-heading text-3xl sm:text-5xl font-extrabold text-white tracking-tight flex items-center gap-3">
+            <span>⏳</span>
+            <span>Experience & <span className="text-gradient-aurora">Career Timeline</span></span>
+          </h2>
+          <p className="text-base sm:text-lg text-slate-300 mt-2 max-w-2xl leading-relaxed">
+            Manage your professional journey, company roles, engineering contributions, and key milestones.
+          </p>
         </div>
         <button
           onClick={() => openModal()}
-          className="px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-sm shadow-lg shadow-indigo-600/30 transition"
+          className="px-6 py-3.5 rounded-2xl bg-gradient-to-r from-[#9191E9] via-[#8585E6] to-[#457EAC] hover:from-[#9d9df0] hover:to-[#5590c2] text-white font-extrabold text-base shadow-xl shadow-[#9191E9]/30 hover:scale-[1.02] transition cursor-pointer self-start sm:self-auto"
         >
           + Add Experience
         </button>
       </div>
 
       {loading ? (
-        <div className="text-center py-12 text-slate-400">Loading experience records...</div>
+        <div className="text-center py-16 text-slate-300 text-lg">Loading experience records...</div>
       ) : experiences.length === 0 ? (
-        <div className="glass-panel p-12 text-center rounded-3xl text-slate-500">
+        <div className="glass-panel p-16 text-center rounded-3xl text-slate-400 text-lg">
           No experience records added yet. Click "+ Add Experience" to build your timeline.
         </div>
       ) : (
-        <div className="space-y-4">
+        <div className="space-y-6">
           {experiences.map(exp => (
-            <div key={exp.id} className="glass-panel p-6 rounded-2xl flex flex-col sm:flex-row justify-between gap-4 border border-white/5">
-              <div className="space-y-2">
-                <div className="flex items-center gap-2">
-                  <h3 className="font-bold text-white text-lg">{exp.role}</h3>
-                  <span className="text-slate-400">@</span>
-                  <span className="text-indigo-400 font-semibold">{exp.company}</span>
+            <div key={exp.id} className="glass-panel p-6 sm:p-8 rounded-3xl border border-[#2D5D7B]/40 hover:border-[#C2AFF0]/60 transition duration-300 flex flex-col sm:flex-row sm:items-start justify-between gap-6 shadow-xl">
+              <div className="space-y-2.5 max-w-3xl">
+                <div className="flex flex-wrap items-center gap-3">
+                  <h3 className="font-heading font-extrabold text-white text-xl sm:text-2xl">{exp.role}</h3>
+                  <span className="text-base sm:text-lg font-bold text-[#C2AFF0]">@ {exp.company}</span>
                   {exp.isCurrent && (
-                    <span className="px-2 py-0.5 rounded text-[11px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
-                      Current
+                    <span className="px-3 py-0.5 rounded-full text-xs font-bold bg-emerald-500/15 border border-emerald-500/35 text-emerald-300 font-mono">
+                      Current Role
                     </span>
                   )}
                 </div>
-                <p className="text-xs text-slate-400 font-mono">
-                  {exp.startDate} – {exp.isCurrent ? 'Present' : exp.endDate} {exp.location ? `• ${exp.location}` : ''}
+                <p className="text-sm sm:text-base font-mono text-slate-400">
+                  {exp.startDate} &mdash; {exp.isCurrent ? 'Present' : exp.endDate} {exp.location ? `• ${exp.location}` : ''}
                 </p>
-                <p className="text-sm text-slate-300 mt-2">{exp.description}</p>
+                <p className="text-base text-slate-300 leading-relaxed pt-1">{exp.description}</p>
                 {exp.highlights && exp.highlights.length > 0 && (
-                  <ul className="list-disc list-inside text-xs text-slate-400 mt-2 space-y-1">
-                    {exp.highlights.map((h, i) => <li key={i}>{h}</li>)}
+                  <ul className="list-disc list-inside space-y-1.5 text-slate-300 text-base pt-2">
+                    {exp.highlights.map((h, i) => (
+                      <li key={i} className="leading-relaxed">{h}</li>
+                    ))}
                   </ul>
                 )}
               </div>
+
               <div className="flex items-center gap-3 self-end sm:self-start">
-                <button onClick={() => openModal(exp)} className="text-xs text-slate-300 hover:text-white font-semibold">Edit</button>
-                <button onClick={() => handleDelete(exp.id)} className="text-xs text-rose-400 hover:text-rose-300 font-semibold">Delete</button>
+                <button onClick={() => openModal(exp)} className="px-5 py-2.5 rounded-xl bg-[#22394c] hover:bg-[#2c4a63] text-sm sm:text-base font-bold text-slate-200 border border-[#457EAC]/30 transition cursor-pointer">
+                  Edit
+                </button>
+                <button onClick={() => handleDelete(exp.id)} className="px-5 py-2.5 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 text-sm sm:text-base font-bold text-rose-300 border border-rose-500/25 transition cursor-pointer">
+                  Delete
+                </button>
               </div>
             </div>
           ))}
@@ -1470,100 +1525,113 @@ function ExperienceScreen({ showToast }) {
       )}
 
       {modalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm overflow-y-auto">
-          <div className="glass-panel p-6 sm:p-8 rounded-3xl border border-white/10 w-full max-w-lg my-8">
-            <h3 className="text-lg font-bold text-white mb-4">{editingId ? 'Edit Experience' : 'Add Experience'}</h3>
-            <form onSubmit={handleSave} className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-md overflow-y-auto">
+          <div className="glass-panel p-8 sm:p-10 rounded-3xl border border-[#2D5D7B]/50 w-full max-w-2xl my-8 shadow-2xl animate-fadeIn">
+            <h3 className="font-heading text-2xl sm:text-3xl font-extrabold text-white mb-6 border-b border-[#2D5D7B]/40 pb-4">
+              {editingId ? 'Edit Experience' : 'Add Experience Record'}
+            </h3>
+            <form onSubmit={handleSave} className="space-y-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 <div>
-                  <label className="block text-xs font-semibold uppercase text-slate-300 mb-1">Role / Title</label>
+                  <label className="block text-sm sm:text-base font-bold uppercase tracking-wider text-slate-200 mb-2">Role Title</label>
                   <input
                     type="text"
                     required
                     value={formData.role}
                     onChange={e => setFormData({ ...formData, role: e.target.value })}
-                    placeholder="Senior Software Engineer"
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-sm text-white outline-none focus:border-indigo-500"
+                    placeholder="Cyber Security Lead"
+                    className="w-full px-5 py-3.5 rounded-2xl bg-[#142330]/90 border border-[#2D5D7B]/60 focus:border-[#C2AFF0] text-white text-base outline-none transition"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold uppercase text-slate-300 mb-1">Company</label>
+                  <label className="block text-sm sm:text-base font-bold uppercase tracking-wider text-slate-200 mb-2">Company / Organization</label>
                   <input
                     type="text"
                     required
                     value={formData.company}
                     onChange={e => setFormData({ ...formData, company: e.target.value })}
-                    placeholder="Google, Acme Corp"
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-sm text-white outline-none focus:border-indigo-500"
+                    placeholder="VIT Chennai / Enterprise"
+                    className="w-full px-5 py-3.5 rounded-2xl bg-[#142330]/90 border border-[#2D5D7B]/60 focus:border-[#C2AFF0] text-white text-base outline-none transition"
                   />
                 </div>
               </div>
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 <div>
-                  <label className="block text-xs font-semibold uppercase text-slate-300 mb-1">Start Date</label>
+                  <label className="block text-sm sm:text-base font-bold uppercase tracking-wider text-slate-200 mb-2">Start Date</label>
                   <input
                     type="text"
                     required
                     value={formData.startDate}
                     onChange={e => setFormData({ ...formData, startDate: e.target.value })}
-                    placeholder="Jan 2023"
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-sm text-white outline-none focus:border-indigo-500"
+                    placeholder="Aug 2024"
+                    className="w-full px-5 py-3.5 rounded-2xl bg-[#142330]/90 border border-[#2D5D7B]/60 focus:border-[#C2AFF0] text-white text-base outline-none transition"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold uppercase text-slate-300 mb-1">End Date</label>
+                  <label className="block text-sm sm:text-base font-bold uppercase tracking-wider text-slate-200 mb-2">End Date (or 'Present')</label>
                   <input
                     type="text"
-                    disabled={formData.isCurrent}
-                    value={formData.isCurrent ? 'Present' : formData.endDate}
+                    value={formData.endDate}
                     onChange={e => setFormData({ ...formData, endDate: e.target.value })}
-                    placeholder="Present / Dec 2024"
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-sm text-white outline-none focus:border-indigo-500 disabled:opacity-50"
+                    placeholder="Present"
+                    className="w-full px-5 py-3.5 rounded-2xl bg-[#142330]/90 border border-[#2D5D7B]/60 focus:border-[#C2AFF0] text-white text-base outline-none transition"
                   />
                 </div>
               </div>
-              <div className="flex items-center gap-2">
+              <div>
+                <label className="block text-sm sm:text-base font-bold uppercase tracking-wider text-slate-200 mb-2">Location</label>
                 <input
-                  type="checkbox"
-                  id="isCurrent"
-                  checked={formData.isCurrent}
-                  onChange={e => setFormData({ ...formData, isCurrent: e.target.checked })}
-                  className="w-4 h-4 rounded text-indigo-600 focus:ring-indigo-500"
+                  type="text"
+                  value={formData.location}
+                  onChange={e => setFormData({ ...formData, location: e.target.value })}
+                  placeholder="Chennai, India"
+                  className="w-full px-5 py-3.5 rounded-2xl bg-[#142330]/90 border border-[#2D5D7B]/60 focus:border-[#C2AFF0] text-white text-base outline-none transition"
                 />
-                <label htmlFor="isCurrent" className="text-sm text-slate-300">Currently working here</label>
               </div>
               <div>
-                <label className="block text-xs font-semibold uppercase text-slate-300 mb-1">Description</label>
+                <label className="block text-sm sm:text-base font-bold uppercase tracking-wider text-slate-200 mb-2">Description</label>
                 <textarea
                   rows="3"
                   required
                   value={formData.description}
                   onChange={e => setFormData({ ...formData, description: e.target.value })}
-                  placeholder="Summary of responsibilities and technical ownership..."
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-sm text-white outline-none focus:border-indigo-500"
+                  placeholder="Summary of responsibilities and scope..."
+                  className="w-full px-5 py-3.5 rounded-2xl bg-[#142330]/90 border border-[#2D5D7B]/60 focus:border-[#C2AFF0] text-white text-base outline-none transition leading-relaxed"
                 ></textarea>
               </div>
               <div>
-                <label className="block text-xs font-semibold uppercase text-slate-300 mb-1">Bullet Highlights (one per line)</label>
+                <label className="block text-sm sm:text-base font-bold uppercase tracking-wider text-slate-200 mb-2">Key Highlights (one bullet per line)</label>
                 <textarea
-                  rows="3"
+                  rows="4"
                   value={formData.highlights}
                   onChange={e => setFormData({ ...formData, highlights: e.target.value })}
-                  placeholder="Architected distributed database layer&#10;Mentored 4 junior engineers"
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-sm text-white outline-none focus:border-indigo-500"
+                  placeholder="Architected cryptographic auth flow&#10;Integrated zero-trust RBAC engine"
+                  className="w-full px-5 py-3.5 rounded-2xl bg-[#142330]/90 border border-[#2D5D7B]/60 focus:border-[#C2AFF0] text-white text-base outline-none transition font-mono text-sm leading-relaxed"
                 ></textarea>
               </div>
-              <div className="flex justify-end gap-3 pt-3 border-t border-slate-800">
+              <div className="flex items-center gap-3">
+                <input
+                  type="checkbox"
+                  id="expCurrent"
+                  checked={formData.isCurrent}
+                  onChange={e => setFormData({ ...formData, isCurrent: e.target.checked })}
+                  className="w-5 h-5 accent-[#9191E9] rounded cursor-pointer"
+                />
+                <label htmlFor="expCurrent" className="text-base font-bold text-white cursor-pointer">
+                  This is my current role
+                </label>
+              </div>
+              <div className="flex justify-end gap-4 pt-4 border-t border-[#2D5D7B]/40">
                 <button
                   type="button"
                   onClick={() => setModalOpen(false)}
-                  className="px-4 py-2 rounded-xl text-sm font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700"
+                  className="px-6 py-3 rounded-2xl text-base font-bold bg-[#1c3041] text-slate-300 hover:bg-[#253f56] transition cursor-pointer"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2 rounded-xl text-sm font-semibold bg-indigo-600 hover:bg-indigo-500 text-white"
+                  className="px-7 py-3 rounded-2xl text-base font-extrabold bg-gradient-to-r from-[#9191E9] via-[#8585E6] to-[#457EAC] text-white shadow-lg transition cursor-pointer"
                 >
                   Save Experience
                 </button>
@@ -1633,6 +1701,23 @@ function TestimonialsScreen({ showToast }) {
     }
   };
 
+  const toggleApproval = async (t) => {
+    try {
+      const updatedStatus = !t.isApproved;
+      const res = await apiFetch(`/testimonials/${t.id}`, {
+        method: 'PUT',
+        body: JSON.stringify({ isApproved: updatedStatus })
+      });
+      const json = await res.json();
+      if (json.success) {
+        showToast(updatedStatus ? 'Testimonial approved & published!' : 'Testimonial marked pending moderation');
+        loadTestimonials();
+      }
+    } catch (err) {
+      showToast(err.message, 'error');
+    }
+  };
+
   const handleDelete = async (id) => {
     if (!confirm('Are you sure you want to delete this testimonial?')) return;
     try {
@@ -1648,43 +1733,65 @@ function TestimonialsScreen({ showToast }) {
   };
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
+    <div className="space-y-8 animate-fadeIn">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-2xl font-bold text-white">Client & Colleague Testimonials</h2>
-          <p className="text-sm text-slate-400">Social proof, recommendations, and reviews</p>
+          <h2 className="font-heading text-3xl sm:text-5xl font-extrabold text-white tracking-tight flex items-center gap-3">
+            <span>⭐</span>
+            <span>Client & Colleague <span className="text-gradient-aurora">Endorsements</span></span>
+          </h2>
+          <p className="text-base sm:text-lg text-slate-300 mt-2 max-w-2xl leading-relaxed">
+            Curate recommendations, reviews, and publicly submitted endorsements from collaborators and recruiters.
+          </p>
         </div>
         <button
           onClick={() => openModal()}
-          className="px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-sm shadow-lg shadow-indigo-600/30 transition"
+          className="px-6 py-3.5 rounded-2xl bg-gradient-to-r from-[#9191E9] via-[#8585E6] to-[#457EAC] hover:from-[#9d9df0] hover:to-[#5590c2] text-white font-extrabold text-base shadow-xl shadow-[#9191E9]/30 hover:scale-[1.02] transition cursor-pointer self-start sm:self-auto"
         >
           + Add Testimonial
         </button>
       </div>
 
       {loading ? (
-        <div className="text-center py-12 text-slate-400">Loading testimonials...</div>
+        <div className="text-center py-16 text-slate-300 text-lg">Loading endorsements...</div>
       ) : testimonials.length === 0 ? (
-        <div className="glass-panel p-12 text-center rounded-3xl text-slate-500">
-          No testimonials yet. Click "+ Add Testimonial" to add praise from colleagues.
+        <div className="glass-panel p-16 text-center rounded-3xl text-slate-400 text-lg">
+          No testimonials yet. Click "+ Add Testimonial" or accept submissions from the public website!
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
           {testimonials.map(t => (
-            <div key={t.id} className="glass-card p-6 rounded-2xl flex flex-col justify-between group border border-white/5">
+            <div key={t.id} className="glass-card p-7 sm:p-8 rounded-3xl border border-[#2D5D7B]/40 hover:border-[#C2AFF0]/60 transition duration-300 flex flex-col justify-between group shadow-xl">
               <div>
-                <div className="flex items-center justify-between mb-3">
-                  <div className="text-amber-400 text-sm">{'★'.repeat(t.rating || 5)}</div>
+                <div className="flex items-center justify-between mb-4">
+                  <div className="text-amber-400 text-lg tracking-wider">{'★'.repeat(t.rating || 5)}</div>
                   <div className="flex items-center gap-2">
-                    <button onClick={() => openModal(t)} className="text-xs text-slate-400 hover:text-white">Edit</button>
-                    <button onClick={() => handleDelete(t.id)} className="text-xs text-rose-400 hover:text-rose-300">Delete</button>
+                    <button
+                      onClick={() => toggleApproval(t)}
+                      className={`px-3 py-1 rounded-full text-xs font-mono font-bold transition cursor-pointer ${
+                        t.isApproved
+                          ? 'bg-emerald-500/15 text-emerald-300 border border-emerald-500/35 hover:bg-emerald-500/25'
+                          : 'bg-amber-500/20 text-amber-300 border border-amber-500/40 animate-pulse hover:bg-amber-500/30'
+                      }`}
+                    >
+                      {t.isApproved ? '✓ Published' : '⏳ Click to Approve'}
+                    </button>
                   </div>
                 </div>
-                <p className="text-sm text-slate-300 italic mb-4">"{t.content}"</p>
+                <p className="text-base sm:text-lg text-slate-200 italic mb-6 leading-relaxed">
+                  "{t.content}"
+                </p>
               </div>
-              <div className="pt-3 border-t border-white/5">
-                <p className="font-bold text-white text-sm">{t.authorName}</p>
-                <p className="text-xs text-slate-400">{t.authorRole} {t.company ? `• ${t.company}` : ''}</p>
+
+              <div className="pt-5 border-t border-[#2D5D7B]/40 flex items-center justify-between">
+                <div>
+                  <p className="font-heading font-extrabold text-white text-lg sm:text-xl">{t.authorName}</p>
+                  <p className="text-sm text-[#C2AFF0] font-medium">{t.authorRole} {t.company ? `• ${t.company}` : ''}</p>
+                </div>
+                <div className="flex items-center gap-3">
+                  <button onClick={() => openModal(t)} className="text-sm font-bold text-slate-300 hover:text-white transition">Edit</button>
+                  <button onClick={() => handleDelete(t.id)} className="text-sm font-bold text-rose-400 hover:text-rose-300 transition">Delete</button>
+                </div>
               </div>
             </div>
           ))}
@@ -1692,66 +1799,80 @@ function TestimonialsScreen({ showToast }) {
       )}
 
       {modalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
-          <div className="glass-panel p-6 sm:p-8 rounded-3xl border border-white/10 w-full max-w-md">
-            <h3 className="text-lg font-bold text-white mb-4">{editingId ? 'Edit Testimonial' : 'Add Testimonial'}</h3>
-            <form onSubmit={handleSave} className="space-y-4">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-md">
+          <div className="glass-panel p-8 sm:p-10 rounded-3xl border border-[#2D5D7B]/50 w-full max-w-lg shadow-2xl animate-fadeIn">
+            <h3 className="font-heading text-2xl sm:text-3xl font-extrabold text-white mb-6 border-b border-[#2D5D7B]/40 pb-4">
+              {editingId ? 'Edit Testimonial' : 'Add Testimonial'}
+            </h3>
+            <form onSubmit={handleSave} className="space-y-6">
               <div>
-                <label className="block text-xs font-semibold uppercase text-slate-300 mb-1">Author Name</label>
+                <label className="block text-sm sm:text-base font-bold uppercase tracking-wider text-slate-200 mb-2">Author Name</label>
                 <input
                   type="text"
                   required
                   value={formData.authorName}
                   onChange={e => setFormData({ ...formData, authorName: e.target.value })}
                   placeholder="Sarah Jenkins"
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-sm text-white outline-none focus:border-indigo-500"
+                  className="w-full px-5 py-3.5 rounded-2xl bg-[#142330]/90 border border-[#2D5D7B]/60 focus:border-[#C2AFF0] text-white text-base outline-none transition"
                 />
               </div>
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 <div>
-                  <label className="block text-xs font-semibold uppercase text-slate-300 mb-1">Role / Title</label>
+                  <label className="block text-sm sm:text-base font-bold uppercase tracking-wider text-slate-200 mb-2">Role / Title</label>
                   <input
                     type="text"
                     required
                     value={formData.authorRole}
                     onChange={e => setFormData({ ...formData, authorRole: e.target.value })}
                     placeholder="VP of Engineering"
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-sm text-white outline-none focus:border-indigo-500"
+                    className="w-full px-5 py-3.5 rounded-2xl bg-[#142330]/90 border border-[#2D5D7B]/60 focus:border-[#C2AFF0] text-white text-base outline-none transition"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold uppercase text-slate-300 mb-1">Company</label>
+                  <label className="block text-sm sm:text-base font-bold uppercase tracking-wider text-slate-200 mb-2">Company</label>
                   <input
                     type="text"
                     value={formData.company}
                     onChange={e => setFormData({ ...formData, company: e.target.value })}
-                    placeholder="Stripe"
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-sm text-white outline-none focus:border-indigo-500"
+                    placeholder="Stripe / Google"
+                    className="w-full px-5 py-3.5 rounded-2xl bg-[#142330]/90 border border-[#2D5D7B]/60 focus:border-[#C2AFF0] text-white text-base outline-none transition"
                   />
                 </div>
               </div>
               <div>
-                <label className="block text-xs font-semibold uppercase text-slate-300 mb-1">Endorsement Content</label>
+                <label className="block text-sm sm:text-base font-bold uppercase tracking-wider text-slate-200 mb-2">Endorsement Text</label>
                 <textarea
                   rows="4"
                   required
                   value={formData.content}
                   onChange={e => setFormData({ ...formData, content: e.target.value })}
-                  placeholder="Describe your working relationship and key strengths..."
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-sm text-white outline-none focus:border-indigo-500"
+                  placeholder="Describe your working relationship, technical strengths, and impact..."
+                  className="w-full px-5 py-3.5 rounded-2xl bg-[#142330]/90 border border-[#2D5D7B]/60 focus:border-[#C2AFF0] text-white text-base outline-none transition leading-relaxed"
                 ></textarea>
               </div>
-              <div className="flex justify-end gap-3 pt-3 border-t border-slate-800">
+              <div className="flex items-center gap-3">
+                <input
+                  type="checkbox"
+                  id="testApproved"
+                  checked={formData.isApproved}
+                  onChange={e => setFormData({ ...formData, isApproved: e.target.checked })}
+                  className="w-5 h-5 accent-[#9191E9] rounded cursor-pointer"
+                />
+                <label htmlFor="testApproved" className="text-base font-bold text-white cursor-pointer">
+                  Approved & published on portfolio website
+                </label>
+              </div>
+              <div className="flex justify-end gap-4 pt-4 border-t border-[#2D5D7B]/40">
                 <button
                   type="button"
                   onClick={() => setModalOpen(false)}
-                  className="px-4 py-2 rounded-xl text-sm font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700"
+                  className="px-6 py-3 rounded-2xl text-base font-bold bg-[#1c3041] text-slate-300 hover:bg-[#253f56] transition cursor-pointer"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2 rounded-xl text-sm font-semibold bg-indigo-600 hover:bg-indigo-500 text-white"
+                  className="px-7 py-3 rounded-2xl text-base font-extrabold bg-gradient-to-r from-[#9191E9] via-[#8585E6] to-[#457EAC] text-white shadow-lg transition cursor-pointer"
                 >
                   Save Testimonial
                 </button>
@@ -1830,49 +1951,56 @@ function ServicesScreen({ showToast }) {
   };
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
+    <div className="space-y-8 animate-fadeIn">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-2xl font-bold text-white">Service Offerings</h2>
-          <p className="text-sm text-slate-400">Freelance, consulting, and engineering services</p>
+          <h2 className="font-heading text-3xl sm:text-5xl font-extrabold text-white tracking-tight flex items-center gap-3">
+            <span>🛠️</span>
+            <span>Engineering <span className="text-gradient-aurora">Services</span></span>
+          </h2>
+          <p className="text-base sm:text-lg text-slate-300 mt-2 max-w-2xl leading-relaxed">
+            Manage your service offerings, technical consulting packages, and deliverables.
+          </p>
         </div>
         <button
           onClick={() => openModal()}
-          className="px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-sm shadow-lg shadow-indigo-600/30 transition"
+          className="px-6 py-3.5 rounded-2xl bg-gradient-to-r from-[#9191E9] via-[#8585E6] to-[#457EAC] hover:from-[#9d9df0] hover:to-[#5590c2] text-white font-extrabold text-base shadow-xl shadow-[#9191E9]/30 hover:scale-[1.02] transition cursor-pointer self-start sm:self-auto"
         >
           + Add Service
         </button>
       </div>
 
       {loading ? (
-        <div className="text-center py-12 text-slate-400">Loading services...</div>
+        <div className="text-center py-16 text-slate-300 text-lg">Loading services...</div>
       ) : services.length === 0 ? (
-        <div className="glass-panel p-12 text-center rounded-3xl text-slate-500">
-          No services created yet. Click "+ Add Service" to define what you build.
+        <div className="glass-panel p-16 text-center rounded-3xl text-slate-400 text-lg">
+          No services created yet. Click "+ Add Service" to offer engineering capabilities.
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
           {services.map(s => (
-            <div key={s.id} className="glass-card p-6 rounded-2xl flex flex-col justify-between group border border-white/5">
+            <div key={s.id} className="glass-card p-7 sm:p-8 rounded-3xl border border-[#2D5D7B]/40 hover:border-[#C2AFF0]/60 transition duration-300 flex flex-col justify-between group shadow-xl">
               <div>
-                <div className="flex items-center justify-between mb-3">
-                  <span className="text-3xl">{s.icon || '🛠️'}</span>
-                  <div className="flex items-center gap-2">
-                    <button onClick={() => openModal(s)} className="text-xs text-slate-400 hover:text-white">Edit</button>
-                    <button onClick={() => handleDelete(s.id)} className="text-xs text-rose-400 hover:text-rose-300">Delete</button>
-                  </div>
+                <div className="w-14 h-14 rounded-2xl bg-[#9191E9]/20 border border-[#9191E9]/35 flex items-center justify-center text-3xl mb-5 shadow-lg">
+                  {s.icon || '⚡'}
                 </div>
-                <h3 className="font-bold text-white text-lg">{s.title}</h3>
-                <p className="text-xs text-slate-400 mt-2">{s.description}</p>
+                <h3 className="font-heading font-extrabold text-white text-xl sm:text-2xl mb-2.5">{s.title}</h3>
+                <p className="text-base text-slate-300 leading-relaxed mb-6">{s.description}</p>
                 {s.features && s.features.length > 0 && (
-                  <div className="flex flex-wrap gap-1.5 mt-4">
+                  <ul className="space-y-2 mb-6">
                     {s.features.map((f, i) => (
-                      <span key={i} className="text-[10px] px-2 py-0.5 rounded bg-indigo-500/10 text-indigo-300 border border-indigo-500/20">
-                        {f}
-                      </span>
+                      <li key={i} className="text-sm sm:text-base text-slate-300 flex items-center gap-2">
+                        <span className="text-[#C2AFF0] font-bold">✓</span>
+                        <span>{f}</span>
+                      </li>
                     ))}
-                  </div>
+                  </ul>
                 )}
+              </div>
+
+              <div className="pt-5 border-t border-[#2D5D7B]/40 flex items-center justify-end gap-4">
+                <button onClick={() => openModal(s)} className="text-sm sm:text-base font-bold text-slate-300 hover:text-white transition">Edit</button>
+                <button onClick={() => handleDelete(s.id)} className="text-sm sm:text-base font-bold text-rose-400 hover:text-rose-300 transition">Delete</button>
               </div>
             </div>
           ))}
@@ -1880,53 +2008,65 @@ function ServicesScreen({ showToast }) {
       )}
 
       {modalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
-          <div className="glass-panel p-6 sm:p-8 rounded-3xl border border-white/10 w-full max-w-md">
-            <h3 className="text-lg font-bold text-white mb-4">{editingId ? 'Edit Service' : 'Add Service'}</h3>
-            <form onSubmit={handleSave} className="space-y-4">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-md">
+          <div className="glass-panel p-8 sm:p-10 rounded-3xl border border-[#2D5D7B]/50 w-full max-w-lg shadow-2xl animate-fadeIn">
+            <h3 className="font-heading text-2xl sm:text-3xl font-extrabold text-white mb-6 border-b border-[#2D5D7B]/40 pb-4">
+              {editingId ? 'Edit Service' : 'Add New Service'}
+            </h3>
+            <form onSubmit={handleSave} className="space-y-6">
               <div>
-                <label className="block text-xs font-semibold uppercase text-slate-300 mb-1">Title</label>
+                <label className="block text-sm sm:text-base font-bold uppercase tracking-wider text-slate-200 mb-2">Service Title</label>
                 <input
                   type="text"
                   required
                   value={formData.title}
                   onChange={e => setFormData({ ...formData, title: e.target.value })}
-                  placeholder="Full Stack Engineering"
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-sm text-white outline-none focus:border-indigo-500"
+                  placeholder="Full-Stack Web Engineering"
+                  className="w-full px-5 py-3.5 rounded-2xl bg-[#142330]/90 border border-[#2D5D7B]/60 focus:border-[#C2AFF0] text-white text-base outline-none transition"
                 />
               </div>
               <div>
-                <label className="block text-xs font-semibold uppercase text-slate-300 mb-1">Description</label>
+                <label className="block text-sm sm:text-base font-bold uppercase tracking-wider text-slate-200 mb-2">Icon Emoji</label>
+                <input
+                  type="text"
+                  value={formData.icon}
+                  onChange={e => setFormData({ ...formData, icon: e.target.value })}
+                  placeholder="⚡, 🛡️, 🚀, ☁️"
+                  className="w-full px-5 py-3.5 rounded-2xl bg-[#142330]/90 border border-[#2D5D7B]/60 focus:border-[#C2AFF0] text-white text-base outline-none transition"
+                />
+              </div>
+              <div>
+                <label className="block text-sm sm:text-base font-bold uppercase tracking-wider text-slate-200 mb-2">Description</label>
                 <textarea
                   rows="3"
                   required
                   value={formData.description}
                   onChange={e => setFormData({ ...formData, description: e.target.value })}
-                  placeholder="Production-ready web applications built with modern tools..."
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-sm text-white outline-none focus:border-indigo-500"
+                  placeholder="Overview of deliverables and scope..."
+                  className="w-full px-5 py-3.5 rounded-2xl bg-[#142330]/90 border border-[#2D5D7B]/60 focus:border-[#C2AFF0] text-white text-base outline-none transition leading-relaxed"
                 ></textarea>
               </div>
               <div>
-                <label className="block text-xs font-semibold uppercase text-slate-300 mb-1">Features (comma separated)</label>
+                <label className="block text-sm sm:text-base font-bold uppercase tracking-wider text-slate-200 mb-2">Key Features (comma separated)</label>
                 <input
                   type="text"
                   value={formData.features}
                   onChange={e => setFormData({ ...formData, features: e.target.value })}
-                  placeholder="API Design, Performance Optimization, Cloud Deployments"
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-sm text-white outline-none focus:border-indigo-500"
+                  placeholder="REST API Design, RBAC Auth, High Performance, Docker Deployment"
+                  className="w-full px-5 py-3.5 rounded-2xl bg-[#142330]/90 border border-[#2D5D7B]/60 focus:border-[#C2AFF0] text-white text-base outline-none transition"
                 />
               </div>
-              <div className="flex justify-end gap-3 pt-3 border-t border-slate-800">
+              <div className="flex justify-end gap-4 pt-4 border-t border-[#2D5D7B]/40">
                 <button
                   type="button"
                   onClick={() => setModalOpen(false)}
-                  className="px-4 py-2 rounded-xl text-sm font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700"
+                  className="px-6 py-3 rounded-2xl text-base font-bold bg-[#1c3041] text-slate-300 hover:bg-[#253f56] transition cursor-pointer"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2 rounded-xl text-sm font-semibold bg-indigo-600 hover:bg-indigo-500 text-white"
+                  className="px-7 py-3 rounded-2xl text-base font-extrabold bg-gradient-to-r from-[#9191E9] via-[#8585E6] to-[#457EAC] text-white shadow-lg transition cursor-pointer"
                 >
                   Save Service
                 </button>
@@ -1986,21 +2126,26 @@ function MessagesScreen({ showToast }) {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8 animate-fadeIn">
       <div>
-        <h2 className="text-2xl font-bold text-white">Contact Inquiries Inbox</h2>
-        <p className="text-sm text-slate-400">Incoming inquiries and project requests from your portfolio</p>
+        <h2 className="font-heading text-3xl sm:text-5xl font-extrabold text-white tracking-tight flex items-center gap-3">
+          <span>📬</span>
+          <span>Contact Inquiries <span className="text-gradient-aurora">Inbox</span></span>
+        </h2>
+        <p className="text-base sm:text-lg text-slate-300 mt-2 max-w-2xl leading-relaxed">
+          Manage inbound outreach, project opportunities, and messages submitted from your contact form.
+        </p>
       </div>
 
       {loading ? (
-        <div className="text-center py-12 text-slate-400">Loading inbox...</div>
+        <div className="text-center py-16 text-slate-300 text-lg">Loading inbox...</div>
       ) : messages.length === 0 ? (
-        <div className="glass-panel p-12 text-center rounded-3xl text-slate-500">
+        <div className="glass-panel p-16 text-center rounded-3xl text-slate-400 text-lg">
           Your inbox is clear. Messages submitted through the contact form will show up here.
         </div>
       ) : (
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <div className="lg:col-span-1 glass-panel rounded-2xl divide-y divide-white/5 overflow-hidden">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="lg:col-span-1 glass-panel rounded-3xl divide-y divide-[#2D5D7B]/30 overflow-hidden border border-[#2D5D7B]/40 shadow-xl">
             {messages.map(m => (
               <div
                 key={m.id}
@@ -2008,53 +2153,53 @@ function MessagesScreen({ showToast }) {
                   setSelectedMessage(m);
                   if (!m.isRead) toggleRead(m);
                 }}
-                className={`p-4 cursor-pointer transition ${
-                  selectedMessage?.id === m.id ? 'bg-indigo-600/20' : 'hover:bg-slate-900/60'
+                className={`p-5 cursor-pointer transition ${
+                  selectedMessage?.id === m.id ? 'bg-[#9191E9]/20 border-l-4 border-[#C2AFF0]' : 'hover:bg-[#1c3041]/70'
                 }`}
               >
-                <div className="flex items-center justify-between mb-1">
-                  <span className={`text-sm font-bold ${m.isRead ? 'text-slate-300' : 'text-white'}`}>{m.name}</span>
-                  {!m.isRead && <span className="w-2 h-2 rounded-full bg-rose-500"></span>}
+                <div className="flex items-center justify-between mb-1.5">
+                  <span className={`text-base font-bold ${m.isRead ? 'text-slate-300' : 'text-white'}`}>{m.name}</span>
+                  {!m.isRead && <span className="w-2.5 h-2.5 rounded-full bg-rose-500 animate-pulse"></span>}
                 </div>
-                <p className="text-xs text-indigo-400 truncate">{m.email}</p>
-                <p className="text-xs text-slate-400 truncate mt-1">{m.subject || m.message}</p>
+                <p className="text-sm text-[#C2AFF0] font-mono truncate">{m.email}</p>
+                <p className="text-sm text-slate-400 truncate mt-1">{m.subject || m.message}</p>
               </div>
             ))}
           </div>
 
-          <div className="lg:col-span-2 glass-panel p-6 sm:p-8 rounded-2xl border border-white/10">
+          <div className="lg:col-span-2 glass-panel p-8 sm:p-10 rounded-3xl border border-[#2D5D7B]/40 shadow-2xl">
             {selectedMessage ? (
               <div className="space-y-6">
-                <div className="flex items-center justify-between pb-4 border-b border-white/5">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-[#2D5D7B]/40">
                   <div>
-                    <h3 className="text-xl font-bold text-white">{selectedMessage.subject || 'Portfolio Inquiry'}</h3>
-                    <p className="text-xs text-slate-400 mt-1">
-                      From: <strong className="text-slate-200">{selectedMessage.name}</strong> ({selectedMessage.email})
+                    <h3 className="font-heading font-extrabold text-2xl text-white">{selectedMessage.subject || 'Portfolio Inquiry'}</h3>
+                    <p className="text-base text-slate-300 mt-1">
+                      From: <strong className="text-white font-bold">{selectedMessage.name}</strong> (<span className="text-[#C2AFF0] font-mono">{selectedMessage.email}</span>)
                     </p>
                   </div>
                   <div className="flex items-center gap-3">
                     <a
                       href={`mailto:${selectedMessage.email}?subject=Re: ${encodeURIComponent(selectedMessage.subject || 'Your Portfolio Inquiry')}`}
-                      className="px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-xs font-semibold text-white"
+                      className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#9191E9] to-[#457EAC] text-white text-sm sm:text-base font-extrabold shadow-md hover:scale-[1.02] transition"
                     >
-                      Reply via Email
+                      Reply via Email ✉️
                     </a>
                     <button
                       onClick={() => handleDelete(selectedMessage.id)}
-                      className="px-3 py-1.5 rounded-lg bg-rose-500/10 hover:bg-rose-500/20 text-xs font-semibold text-rose-300"
+                      className="px-5 py-2.5 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 text-sm sm:text-base font-bold text-rose-300 border border-rose-500/25 transition cursor-pointer"
                     >
                       Delete
                     </button>
                   </div>
                 </div>
 
-                <div className="p-4 rounded-xl bg-slate-900/60 text-slate-200 text-sm whitespace-pre-wrap leading-relaxed">
+                <div className="p-6 rounded-2xl bg-[#142330]/80 border border-[#2D5D7B]/50 text-slate-200 text-base sm:text-lg leading-relaxed whitespace-pre-wrap font-sans">
                   {selectedMessage.message}
                 </div>
               </div>
             ) : (
-              <div className="text-center py-20 text-slate-500 text-sm">
-                Select an inquiry from the list to view its contents.
+              <div className="text-center py-24 text-slate-400 text-lg">
+                Select an inquiry from the left panel to review message details.
               </div>
             )}
           </div>
@@ -2125,14 +2270,19 @@ function MediaScreen({ showToast }) {
   };
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
+    <div className="space-y-8 animate-fadeIn">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-2xl font-bold text-white">Media Library</h2>
-          <p className="text-sm text-slate-400">Upload and manage image assets for projects, avatars, and blogs</p>
+          <h2 className="font-heading text-3xl sm:text-5xl font-extrabold text-white tracking-tight flex items-center gap-3">
+            <span>🖼️</span>
+            <span>Media & <span className="text-gradient-aurora">Asset Library</span></span>
+          </h2>
+          <p className="text-base sm:text-lg text-slate-300 mt-2 max-w-2xl leading-relaxed">
+            Upload, store, and copy URL links for cover images, project screenshots, avatars, and diagrams.
+          </p>
         </div>
         <div>
-          <label className="px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-sm shadow-lg shadow-indigo-600/30 transition cursor-pointer inline-flex items-center gap-2">
+          <label className="px-6 py-3.5 rounded-2xl bg-gradient-to-r from-[#9191E9] via-[#8585E6] to-[#457EAC] hover:from-[#9d9df0] hover:to-[#5590c2] text-white font-extrabold text-base shadow-xl shadow-[#9191E9]/30 hover:scale-[1.02] transition cursor-pointer inline-flex items-center gap-2.5">
             <span>{uploading ? 'Uploading...' : '📁 Upload Image'}</span>
             <input type="file" accept="image/*" onChange={handleUpload} disabled={uploading} className="hidden" />
           </label>
@@ -2140,26 +2290,26 @@ function MediaScreen({ showToast }) {
       </div>
 
       {loading ? (
-        <div className="text-center py-12 text-slate-400">Loading media library...</div>
+        <div className="text-center py-16 text-slate-300 text-lg">Loading media library...</div>
       ) : mediaList.length === 0 ? (
-        <div className="glass-panel p-12 text-center rounded-3xl text-slate-500">
+        <div className="glass-panel p-16 text-center rounded-3xl text-slate-400 text-lg">
           No images uploaded yet. Click "Upload Image" to add visual assets.
         </div>
       ) : (
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
           {mediaList.map(m => (
-            <div key={m.id} className="glass-card rounded-xl overflow-hidden group border border-white/5 relative flex flex-col justify-between">
-              <div className="w-full h-32 bg-slate-900 flex items-center justify-center overflow-hidden">
+            <div key={m.id} className="glass-card rounded-2xl overflow-hidden group border border-[#2D5D7B]/40 hover:border-[#C2AFF0]/60 transition duration-300 relative flex flex-col justify-between shadow-xl">
+              <div className="w-full h-36 bg-slate-900 flex items-center justify-center overflow-hidden">
                 <img src={m.url} alt={m.originalName} className="w-full h-full object-cover group-hover:scale-105 transition" />
               </div>
-              <div className="p-3">
-                <p className="text-xs font-semibold text-slate-200 truncate">{m.originalName}</p>
-                <p className="text-[10px] text-slate-400 font-mono mt-0.5">{(m.size / 1024).toFixed(1)} KB</p>
-                <div className="flex items-center justify-between mt-2 pt-2 border-t border-white/5">
-                  <button onClick={() => copyUrl(m.url)} className="text-[11px] text-indigo-400 hover:text-indigo-300 font-semibold">
+              <div className="p-4">
+                <p className="text-sm font-bold text-slate-200 truncate">{m.originalName}</p>
+                <p className="text-xs text-[#C2AFF0] font-mono mt-0.5">{(m.size / 1024).toFixed(1)} KB</p>
+                <div className="flex items-center justify-between mt-3 pt-3 border-t border-[#2D5D7B]/30">
+                  <button onClick={() => copyUrl(m.url)} className="text-xs sm:text-sm text-[#9191E9] hover:text-[#C2AFF0] font-bold transition">
                     Copy URL
                   </button>
-                  <button onClick={() => handleDelete(m.id)} className="text-[11px] text-rose-400 hover:text-rose-300">
+                  <button onClick={() => handleDelete(m.id)} className="text-xs sm:text-sm text-rose-400 hover:text-rose-300 font-bold transition">
                     Delete
                   </button>
                 </div>

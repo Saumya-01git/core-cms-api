@@ -6,7 +6,7 @@
   <title>Core CMS — Headless Portfolio Admin</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   
   <!-- Locally Vendored Libraries (Instant local loading, zero CDN/network failure) -->
   <script src="/admin/vendor/tailwind.js"></script>
@@ -20,23 +20,17 @@
       theme: {
         extend: {
           fontFamily: {
+            heading: ['"Outfit"', 'sans-serif'],
             sans: ['"Plus Jakarta Sans"', 'sans-serif'],
             mono: ['"JetBrains Mono"', 'monospace'],
           },
           colors: {
-            brand: {
-              50: '#eef2ff',
-              100: '#e0e7ff',
-              500: '#6366f1',
-              600: '#4f46e5',
-              700: '#4338ca',
-            },
-            dark: {
-              950: '#090d16',
-              900: '#0f172a',
-              850: '#141e33',
-              800: '#1e293b',
-              700: '#334155',
+            palette: {
+              mauve: '#C2AFF0',
+              periwinkle: '#9191E9',
+              steel: '#457EAC',
+              baltic: '#2D5D7B',
+              grey: '#686868'
             }
           }
         }
@@ -44,49 +38,95 @@
     }
   </script>
   <style>
+    html {
+      font-size: 16px;
+    }
     body {
       font-family: 'Plus Jakarta Sans', sans-serif;
-      background-color: #090d16;
+      background-color: #172735;
       color: #f1f5f9;
+      letter-spacing: -0.01em;
     }
+    h1, h2 {
+      font-family: 'Outfit', sans-serif;
+      letter-spacing: -0.025em;
+    }
+
+    /* Aurora Canvas Background with Baltic Blue & Periwinkle/Mauve Gradients */
+    .aurora-bg {
+      background: 
+        radial-gradient(ellipse 90% 65% at 50% -20%, rgba(69, 126, 172, 0.4), transparent 70%),
+        radial-gradient(circle 750px at 85% 25%, rgba(194, 175, 240, 0.28), transparent 70%),
+        radial-gradient(circle 650px at 15% 65%, rgba(145, 145, 233, 0.28), transparent 70%),
+        radial-gradient(circle 850px at 70% 90%, rgba(45, 93, 123, 0.42), transparent 70%),
+        #172735;
+    }
+
+    /* Frosted Glass Panels */
     .glass-panel {
-      background: rgba(15, 23, 42, 0.75);
+      background: rgba(28, 48, 65, 0.72);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(194, 175, 240, 0.22);
+    }
+
+    .glass-card {
+      background: rgba(34, 57, 76, 0.58);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(145, 145, 233, 0.2);
     }
-    .glass-card {
-      background: rgba(30, 41, 59, 0.5);
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.07);
+
+    .glass-card:hover {
+      border-color: rgba(194, 175, 240, 0.6);
+      box-shadow: 0 16px 40px -10px rgba(45, 93, 123, 0.45), 0 0 25px -5px rgba(145, 145, 233, 0.25);
     }
-    .custom-scrollbar::-webkit-scrollbar {
-      width: 6px;
-      height: 6px;
+
+    /* Radiant Text Gradients matching the portfolio */
+    .text-gradient-aurora {
+      background: linear-gradient(135deg, #ffffff 0%, #C2AFF0 40%, #9191E9 75%, #457EAC 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
-    .custom-scrollbar::-webkit-scrollbar-track {
-      background: rgba(15, 23, 42, 0.6);
+
+    .text-gradient-cyan {
+      background: linear-gradient(135deg, #ffffff 0%, #38bdf8 45%, #818cf8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
-    .custom-scrollbar::-webkit-scrollbar-thumb {
-      background: rgba(255, 255, 255, 0.15);
+
+    /* Custom Scrollbar in Palette Colors */
+    .custom-scrollbar::-webkit-scrollbar,
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track,
+    ::-webkit-scrollbar-track {
+      background: #172735;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb,
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(to bottom, #9191E9, #457EAC, #2D5D7B);
       border-radius: 9999px;
     }
-    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-      background: rgba(255, 255, 255, 0.25);
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover,
+    ::-webkit-scrollbar-thumb:hover {
+      background: linear-gradient(to bottom, #C2AFF0, #9191E9, #457EAC);
     }
 
     /* Moving Fluid Cyber Gradients */
     @keyframes adminAurora1 {
       0%, 100% { transform: translate(0, 0) scale(1); }
-      50% { transform: translate(50px, 40px) scale(1.12); }
+      50% { transform: translate(60px, 45px) scale(1.12); }
     }
     @keyframes adminAurora2 {
       0%, 100% { transform: translate(0, 0) scale(1); }
-      50% { transform: translate(-40px, -30px) scale(1.15); }
+      50% { transform: translate(-50px, -35px) scale(1.15); }
     }
     @keyframes adminAurora3 {
-      0%, 100% { transform: translate(30px, -40px) scale(1.08); }
-      50% { transform: translate(-30px, 30px) scale(1); }
+      0%, 100% { transform: translate(45px, -50px) scale(1.08); }
+      50% { transform: translate(-30px, 40px) scale(1); }
     }
     .animate-admin-aurora-1 { animation: adminAurora1 20s ease-in-out infinite; }
     .animate-admin-aurora-2 { animation: adminAurora2 25s ease-in-out infinite; }
@@ -95,11 +135,11 @@
     /* Technical Perspective Grid Overlay */
     .admin-cyber-grid {
       background-image: 
-        linear-gradient(to right, rgba(56, 189, 248, 0.05) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(192, 132, 252, 0.05) 1px, transparent 1px);
-      background-size: 44px 44px;
-      mask-image: radial-gradient(circle at 50% 50%, black 60%, transparent 95%);
-      -webkit-mask-image: radial-gradient(circle at 50% 50%, black 60%, transparent 95%);
+        linear-gradient(to right, rgba(145, 145, 233, 0.06) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(69, 126, 172, 0.06) 1px, transparent 1px);
+      background-size: 48px 48px;
+      mask-image: radial-gradient(circle at 50% 50%, black 50%, transparent 92%);
+      -webkit-mask-image: radial-gradient(circle at 50% 50%, black 50%, transparent 92%);
     }
 
     /* Cyber Scanline */
@@ -110,25 +150,25 @@
       100% { transform: translateY(100vh); opacity: 0; }
     }
     .admin-scanline {
-      height: 120px;
+      height: 140px;
       background: linear-gradient(
         to bottom,
         transparent 0%,
-        rgba(56, 189, 248, 0.03) 40%,
-        rgba(192, 132, 252, 0.08) 75%,
-        rgba(52, 211, 153, 0.12) 98%,
-        rgba(56, 189, 248, 0.22) 100%
+        rgba(194, 175, 240, 0.03) 40%,
+        rgba(145, 145, 233, 0.07) 75%,
+        rgba(69, 126, 172, 0.12) 98%,
+        rgba(194, 175, 240, 0.22) 100%
       );
       animation: adminScanline 14s cubic-bezier(0.4, 0, 0.2, 1) infinite;
       pointer-events: none;
     }
   </style>
 </head>
-<body class="min-h-screen text-slate-100 antialiased selection:bg-indigo-500 selection:text-white">
+<body class="min-h-screen text-slate-100 antialiased selection:bg-[#9191E9] selection:text-white aurora-bg">
   <div id="root">
-    <div class="min-h-screen flex flex-col items-center justify-center bg-[#090d16] text-slate-300">
-      <div class="w-12 h-12 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin mb-4"></div>
-      <p class="font-mono text-sm tracking-wide text-indigo-300">Starting Core CMS Admin Interface...</p>
+    <div class="min-h-screen flex flex-col items-center justify-center aurora-bg text-slate-300">
+      <div class="w-14 h-14 border-4 border-[#C2AFF0] border-t-transparent rounded-full animate-spin mb-4"></div>
+      <p class="font-heading text-lg font-bold tracking-wide text-white">Starting Core CMS Admin Interface...</p>
     </div>
   </div>
   <script type="text/babel" src="/admin/app.jsx"></script>
