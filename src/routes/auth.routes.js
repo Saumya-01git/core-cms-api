@@ -13,3 +13,4 @@ router.get('/me', authenticate, getMe);
 router.put('/me', authenticate, updateMe);
 
 module.exports = router;
+

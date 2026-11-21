@@ -110,10 +110,10 @@ npm run db:studio
 - [x] **Day 5: Admin Panel UI (Auth & Dashboard)** (`Day 5 completed -> Admin Panel UI Setup with Auth and Dashboard`)
 - [x] **Day 6: CMS CRUD Screens (About, Skills, Projects)** (`Day 6 completed -> CMS CRUD Screens for About, Skills, Projects`)
 - [x] **Day 7: Remaining CMS Screens & UI Polish** (`Day 7 completed -> Remaining CMS Screens Blogs, Experience, Testimonials, Services, Media & Messages`)
-- [ ] **Day 8: Portfolio Frontend Setup (Next.js + Tailwind)**
-- [ ] **Day 9: Fetch Content From CMS (Dynamic Rendering)**
-- [ ] **Day 10: Additional Sections & Experience Timeline**
-- [ ] **Day 11: Contact Form & Backend Integration**
-- [ ] **Day 12: Deployment (Backend + CMS Admin)**
+- [x] **Day 8: Portfolio Frontend Setup (Next.js + Tailwind)** (`Day 8 completed -> Portfolio Frontend Setup with React, Tailwind and Base Layout`)
+- [x] **Day 9: Fetch Content From CMS (Dynamic Rendering)** (`Day 9 completed -> Fetch Content From CMS for Dynamic About, Skills and Projects`)
+- [x] **Day 10: Additional Sections & Experience Timeline** (`Day 10 completed -> Additional Sections for Blogs, Experience Timeline, Testimonials and Services`)
+- [x] **Day 11: Contact Form & Backend Integration** (`Day 11 completed -> Contact Form Integration with Backend API`)
+- [x] **Day 12: Deployment (Backend + CMS Admin)** (`Day 12 completed -> Backend and CMS Admin Deployment Configurations for Render and Railway`)
 - [ ] **Day 13: Deploy Portfolio Frontend**
 - [ ] **Day 14: Final Testing, Polish & Optimization**

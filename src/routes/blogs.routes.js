@@ -17,3 +17,4 @@ router.put('/:id', authenticate, updateBlog);
 router.delete('/:id', authenticate, deleteBlog);
 
 module.exports = router;
+

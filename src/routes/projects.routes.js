@@ -17,3 +17,4 @@ router.put('/:id', authenticate, updateProject);
 router.delete('/:id', authenticate, deleteProject);
 
 module.exports = router;
+

@@ -15,3 +15,4 @@ router.patch('/:id/read', authenticate, toggleMessageRead);
 router.delete('/:id', authenticate, deleteMessage);
 
 module.exports = router;
+

@@ -8,3 +8,4 @@ router.get('/', getAbout);
 router.put('/', authenticate, updateAbout);
 
 module.exports = router;
+

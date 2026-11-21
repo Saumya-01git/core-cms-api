@@ -22,3 +22,4 @@ router.get('/', getMediaList);
 router.delete('/:id', deleteMedia);
 
 module.exports = router;
+

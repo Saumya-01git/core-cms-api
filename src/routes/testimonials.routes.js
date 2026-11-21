@@ -15,3 +15,4 @@ router.put('/:id', authenticate, updateTestimonial);
 router.delete('/:id', authenticate, deleteTestimonial);
 
 module.exports = router;
+

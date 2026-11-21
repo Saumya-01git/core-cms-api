@@ -10,3 +10,4 @@ router.put('/:id', authenticate, updateSkill);
 router.delete('/:id', authenticate, deleteSkill);
 
 module.exports = router;
+
