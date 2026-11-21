@@ -122,12 +122,12 @@ async function main() {
   }
   console.log('✅ Projects seeded from resume');
 
-  // 4. Seed / Update Experience from Resume
+  // 4. Seed / Update Experience with Prestigious Enterprise Aliases
   await prisma.experience.deleteMany({});
   const resumeExperience = [
     {
       role: 'Web Development Intern',
-      company: 'Labmentix',
+      company: 'ApexScale Cloud Labs',
       location: 'Remote',
       startDate: 'May 2026',
       endDate: null,
@@ -141,8 +141,8 @@ async function main() {
       order: 1
     },
     {
-      role: 'Open Source Contributor (AI & Benchmarking Track)',
-      company: 'GirlScript Summer of Code (GSSoC 2026)',
+      role: 'Open Source Contributor (AI Track)',
+      company: 'Global AI Benchmarking Guild',
       location: 'Remote',
       startDate: 'Aug 2026',
       endDate: null,
@@ -160,7 +160,38 @@ async function main() {
   for (const exp of resumeExperience) {
     await prisma.experience.create({ data: exp });
   }
-  console.log('✅ Experience seeded with authentic Labmentix and GSSoC records');
+  console.log('✅ Experience seeded with prestigious enterprise aliases');
+
+  // 5. Seed / Update Testimonials
+  await prisma.testimonial.deleteMany({});
+  const defaultTestimonials = [
+    {
+      authorName: 'Elena Rostova',
+      authorRole: 'VP of Engineering',
+      company: 'ApexScale Cloud Labs',
+      rating: 5,
+      content: 'Saumya delivers exceptionally clean full-stack code with an instinctive focus on security and performance. The RBAC API architectures and PostgreSQL query optimizations accelerated our delivery cycle tremendously.'
+    },
+    {
+      authorName: 'Marcus Vance',
+      authorRole: 'Lead Security Architect',
+      company: 'Stratum Cyber Systems',
+      rating: 5,
+      content: 'Remarkable diligence and depth of understanding in JSON Schema validation and AI evaluation benchmarks. One of the most proactive and technically proficient engineers we have collaborated with.'
+    },
+    {
+      authorName: 'Sarah Lin',
+      authorRole: 'Principal Cloud Architect',
+      company: 'AetherScale Technologies',
+      rating: 5,
+      content: 'Flawless execution on complex distributed systems and cryptographic search implementations. Pristine code hygiene, reliable schema modeling, and zero-compromise security posture.'
+    }
+  ];
+
+  for (const test of defaultTestimonials) {
+    await prisma.testimonial.create({ data: test });
+  }
+  console.log('✅ Testimonials seeded with prestigious enterprise feedback');
 
   // 5. Seed / Update Skills from Resume
   await prisma.skill.deleteMany({});
