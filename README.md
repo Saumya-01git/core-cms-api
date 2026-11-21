@@ -115,5 +115,5 @@ npm run db:studio
 - [x] **Day 10: Additional Sections & Experience Timeline** (`Day 10 completed -> Additional Sections for Blogs, Experience Timeline, Testimonials and Services`)
 - [x] **Day 11: Contact Form & Backend Integration** (`Day 11 completed -> Contact Form Integration with Backend API`)
 - [x] **Day 12: Deployment (Backend + CMS Admin)** (`Day 12 completed -> Backend and CMS Admin Deployment Configurations for Render and Railway`)
-- [ ] **Day 13: Deploy Portfolio Frontend**
-- [ ] **Day 14: Final Testing, Polish & Optimization**
+- [x] **Day 13: Deploy Portfolio Frontend** (`Day 13 completed -> Portfolio Frontend Deployment Configurations for Vercel and Netlify`)
+- [x] **Day 14: Final Testing, Polish & Optimization** (`Day 14 completed -> Final Testing, Polish, Aesthetic Aurora UI Redesign and Optimizations`)
