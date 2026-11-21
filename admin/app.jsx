@@ -2505,6 +2505,250 @@ function AdminLayout() {
   );
 }
 
+// --- Interactive Mathematical & Cyber Engineering Background ---
+function AdminMathCanvasBackground() {
+  const canvasRef = useRef(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    let animationFrameId;
+    let width = (canvas.width = window.innerWidth);
+    let height = (canvas.height = window.innerHeight);
+
+    const mouse = { x: -1000, y: -1000, active: false };
+    const ripples = [];
+
+    const mathTokensList = [
+      '∑(x_i - μ)²',
+      'O(log n)',
+      '∫ e^(-x²) dx',
+      'e^(iπ) + 1 = 0',
+      'det(A - λI) = 0',
+      '∇ × E = -∂B/∂t',
+      'lim (x→0) sin(x)/x = 1',
+      'f\'(x) = 2x + C',
+      'π ≈ 3.14159265',
+      '0x7FFD_004A',
+      'λ => next()',
+      'JWT.verify(token)',
+      'HTTP/2 200 OK',
+      'POST /api/v1/auth',
+      'sha256(secret + salt)',
+      'Prisma.connect()',
+      'SELECT * FROM "Metrics"',
+      'Cache: 99.8% hit',
+      'AES-GCM-256',
+      'k8s:pod/ready'
+    ];
+
+    const isMobile = window.innerWidth < 768;
+    const NODE_COUNT = isMobile ? 28 : 55;
+    const CONNECT_DIST = isMobile ? 90 : 130;
+    const MOUSE_CONNECT_DIST = isMobile ? 110 : 170;
+    const TOKEN_COUNT = isMobile ? 8 : 16;
+
+    // Light neon / cyber colors for admin portal
+    const colors = [
+      { r: 56, g: 189, b: 248, hex: '#38bdf8' },  // Ice Cyan
+      { r: 52, g: 211, b: 153, hex: '#34d399' },  // Soft Emerald
+      { r: 192, g: 132, b: 252, hex: '#c084fc' }, // Light Violet
+      { r: 251, g: 191, b: 36, hex: '#fbbf24' }   // Soft Amber
+    ];
+
+    const nodes = [];
+    for (let i = 0; i < NODE_COUNT; i++) {
+      nodes.push({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        vx: (Math.random() - 0.5) * 0.6,
+        vy: (Math.random() - 0.5) * 0.6,
+        radius: Math.random() * 2.2 + 1.2,
+        color: colors[i % colors.length],
+        pulseOffset: Math.random() * Math.PI * 2
+      });
+    }
+
+    const tokens = [];
+    for (let i = 0; i < TOKEN_COUNT; i++) {
+      tokens.push({
+        text: mathTokensList[i % mathTokensList.length],
+        x: Math.random() * width,
+        y: Math.random() * height,
+        vy: -0.2 - Math.random() * 0.25,
+        wavePhase: Math.random() * Math.PI * 2,
+        color: colors[i % colors.length],
+        fontSize: Math.floor(Math.random() * 2) + 11,
+        opacity: 0.18 + Math.random() * 0.16
+      });
+    }
+
+    const handleResize = () => {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    };
+
+    const handleMouseMove = (e) => {
+      mouse.x = e.clientX;
+      mouse.y = e.clientY;
+      mouse.active = true;
+    };
+
+    const handleMouseLeave = () => {
+      mouse.x = -1000;
+      mouse.y = -1000;
+      mouse.active = false;
+    };
+
+    const handleClick = (e) => {
+      ripples.push({
+        x: e.clientX,
+        y: e.clientY,
+        radius: 0,
+        maxRadius: 180,
+        opacity: 0.75,
+        color: colors[Math.floor(Math.random() * colors.length)]
+      });
+    };
+
+    window.addEventListener('resize', handleResize);
+    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mouseleave', handleMouseLeave);
+    window.addEventListener('click', handleClick);
+
+    let time = 0;
+    const render = () => {
+      time += 0.016;
+      ctx.clearRect(0, 0, width, height);
+
+      // Ripples
+      for (let i = ripples.length - 1; i >= 0; i--) {
+        const r = ripples[i];
+        r.radius += 3.5;
+        r.opacity *= 0.96;
+        ctx.beginPath();
+        ctx.arc(r.x, r.y, r.radius, 0, Math.PI * 2);
+        ctx.strokeStyle = `rgba(${r.color.r}, ${r.color.g}, ${r.color.b}, ${r.opacity})`;
+        ctx.lineWidth = 1.6;
+        ctx.stroke();
+
+        if (r.opacity < 0.02 || r.radius > r.maxRadius) {
+          ripples.splice(i, 1);
+        }
+      }
+
+      // Mathematical Tokens
+      ctx.textBaseline = 'middle';
+      for (let i = 0; i < tokens.length; i++) {
+        const tok = tokens[i];
+        tok.y += tok.vy;
+        tok.wavePhase += 0.012;
+        const currentX = tok.x + Math.sin(tok.wavePhase) * 18;
+
+        if (tok.y < -30) {
+          tok.y = height + 20;
+          tok.x = Math.random() * width;
+        }
+
+        ctx.font = `${tok.fontSize}px "JetBrains Mono", monospace`;
+        ctx.fillStyle = `rgba(${tok.color.r}, ${tok.color.g}, ${tok.color.b}, ${tok.opacity})`;
+        ctx.fillText(tok.text, currentX, tok.y);
+      }
+
+      // Constellation Nodes
+      for (let i = 0; i < nodes.length; i++) {
+        const node = nodes[i];
+        node.x += node.vx;
+        node.y += node.vy;
+
+        if (node.x <= 0 || node.x >= width) node.vx *= -1;
+        if (node.y <= 0 || node.y >= height) node.vy *= -1;
+
+        if (mouse.active) {
+          const dx = mouse.x - node.x;
+          const dy = mouse.y - node.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < MOUSE_CONNECT_DIST) {
+            const mouseAlpha = (1 - dist / MOUSE_CONNECT_DIST) * 0.45;
+            ctx.beginPath();
+            ctx.moveTo(node.x, node.y);
+            ctx.lineTo(mouse.x, mouse.y);
+            ctx.strokeStyle = `rgba(${node.color.r}, ${node.color.g}, ${node.color.b}, ${mouseAlpha})`;
+            ctx.lineWidth = 1.2;
+            ctx.stroke();
+
+            const force = (1 - dist / MOUSE_CONNECT_DIST) * 0.22;
+            node.x += (dx / dist) * force;
+            node.y += (dy / dist) * force;
+          }
+        }
+
+        for (let j = i + 1; j < nodes.length; j++) {
+          const other = nodes[j];
+          const dx = node.x - other.x;
+          const dy = node.y - other.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+
+          if (dist < CONNECT_DIST) {
+            const alpha = (1 - dist / CONNECT_DIST) * 0.26;
+            ctx.beginPath();
+            ctx.moveTo(node.x, node.y);
+            ctx.lineTo(other.x, other.y);
+            ctx.strokeStyle = `rgba(${node.color.r}, ${node.color.g}, ${node.color.b}, ${alpha})`;
+            ctx.lineWidth = 0.85;
+            ctx.stroke();
+          }
+        }
+
+        const pulse = Math.sin(time * 3 + node.pulseOffset) * 0.5 + 0.5;
+        const currentRadius = node.radius + pulse * 1.1;
+        const glowAlpha = 0.45 + pulse * 0.35;
+
+        ctx.beginPath();
+        ctx.arc(node.x, node.y, currentRadius * 2.2, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(${node.color.r}, ${node.color.g}, ${node.color.b}, ${glowAlpha * 0.16})`;
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.arc(node.x, node.y, currentRadius, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(${node.color.r}, ${node.color.g}, ${node.color.b}, ${glowAlpha})`;
+        ctx.fill();
+      }
+
+      animationFrameId = requestAnimationFrame(render);
+    };
+
+    render();
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mouseleave', handleMouseLeave);
+      window.removeEventListener('click', handleClick);
+      cancelAnimationFrame(animationFrameId);
+    };
+  }, []);
+
+  return (
+    <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+      {/* Dynamic Moving Ambient Gradients */}
+      <div className="absolute -top-[15%] -left-[10%] w-[55vw] h-[55vw] rounded-full bg-gradient-to-br from-[#38bdf8]/15 via-[#34d399]/10 to-transparent blur-[140px] animate-admin-aurora-1"></div>
+      <div className="absolute top-[35%] -right-[15%] w-[50vw] h-[50vw] rounded-full bg-gradient-to-bl from-[#c084fc]/15 via-[#38bdf8]/10 to-transparent blur-[150px] animate-admin-aurora-2"></div>
+      <div className="absolute -bottom-[15%] left-[25%] w-[60vw] h-[60vw] rounded-full bg-gradient-to-tr from-[#34d399]/15 via-[#c084fc]/12 to-transparent blur-[160px] animate-admin-aurora-3"></div>
+
+      {/* Cyber Perspective Grid & Scanline */}
+      <div className="absolute inset-0 admin-cyber-grid opacity-35"></div>
+      <div className="absolute inset-0 admin-scanline"></div>
+
+      {/* Interactive 60 FPS Mathematical Canvas */}
+      <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" />
+    </div>
+  );
+}
+
 // --- App Root ---
 function App() {
   const { user, loading } = useAuth();
@@ -2512,12 +2756,19 @@ function App() {
   if (loading) {
     return (
       <div className="min-h-screen bg-[#070b14] flex items-center justify-center">
-        <div className="w-10 h-10 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin"></div>
+        <div className="w-10 h-10 border-4 border-cyan-500 border-t-transparent rounded-full animate-spin"></div>
       </div>
     );
   }
 
-  return user ? <AdminLayout /> : <LoginScreen />;
+  return (
+    <div className="relative min-h-screen bg-[#080d1a] text-slate-100 overflow-x-hidden selection:bg-cyan-500 selection:text-slate-950">
+      <AdminMathCanvasBackground />
+      <div className="relative z-10">
+        {user ? <AdminLayout /> : <LoginScreen />}
+      </div>
+    </div>
+  );
 }
 
 ReactDOM.createRoot(document.getElementById('root')).render(

@@ -74,6 +74,54 @@
     .custom-scrollbar::-webkit-scrollbar-thumb:hover {
       background: rgba(255, 255, 255, 0.25);
     }
+
+    /* Moving Fluid Cyber Gradients */
+    @keyframes adminAurora1 {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(50px, 40px) scale(1.12); }
+    }
+    @keyframes adminAurora2 {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(-40px, -30px) scale(1.15); }
+    }
+    @keyframes adminAurora3 {
+      0%, 100% { transform: translate(30px, -40px) scale(1.08); }
+      50% { transform: translate(-30px, 30px) scale(1); }
+    }
+    .animate-admin-aurora-1 { animation: adminAurora1 20s ease-in-out infinite; }
+    .animate-admin-aurora-2 { animation: adminAurora2 25s ease-in-out infinite; }
+    .animate-admin-aurora-3 { animation: adminAurora3 22s ease-in-out infinite; }
+
+    /* Technical Perspective Grid Overlay */
+    .admin-cyber-grid {
+      background-image: 
+        linear-gradient(to right, rgba(56, 189, 248, 0.05) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(192, 132, 252, 0.05) 1px, transparent 1px);
+      background-size: 44px 44px;
+      mask-image: radial-gradient(circle at 50% 50%, black 60%, transparent 95%);
+      -webkit-mask-image: radial-gradient(circle at 50% 50%, black 60%, transparent 95%);
+    }
+
+    /* Cyber Scanline */
+    @keyframes adminScanline {
+      0% { transform: translateY(-100%); opacity: 0; }
+      15% { opacity: 0.6; }
+      85% { opacity: 0.6; }
+      100% { transform: translateY(100vh); opacity: 0; }
+    }
+    .admin-scanline {
+      height: 120px;
+      background: linear-gradient(
+        to bottom,
+        transparent 0%,
+        rgba(56, 189, 248, 0.03) 40%,
+        rgba(192, 132, 252, 0.08) 75%,
+        rgba(52, 211, 153, 0.12) 98%,
+        rgba(56, 189, 248, 0.22) 100%
+      );
+      animation: adminScanline 14s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+      pointer-events: none;
+    }
   </style>
 </head>
 <body class="min-h-screen text-slate-100 antialiased selection:bg-indigo-500 selection:text-white">

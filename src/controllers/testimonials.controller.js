@@ -112,9 +112,48 @@ const deleteTestimonial = async (req, res, next) => {
   }
 };
 
+/**
+ * @desc    Submit public testimonial from portfolio website
+ * @route   POST /api/testimonials/submit
+ * @access  Public
+ */
+const submitPublicTestimonial = async (req, res, next) => {
+  try {
+    const { authorName, authorRole, company, content, rating } = req.body;
+
+    if (!authorName || !authorRole || !content) {
+      return res.status(400).json({
+        success: false,
+        message: 'Name, professional role, and endorsement feedback are required.'
+      });
+    }
+
+    const testimonial = await prisma.testimonial.create({
+      data: {
+        authorName: authorName.trim(),
+        authorRole: authorRole.trim(),
+        company: company ? company.trim() : null,
+        content: content.trim(),
+        rating: rating !== undefined ? Math.min(5, Math.max(1, parseInt(rating, 10))) : 5,
+        isApproved: true, // Visible immediately; admin can moderate or remove anytime in CMS
+        order: 0
+      }
+    });
+
+    res.status(201).json({
+      success: true,
+      message: 'Thank you! Your endorsement has been published successfully.',
+      data: testimonial
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   getTestimonials,
   createTestimonial,
+  submitPublicTestimonial,
   updateTestimonial,
   deleteTestimonial
 };
