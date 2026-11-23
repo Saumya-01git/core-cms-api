@@ -133,33 +133,33 @@ function PasswordStrengthWidget({ password = '', showDetails = true }) {
   const percent = Math.min(100, Math.round((passedCount / 5) * 100));
 
   return (
-    <div className="mt-3 p-3.5 rounded-xl bg-slate-950/80 border border-slate-800 text-xs space-y-2">
+    <div className="mt-3.5 p-4 rounded-2xl bg-[#142330]/90 border border-[#2D5D7B]/50 text-sm space-y-3">
       <div className="flex items-center justify-between font-mono">
-        <span className="text-slate-400 text-[11px]">Security Strength:</span>
-        <span className={`font-bold text-[11px] ${isValid ? 'text-emerald-400' : 'text-amber-300'}`}>
+        <span className="text-slate-300 text-xs sm:text-sm font-semibold">Security Strength:</span>
+        <span className={`font-bold text-xs sm:text-sm ${isValid ? 'text-emerald-400' : 'text-amber-300'}`}>
           {strengthLabel} ({passedCount}/5)
         </span>
       </div>
 
       {/* Strength Bar */}
-      <div className="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
+      <div className="w-full h-2.5 bg-slate-800 rounded-full overflow-hidden">
         <div
-          className={`h-full ${barColor} transition-all duration-300`}
+          className={`h-full ${barColor} transition-all duration-300 rounded-full`}
           style={{ width: `${percent}%` }}
         ></div>
       </div>
 
       {/* Rules Checklist */}
       {showDetails && (
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 pt-1">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1.5">
           {rules.map(r => (
-            <div key={r.id} className="flex items-center gap-1.5 text-[11px]">
-              <span className={`w-3.5 h-3.5 rounded-full flex items-center justify-center text-[9px] font-bold flex-shrink-0 ${
+            <div key={r.id} className="flex items-center gap-2 text-xs sm:text-sm font-medium">
+              <span className={`w-4 h-4 rounded-full flex items-center justify-center text-[10px] font-bold flex-shrink-0 ${
                 r.met ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/40' : 'bg-slate-800 text-slate-500 border border-slate-700'
               }`}>
                 {r.met ? '✓' : '○'}
               </span>
-              <span className={r.met ? 'text-slate-200' : 'text-slate-500'}>
+              <span className={r.met ? 'text-slate-200 font-semibold' : 'text-slate-400'}>
                 {r.label}
               </span>
             </div>
@@ -202,54 +202,58 @@ function LoginScreen() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden bg-gradient-to-br from-[#070b14] via-[#0b1329] to-[#070b14]">
-      <div className="absolute top-1/4 -left-32 w-96 h-96 bg-indigo-600/20 rounded-full blur-[128px] pointer-events-none"></div>
-      <div className="absolute bottom-1/4 -right-32 w-96 h-96 bg-violet-600/20 rounded-full blur-[128px] pointer-events-none"></div>
+    <div className="min-h-screen flex items-center justify-center p-6 relative overflow-hidden aurora-bg">
+      {/* 5-Color Palette Ambient Glow Mesh */}
+      <div className="absolute top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-[#457EAC]/28 rounded-full blur-[150px] pointer-events-none"></div>
+      <div className="absolute top-1/3 right-1/4 translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-[#9191E9]/25 rounded-full blur-[150px] pointer-events-none"></div>
+      <div className="absolute bottom-10 left-1/3 w-[550px] h-[350px] bg-[#C2AFF0]/22 rounded-full blur-[140px] pointer-events-none"></div>
 
-      <div className="w-full max-w-lg relative z-10 space-y-6">
+      <div className="w-full max-w-xl relative z-10 space-y-7">
         {/* Main Login Card */}
-        <div className="glass-panel p-8 sm:p-10 rounded-3xl shadow-2xl border border-white/10">
-          <div className="flex flex-col items-center mb-6 text-center">
-            <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-indigo-600 to-violet-500 flex items-center justify-center shadow-lg shadow-indigo-500/30 mb-3">
-              <span className="text-2xl font-bold text-white tracking-wider">⚡</span>
+        <div className="glass-panel p-8 sm:p-12 rounded-3xl shadow-2xl border border-[#2D5D7B]/40">
+          <div className="flex flex-col items-center mb-8 text-center">
+            <div className="w-16 h-16 rounded-3xl bg-gradient-to-tr from-[#9191E9] to-[#C2AFF0] flex items-center justify-center shadow-xl shadow-[#9191E9]/30 mb-4">
+              <span className="text-3xl font-bold text-slate-950">⚡</span>
             </div>
-            <h1 className="text-2xl font-extrabold tracking-tight text-white">Core CMS Admin</h1>
-            <p className="text-slate-400 text-xs sm:text-sm mt-1">Headless Content Architecture & Role-Based Control</p>
+            <h1 className="font-heading text-3xl sm:text-5xl font-extrabold tracking-tight text-white">
+              Core CMS <span className="text-gradient-aurora">Admin</span>
+            </h1>
+            <p className="text-slate-300 text-sm sm:text-base mt-2">Headless Portfolio Management & Security Architecture</p>
           </div>
 
           {/* Demo Access Callout Banner */}
-          <div className="mb-6 p-4 rounded-2xl bg-indigo-950/40 border border-indigo-500/30 space-y-3">
+          <div className="mb-7 p-5 rounded-2xl bg-[#1c3041]/80 border border-[#9191E9]/30 space-y-4 shadow-lg shadow-[#13222e]/40">
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                <span className="text-xs font-bold uppercase tracking-wider text-indigo-300">Demo Access Mode</span>
+              <div className="flex items-center gap-2.5">
+                <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span className="text-sm font-bold uppercase tracking-wider text-[#C2AFF0]">Demo Access Mode</span>
               </div>
-              <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 font-semibold">
+              <span className="text-xs font-mono px-3 py-1 rounded-full bg-[#9191E9]/20 text-[#C2AFF0] font-bold">
                 Evaluation Access
               </span>
             </div>
             
-            <p className="text-xs text-slate-300 leading-relaxed">
-              Exploring this portfolio CMS engine? Use the pre-configured administrator credentials below:
+            <p className="text-sm text-slate-200 leading-relaxed">
+              Evaluating this portfolio CMS? Use the pre-configured administrator credentials below:
             </p>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs font-mono">
-              <div className="p-2 rounded-xl bg-slate-900/90 border border-indigo-500/20">
-                <span className="text-[10px] text-slate-400 block font-sans">Username:</span>
-                <span className="text-indigo-300 font-bold select-all">admin@portfolio.local</span>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm font-mono">
+              <div className="p-3 rounded-xl bg-[#142330]/90 border border-[#2D5D7B]/50">
+                <span className="text-xs text-slate-400 block font-sans mb-0.5">Username:</span>
+                <span className="text-[#C2AFF0] font-bold select-all text-sm">admin@portfolio.local</span>
               </div>
-              <div className="p-2 rounded-xl bg-slate-900/90 border border-indigo-500/20">
-                <span className="text-[10px] text-slate-400 block font-sans">Password:</span>
-                <span className="text-indigo-300 font-bold select-all">Admin@123456</span>
+              <div className="p-3 rounded-xl bg-[#142330]/90 border border-[#2D5D7B]/50">
+                <span className="text-xs text-slate-400 block font-sans mb-0.5">Password:</span>
+                <span className="text-[#C2AFF0] font-bold select-all text-sm">Admin@123456</span>
               </div>
             </div>
 
-            <div className="flex gap-2 pt-1">
+            <div className="flex flex-col sm:flex-row gap-2.5 pt-1">
               <button
                 type="button"
                 onClick={handleDemoInstantAccess}
                 disabled={isSubmitting}
-                className="flex-1 py-2.5 px-3 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-xs shadow-md shadow-emerald-600/20 transition flex items-center justify-center gap-1.5 cursor-pointer disabled:opacity-50"
+                className="flex-1 py-3 px-4 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 font-extrabold text-sm shadow-lg shadow-emerald-500/25 transition flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
               >
                 <span>⚡</span>
                 <span>One-Click Demo Access</span>
@@ -260,7 +264,7 @@ function LoginScreen() {
                   setEmail('admin@portfolio.local');
                   setPassword('Admin@123456');
                 }}
-                className="py-2.5 px-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white font-semibold text-xs border border-slate-700 transition cursor-pointer"
+                className="py-3 px-4 rounded-xl bg-[#22394c] hover:bg-[#2c4a63] text-slate-200 hover:text-white font-bold text-sm border border-[#457EAC]/30 transition cursor-pointer"
               >
                 Fill Fields
               </button>
@@ -268,15 +272,15 @@ function LoginScreen() {
           </div>
 
           {error && (
-            <div className="mb-6 p-3.5 rounded-xl bg-red-500/10 border border-red-500/30 text-red-300 text-sm flex items-center gap-2">
+            <div className="mb-6 p-4 rounded-2xl bg-rose-500/15 border border-rose-500/30 text-rose-300 text-sm flex items-center gap-2.5">
               <span>⚠️</span>
               <span>{error}</span>
             </div>
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-5">
             <div>
-              <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">
+              <label className="block text-sm font-bold uppercase tracking-wider text-slate-200 mb-2">
                 Administrator Email
               </label>
               <input
@@ -285,12 +289,12 @@ function LoginScreen() {
                 value={email}
                 onChange={e => setEmail(e.target.value)}
                 placeholder="admin@portfolio.local"
-                className="w-full px-4 py-3 rounded-xl bg-slate-900/80 border border-slate-700/60 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 text-slate-100 placeholder-slate-500 text-sm outline-none transition font-mono"
+                className="w-full px-5 py-4 rounded-2xl bg-[#142330]/90 border border-[#2D5D7B]/60 focus:border-[#C2AFF0] focus:ring-2 focus:ring-[#C2AFF0]/20 text-slate-100 placeholder-slate-500 text-base outline-none transition font-mono"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">
+              <label className="block text-sm font-bold uppercase tracking-wider text-slate-200 mb-2">
                 Admin Password
               </label>
               <input
@@ -299,32 +303,31 @@ function LoginScreen() {
                 value={password}
                 onChange={e => setPassword(e.target.value)}
                 placeholder="••••••••••••"
-                className="w-full px-4 py-3 rounded-xl bg-slate-900/80 border border-slate-700/60 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 text-slate-100 placeholder-slate-500 text-sm outline-none transition font-mono"
+                className="w-full px-5 py-4 rounded-2xl bg-[#142330]/90 border border-[#2D5D7B]/60 focus:border-[#C2AFF0] focus:ring-2 focus:ring-[#C2AFF0]/20 text-slate-100 placeholder-slate-500 text-base outline-none transition font-mono"
               />
-              {/* Real-time strength evaluator */}
               <PasswordStrengthWidget password={password} showDetails={false} />
             </div>
 
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full py-3.5 px-4 rounded-xl font-semibold text-sm bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white shadow-lg shadow-indigo-600/30 transition duration-200 disabled:opacity-50 flex items-center justify-center gap-2 cursor-pointer mt-2"
+              className="w-full py-4 px-6 rounded-2xl font-extrabold text-base bg-gradient-to-r from-[#9191E9] via-[#8585E6] to-[#457EAC] hover:from-[#9d9df0] hover:to-[#5590c2] text-white shadow-xl shadow-[#9191E9]/30 transition duration-200 disabled:opacity-50 flex items-center justify-center gap-2 cursor-pointer mt-3"
             >
               {isSubmitting ? 'Verifying authentication...' : 'Sign In with Credentials →'}
             </button>
           </form>
 
           {/* Password Security Rules Box */}
-          <div className="mt-6 pt-5 border-t border-slate-800">
-            <div className="flex items-center gap-1.5 text-[11px] font-mono text-slate-400 mb-2">
+          <div className="mt-8 pt-6 border-t border-[#2D5D7B]/30">
+            <div className="flex items-center gap-2 text-xs font-mono text-slate-300 mb-2.5">
               <span>🛡️</span>
-              <span className="font-bold text-slate-300 uppercase tracking-wider">Password Security Standards</span>
+              <span className="font-bold text-white uppercase tracking-wider">Password Security Standards</span>
             </div>
-            <ul className="text-[11px] text-slate-400 space-y-1 list-disc list-inside">
+            <ul className="text-xs text-slate-300 space-y-1.5 list-disc list-inside">
               <li>Minimum 8 characters length</li>
               <li>Includes uppercase (A-Z) & lowercase (a-z) letters</li>
               <li>Includes numeric digits (0-9) & special symbols (!@#$...)</li>
-              <li>Stored with 10 bcrypt salt rounds and verified via stateless JWT</li>
+              <li>Encrypted with 10 bcrypt salt rounds and verified via stateless JWT</li>
             </ul>
           </div>
         </div>
@@ -2378,58 +2381,58 @@ function SecurityScreen({ showToast }) {
     <div className="max-w-4xl mx-auto space-y-8 animate-fadeIn">
       {/* Header */}
       <div>
-        <h2 className="text-2xl font-extrabold text-white tracking-tight flex items-center gap-3">
-          <span className="text-2xl">🔒</span>
-          <span>Security & Authentication Settings</span>
+        <h2 className="font-heading text-4xl sm:text-6xl font-extrabold text-white tracking-tight flex items-center gap-4">
+          <span className="text-3xl sm:text-5xl">🔒</span>
+          <span>Security & <span className="text-gradient-aurora">Authentication</span></span>
         </h2>
-        <p className="text-sm text-slate-400 mt-1">
+        <p className="text-base sm:text-xl text-slate-300 mt-2 max-w-2xl leading-relaxed">
           Manage your administrator credentials, enforce password policy rules, and update login authentication keys.
         </p>
       </div>
 
       {/* Account Info Card */}
-      <div className="glass-panel p-6 rounded-2xl border border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="glass-panel p-8 sm:p-10 rounded-3xl border border-[#2D5D7B]/40 flex flex-col sm:flex-row sm:items-center justify-between gap-6 shadow-2xl shadow-[#13222e]/50">
         <div>
-          <span className="text-[10px] font-mono uppercase tracking-wider text-indigo-400 font-bold block mb-1">
+          <span className="text-xs font-mono uppercase tracking-wider text-[#C2AFF0] font-bold block mb-1">
             Active Admin Account
           </span>
-          <h3 className="text-lg font-bold text-white">{user?.name || 'Administrator'}</h3>
-          <p className="text-xs text-slate-400 font-mono mt-0.5">{user?.email}</p>
+          <h3 className="font-heading text-2xl sm:text-3xl font-extrabold text-white">{user?.name || 'Administrator'}</h3>
+          <p className="text-base text-slate-300 font-mono mt-1">{user?.email}</p>
         </div>
-        <div className="flex items-center gap-2">
-          <span className="px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 text-xs font-bold font-mono">
+        <div className="flex items-center gap-3">
+          <span className="px-4 py-2 rounded-full bg-emerald-500/15 border border-emerald-500/35 text-emerald-300 text-sm font-bold font-mono">
             Role: {user?.role || 'ADMIN'}
           </span>
-          <span className="px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/30 text-indigo-300 text-xs font-bold font-mono">
+          <span className="px-4 py-2 rounded-full bg-[#9191E9]/20 border border-[#9191E9]/40 text-[#C2AFF0] text-sm font-bold font-mono">
             JWT: Active
           </span>
         </div>
       </div>
 
       {/* Change Password Card */}
-      <div className="glass-panel p-6 sm:p-8 rounded-3xl border border-white/10 space-y-6">
-        <div className="border-b border-slate-800 pb-4">
-          <h3 className="text-lg font-bold text-white">Change Account Password</h3>
-          <p className="text-xs text-slate-400 mt-1">
+      <div className="glass-panel p-8 sm:p-12 rounded-3xl border border-[#2D5D7B]/40 space-y-8 shadow-2xl shadow-[#13222e]/50">
+        <div className="border-b border-[#2D5D7B]/40 pb-5">
+          <h3 className="font-heading text-2xl sm:text-3xl font-extrabold text-white">Change Account Password</h3>
+          <p className="text-base text-slate-300 mt-1.5 leading-relaxed">
             Enforces strict enterprise security: minimum 8 characters with mixed casing, digits, and special characters.
           </p>
         </div>
 
         {statusMsg && (
-          <div className={`p-4 rounded-xl text-xs sm:text-sm font-medium flex items-center gap-3 border ${
+          <div className={`p-4 sm:p-5 rounded-2xl text-base font-semibold flex items-center gap-3.5 border ${
             statusMsg.type === 'error'
-              ? 'bg-rose-500/10 border-rose-500/30 text-rose-300'
-              : 'bg-emerald-500/10 border-emerald-500/30 text-emerald-300'
+              ? 'bg-rose-500/15 border-rose-500/35 text-rose-300'
+              : 'bg-emerald-500/15 border-emerald-500/35 text-emerald-300'
           }`}>
-            <span>{statusMsg.type === 'error' ? '⚠️' : '✅'}</span>
+            <span className="text-xl">{statusMsg.type === 'error' ? '⚠️' : '✅'}</span>
             <span>{statusMsg.text}</span>
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-7">
           {/* Current Password */}
           <div>
-            <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">
+            <label className="block text-sm font-bold uppercase tracking-wider text-slate-200 mb-2.5">
               Current Admin Password
             </label>
             <div className="relative">
@@ -2439,12 +2442,12 @@ function SecurityScreen({ showToast }) {
                 value={currentPassword}
                 onChange={e => setCurrentPassword(e.target.value)}
                 placeholder="Enter your current password"
-                className="w-full px-4 py-3 rounded-xl bg-slate-900/80 border border-slate-700/60 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 text-slate-100 placeholder-slate-500 text-sm outline-none transition pr-16 font-mono"
+                className="w-full px-6 py-4 rounded-2xl bg-[#142330]/90 border border-[#2D5D7B]/60 focus:border-[#C2AFF0] focus:ring-2 focus:ring-[#C2AFF0]/20 text-white placeholder-slate-500 text-base sm:text-lg outline-none transition pr-24 font-mono"
               />
               <button
                 type="button"
                 onClick={() => setShowCurrent(!showCurrent)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white text-xs font-mono px-2 py-1"
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-sm font-mono font-bold text-[#C2AFF0] hover:text-white px-3 py-1.5 rounded-lg bg-[#2D5D7B]/40 hover:bg-[#457EAC]/50 transition"
               >
                 {showCurrent ? "Hide" : "Show"}
               </button>
@@ -2453,7 +2456,7 @@ function SecurityScreen({ showToast }) {
 
           {/* New Password */}
           <div>
-            <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">
+            <label className="block text-sm font-bold uppercase tracking-wider text-slate-200 mb-2.5">
               New Password
             </label>
             <div className="relative">
@@ -2463,12 +2466,12 @@ function SecurityScreen({ showToast }) {
                 value={newPassword}
                 onChange={e => setNewPassword(e.target.value)}
                 placeholder="Enter new strong password"
-                className="w-full px-4 py-3 rounded-xl bg-slate-900/80 border border-slate-700/60 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 text-slate-100 placeholder-slate-500 text-sm outline-none transition pr-16 font-mono"
+                className="w-full px-6 py-4 rounded-2xl bg-[#142330]/90 border border-[#2D5D7B]/60 focus:border-[#C2AFF0] focus:ring-2 focus:ring-[#C2AFF0]/20 text-white placeholder-slate-500 text-base sm:text-lg outline-none transition pr-24 font-mono"
               />
               <button
                 type="button"
                 onClick={() => setShowNew(!showNew)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white text-xs font-mono px-2 py-1"
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-sm font-mono font-bold text-[#C2AFF0] hover:text-white px-3 py-1.5 rounded-lg bg-[#2D5D7B]/40 hover:bg-[#457EAC]/50 transition"
               >
                 {showNew ? "Hide" : "Show"}
               </button>
@@ -2479,7 +2482,7 @@ function SecurityScreen({ showToast }) {
 
           {/* Confirm New Password */}
           <div>
-            <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">
+            <label className="block text-sm font-bold uppercase tracking-wider text-slate-200 mb-2.5">
               Confirm New Password
             </label>
             <input
@@ -2488,10 +2491,10 @@ function SecurityScreen({ showToast }) {
               value={confirmPassword}
               onChange={e => setConfirmPassword(e.target.value)}
               placeholder="Re-enter new password"
-              className="w-full px-4 py-3 rounded-xl bg-slate-900/80 border border-slate-700/60 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 text-slate-100 placeholder-slate-500 text-sm outline-none transition font-mono"
+              className="w-full px-6 py-4 rounded-2xl bg-[#142330]/90 border border-[#2D5D7B]/60 focus:border-[#C2AFF0] focus:ring-2 focus:ring-[#C2AFF0]/20 text-white placeholder-slate-500 text-base sm:text-lg outline-none transition font-mono"
             />
             {confirmPassword.length > 0 && (
-              <p className={`text-[11px] mt-1.5 flex items-center gap-1.5 font-medium ${
+              <p className={`text-sm mt-2 flex items-center gap-2 font-bold ${
                 passwordsMatch ? 'text-emerald-400' : 'text-rose-400'
               }`}>
                 <span>{passwordsMatch ? '✓ Passwords match' : '✕ Passwords do not match'}</span>
@@ -2499,14 +2502,14 @@ function SecurityScreen({ showToast }) {
             )}
           </div>
 
-          <div className="pt-4 border-t border-slate-800 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-            <span className="text-[11px] text-slate-500 font-mono">
+          <div className="pt-6 border-t border-[#2D5D7B]/40 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5">
+            <span className="text-xs sm:text-sm text-slate-300 font-mono">
               Changes immediately update the database with 10 bcrypt salt rounds.
             </span>
             <button
               type="submit"
               disabled={isSubmitting || !newEvaluation.isValid || !passwordsMatch}
-              className="px-6 py-3 rounded-xl font-semibold text-sm bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white shadow-lg shadow-indigo-600/30 transition duration-200 disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-2 cursor-pointer"
+              className="px-8 py-4 rounded-2xl font-extrabold text-base bg-gradient-to-r from-[#9191E9] via-[#8585E6] to-[#457EAC] hover:from-[#9d9df0] hover:to-[#5590c2] text-white shadow-xl shadow-[#9191E9]/30 hover:scale-[1.02] transition duration-200 disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-2.5 cursor-pointer"
             >
               {isSubmitting ? 'Securing Account...' : 'Update Password 🔒'}
             </button>
@@ -2543,36 +2546,36 @@ function AdminLayout() {
   ];
 
   return (
-    <div className="min-h-screen flex bg-[#070b14] text-slate-100">
+    <div className="min-h-screen flex text-slate-100 relative">
       <Toast toast={toast} onClose={() => setToast(null)} />
 
       {/* Sidebar */}
-      <aside className="w-64 glass-panel border-r border-white/5 hidden md:flex flex-col justify-between p-4 sticky top-0 h-screen">
+      <aside className="w-72 glass-panel border-r border-[#2D5D7B]/40 hidden md:flex flex-col justify-between p-5 sticky top-0 h-screen z-20">
         <div>
-          <div className="flex items-center gap-3 px-3 py-4 mb-4">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 to-violet-500 flex items-center justify-center font-bold text-white shadow-lg shadow-indigo-600/30">
+          <div className="flex items-center gap-3.5 px-3 py-4 mb-5">
+            <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-[#9191E9] to-[#C2AFF0] flex items-center justify-center font-bold text-slate-950 text-2xl shadow-xl shadow-[#9191E9]/30">
               ⚡
             </div>
             <div>
-              <h1 className="font-extrabold text-base tracking-tight text-white leading-none">CORE CMS</h1>
-              <span className="text-[10px] font-mono font-semibold text-indigo-400">Headless Engine</span>
+              <h1 className="font-heading font-extrabold text-xl tracking-tight text-white leading-tight">CORE CMS</h1>
+              <span className="text-xs font-mono font-bold text-[#C2AFF0]">Headless Engine</span>
             </div>
           </div>
 
-          <nav className="space-y-1">
+          <nav className="space-y-1.5">
             {navItems.map(item => {
               const active = view === item.id;
               return (
                 <button
                   key={item.id}
                   onClick={() => setView(item.id)}
-                  className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold transition ${
+                  className={`w-full flex items-center gap-3.5 px-4 py-3 rounded-2xl text-sm sm:text-base font-bold transition cursor-pointer ${
                     active
-                      ? 'bg-gradient-to-r from-indigo-600 to-violet-600 text-white shadow-lg shadow-indigo-600/20'
-                      : 'text-slate-400 hover:text-white hover:bg-slate-900/60'
+                      ? 'bg-gradient-to-r from-[#9191E9] via-[#8585E6] to-[#457EAC] text-white shadow-xl shadow-[#9191E9]/25'
+                      : 'text-slate-300 hover:text-white hover:bg-[#22394c]/60'
                   }`}
                 >
-                  <span className="text-base">{item.icon}</span>
+                  <span className="text-lg">{item.icon}</span>
                   <span>{item.label}</span>
                 </button>
               );
@@ -2580,23 +2583,23 @@ function AdminLayout() {
           </nav>
         </div>
 
-        <div className="p-3 rounded-2xl bg-slate-900/80 border border-white/5 space-y-2">
+        <div className="p-4 rounded-3xl bg-[#1c3041]/80 border border-[#2D5D7B]/40 space-y-2.5">
           <div className="flex items-center justify-between mb-1">
             <div className="truncate mr-2">
-              <p className="text-xs font-bold text-white truncate">{user?.name || 'Admin'}</p>
-              <p className="text-[10px] text-slate-400 truncate">{user?.email}</p>
+              <p className="text-sm font-bold text-white truncate">{user?.name || 'Admin'}</p>
+              <p className="text-xs text-slate-400 font-mono truncate">{user?.email}</p>
             </div>
-            <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-indigo-500/20 text-indigo-300">
+            <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-[#9191E9]/20 text-[#C2AFF0] font-mono">
               {user?.role || 'ADMIN'}
             </span>
           </div>
 
           <button
             onClick={() => setView('security')}
-            className={`w-full py-1.5 rounded-lg text-xs font-semibold flex items-center justify-center gap-1.5 transition ${
+            className={`w-full py-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-2 transition cursor-pointer ${
               view === 'security'
-                ? 'bg-indigo-600 text-white'
-                : 'bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-300'
+                ? 'bg-gradient-to-r from-[#9191E9] to-[#C2AFF0] text-slate-950 shadow-md'
+                : 'bg-[#22394c] hover:bg-[#2c4a63] text-slate-200 border border-[#457EAC]/30'
             }`}
           >
             <span>🔒</span>
@@ -2605,7 +2608,7 @@ function AdminLayout() {
 
           <button
             onClick={logout}
-            className="w-full py-1.5 rounded-lg text-xs font-semibold bg-rose-500/10 hover:bg-rose-500/20 text-rose-300 transition"
+            className="w-full py-2 rounded-xl text-xs font-bold bg-rose-500/10 hover:bg-rose-500/20 text-rose-300 transition cursor-pointer"
           >
             Log Out
           </button>
@@ -2614,15 +2617,15 @@ function AdminLayout() {
 
       {/* Main Content Area */}
       <main className="flex-1 flex flex-col min-w-0">
-        <header className="glass-panel border-b border-white/5 px-6 py-4 flex items-center justify-between sticky top-0 z-30">
+        <header className="glass-panel border-b border-[#2D5D7B]/30 px-8 py-5 flex items-center justify-between sticky top-0 z-30">
           <div className="flex items-center gap-3">
-            <span className="text-sm font-semibold text-slate-400 uppercase tracking-wider">CMS /</span>
-            <span className="text-sm font-bold text-white capitalize">{view}</span>
+            <span className="text-sm font-bold text-slate-400 uppercase tracking-wider font-mono">CMS /</span>
+            <span className="font-heading text-2xl font-extrabold text-white capitalize">{view}</span>
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3.5">
             <button
               onClick={() => setView('security')}
-              className="text-xs font-semibold text-slate-300 hover:text-white px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 flex items-center gap-1.5 transition cursor-pointer"
+              className="text-sm font-bold text-slate-200 hover:text-white px-4 py-2.5 rounded-xl bg-[#22394c] hover:bg-[#2c4a63] border border-[#457EAC]/30 flex items-center gap-2 transition cursor-pointer shadow-sm"
             >
               <span>🔒</span>
               <span>Change Password</span>
@@ -2630,14 +2633,14 @@ function AdminLayout() {
             <a
               href="/"
               target="_blank"
-              className="text-xs font-semibold text-indigo-400 hover:text-indigo-300 px-3 py-1.5 rounded-lg bg-indigo-500/10 border border-indigo-500/20"
+              className="text-sm font-bold text-[#C2AFF0] hover:text-white px-4 py-2.5 rounded-xl bg-[#9191E9]/20 border border-[#9191E9]/40 hover:bg-[#9191E9]/30 transition"
             >
               Public API Root ↗
             </a>
           </div>
         </header>
 
-        <div className="p-6 sm:p-8 flex-1">
+        <div className="p-8 sm:p-12 flex-1 relative z-10 max-w-7xl mx-auto w-full">
           {view === 'dashboard' && <DashboardScreen setView={setView} showToast={showToast} />}
           {view === 'about' && <AboutScreen showToast={showToast} />}
           {view === 'skills' && <SkillsScreen showToast={showToast} />}
@@ -2696,17 +2699,17 @@ function AdminMathCanvasBackground() {
     ];
 
     const isMobile = window.innerWidth < 768;
-    const NODE_COUNT = isMobile ? 28 : 55;
-    const CONNECT_DIST = isMobile ? 90 : 130;
-    const MOUSE_CONNECT_DIST = isMobile ? 110 : 170;
+    const NODE_COUNT = isMobile ? 32 : 65;
+    const CONNECT_DIST = isMobile ? 95 : 135;
+    const MOUSE_CONNECT_DIST = isMobile ? 120 : 180;
     const TOKEN_COUNT = isMobile ? 8 : 16;
 
-    // Light neon / cyber colors for admin portal
+    // Palette Colors matching portfolio exactly:
     const colors = [
-      { r: 56, g: 189, b: 248, hex: '#38bdf8' },  // Ice Cyan
-      { r: 52, g: 211, b: 153, hex: '#34d399' },  // Soft Emerald
-      { r: 192, g: 132, b: 252, hex: '#c084fc' }, // Light Violet
-      { r: 251, g: 191, b: 36, hex: '#fbbf24' }   // Soft Amber
+      { r: 194, g: 175, b: 240, hex: '#C2AFF0' }, // Mauve
+      { r: 145, g: 145, b: 233, hex: '#9191E9' }, // Soft Periwinkle
+      { r: 69, g: 126, b: 172, hex: '#457EAC' },   // Steel Blue
+      { r: 45, g: 93, b: 123, hex: '#2D5D7B' }    // Baltic Blue
     ];
 
     const nodes = [];
@@ -2714,8 +2717,8 @@ function AdminMathCanvasBackground() {
       nodes.push({
         x: Math.random() * width,
         y: Math.random() * height,
-        vx: (Math.random() - 0.5) * 0.6,
-        vy: (Math.random() - 0.5) * 0.6,
+        vx: (Math.random() - 0.5) * 0.65,
+        vy: (Math.random() - 0.5) * 0.65,
         radius: Math.random() * 2.2 + 1.2,
         color: colors[i % colors.length],
         pulseOffset: Math.random() * Math.PI * 2
@@ -2728,11 +2731,11 @@ function AdminMathCanvasBackground() {
         text: mathTokensList[i % mathTokensList.length],
         x: Math.random() * width,
         y: Math.random() * height,
-        vy: -0.2 - Math.random() * 0.25,
+        vy: -0.22 - Math.random() * 0.28,
         wavePhase: Math.random() * Math.PI * 2,
         color: colors[i % colors.length],
-        fontSize: Math.floor(Math.random() * 2) + 11,
-        opacity: 0.18 + Math.random() * 0.16
+        fontSize: Math.floor(Math.random() * 2) + 12,
+        opacity: 0.2 + Math.random() * 0.18
       });
     }
 
@@ -2760,7 +2763,7 @@ function AdminMathCanvasBackground() {
         radius: 0,
         maxRadius: 180,
         opacity: 0.75,
-        color: colors[Math.floor(Math.random() * colors.length)]
+        color: colors[Math.floor(Math.random() * 2)]
       });
     };
 
@@ -2884,10 +2887,11 @@ function AdminMathCanvasBackground() {
 
   return (
     <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
-      {/* Dynamic Moving Ambient Gradients */}
-      <div className="absolute -top-[15%] -left-[10%] w-[55vw] h-[55vw] rounded-full bg-gradient-to-br from-[#38bdf8]/15 via-[#34d399]/10 to-transparent blur-[140px] animate-admin-aurora-1"></div>
-      <div className="absolute top-[35%] -right-[15%] w-[50vw] h-[50vw] rounded-full bg-gradient-to-bl from-[#c084fc]/15 via-[#38bdf8]/10 to-transparent blur-[150px] animate-admin-aurora-2"></div>
-      <div className="absolute -bottom-[15%] left-[25%] w-[60vw] h-[60vw] rounded-full bg-gradient-to-tr from-[#34d399]/15 via-[#c084fc]/12 to-transparent blur-[160px] animate-admin-aurora-3"></div>
+      {/* 5-Color Palette Ambient Glow Mesh matching portfolio */}
+      <div className="absolute top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[450px] bg-[#457EAC]/28 rounded-full blur-[150px] pointer-events-none"></div>
+      <div className="absolute top-1/3 right-1/4 translate-x-1/2 -translate-y-1/2 w-[650px] h-[450px] bg-[#9191E9]/25 rounded-full blur-[150px] pointer-events-none"></div>
+      <div className="absolute bottom-10 left-1/3 w-[600px] h-[400px] bg-[#C2AFF0]/22 rounded-full blur-[140px] pointer-events-none"></div>
+      <div className="absolute top-1/2 right-1/3 w-[600px] h-[450px] bg-[#2D5D7B]/35 rounded-full blur-[150px] pointer-events-none"></div>
 
       {/* Cyber Perspective Grid & Scanline */}
       <div className="absolute inset-0 admin-cyber-grid opacity-35"></div>
@@ -2905,14 +2909,14 @@ function App() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#070b14] flex items-center justify-center">
-        <div className="w-10 h-10 border-4 border-cyan-500 border-t-transparent rounded-full animate-spin"></div>
+      <div className="min-h-screen aurora-bg flex items-center justify-center">
+        <div className="w-14 h-14 border-4 border-[#C2AFF0] border-t-transparent rounded-full animate-spin"></div>
       </div>
     );
   }
 
   return (
-    <div className="relative min-h-screen bg-[#080d1a] text-slate-100 overflow-x-hidden selection:bg-cyan-500 selection:text-slate-950">
+    <div className="relative min-h-screen aurora-bg text-slate-100 overflow-x-hidden selection:bg-[#9191E9] selection:text-white">
       <AdminMathCanvasBackground />
       <div className="relative z-10">
         {user ? <AdminLayout /> : <LoginScreen />}
