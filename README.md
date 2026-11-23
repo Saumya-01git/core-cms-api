@@ -1,119 +1,187 @@
-# 🚀 Core CMS API (`core-cms-api`)
+# ⚡ Core CMS REST API & Headless Engine
 
-> Custom Headless CMS backend and REST API engine built from scratch for the developer portfolio ecosystem.
-
----
-
-## 🛠 Tech Stack
-
-- **Runtime**: [Node.js](https://nodejs.org/) (v24+)
-- **Framework**: [Express.js](https://expressjs.com/)
-- **Database**: [PostgreSQL](https://www.postgresql.org/) (v17)
-- **ORM**: [Prisma ORM](https://www.prisma.io/)
-- **Security & Utilities**: Helmet, CORS, Morgan, dotenv, bcryptjs, jsonwebtoken
+> A high-performance, enterprise-grade Headless Content Management System (CMS) and RESTful API backend engineered for decoupled, dynamic web portfolio applications.
 
 ---
 
-## 📁 Project Architecture & Folder Structure
+## 📸 Interface Previews
+
+### Headless CMS Admin Interface
+![Headless CMS Admin Portal](docs/screenshots/admin-login.png)
+
+### Live Reactive Client Interface
+![Portfolio Client Interface](docs/screenshots/portfolio-hero.png)
+
+### Design System & Color Palette
+![Design System Palette](docs/screenshots/color-palette.png)
+
+---
+
+## 🛠 Tech Stack & Architecture
+
+- **Runtime Environment:** [Node.js](https://nodejs.org/) (v20+ / v24+)
+- **Server Framework:** [Express.js](https://expressjs.com/)
+- **Database Engine:** [PostgreSQL](https://www.postgresql.org/) (v16+)
+- **Object-Relational Mapping:** [Prisma ORM](https://www.prisma.io/)
+- **Authentication & Security:** JSON Web Tokens (JWT), Bcrypt password hashing (10 salt rounds), Helmet security headers, CORS origin filtering
+- **Media Engine:** Multer multipart/form-data handler with disk storage and URL generator
+- **Admin Panel UI:** Zero-dependency standalone React 18, Tailwind CSS, Babel, Canvas 60 FPS cyber constellation background
+
+---
+
+## ✨ Key Capabilities & Engineering Features
+
+1. **Strict Cryptographic Authentication & RBAC:**
+   - Stateless JWT tokens with expiration handling.
+   - Enterprise-grade password policy engine requiring minimum 8 characters, uppercase letters, lowercase letters, numbers, and special symbols.
+   - Built-in live password entropy and strength meter.
+   - Secure in-panel credential update endpoint (`PUT /api/auth/change-password`).
+
+2. **Decoupled Headless CMS Admin Portal (`/admin`):**
+   - Locally vendored SPA (zero external CDN dependency) with frosted glass panels, ambient aurora glow mesh, and mathematical engineering canvas.
+   - One-Click Instant Demo Access mode for testing and evaluation.
+   - Full CRUD management modules for:
+     - **Profile & Bio:** Headline titles, story narrative, contact links, and resume paths.
+     - **Technical Skills:** Multi-category inventory (Frontend, Backend, Database, Cloud, Security) with proficiency meters.
+     - **Showcase Projects:** Slugs, live demo URLs, GitHub repositories, tag arrays, and featured toggles.
+     - **Technical Articles:** Full markdown-supported blogs with view counters and publication drafts.
+     - **Career Timeline:** Work history, company details, responsibilities, and key achievements.
+     - **Testimonials & Social Proof:** Interactive public endorsement review and moderation workflow.
+     - **Service Offerings:** Consulting and engineering service packages.
+     - **Inquiries Inbox:** Contact submissions, read/unread states, and direct email reply hooks.
+     - **Media Library:** Upload, preview, and clipboard URL copying for image assets.
+
+3. **Public Testimonial Submission API:**
+   - Dedicated public endpoint (`POST /api/testimonials/submit`) allowing website visitors, recruiters, and colleagues to submit endorsements.
+   - Default status set to unapproved until verified in the Admin Portal.
+
+---
+
+## 📁 Repository Structure
 
 ```
 core-cms-api/
+├── admin/
+│   ├── vendor/               # Offline vendored libraries (React, ReactDOM, Babel, Tailwind)
+│   ├── app.jsx               # Comprehensive Single-Page Application (Admin Portal)
+│   └── index.html            # Admin mount with cyber scanlines and aurora styles
+├── docs/
+│   └── screenshots/          # High-resolution architectural screenshots
 ├── prisma/
-│   └── schema.prisma         # Custom Database Schemas (users, about, skills, etc.)
+│   ├── schema.prisma         # Relational database models
+│   └── migrations/           # Prisma versioned migration files
 ├── src/
 │   ├── config/
-│   │   ├── db.js             # Prisma Client & connection management
-│   │   └── env.js            # Central environment configuration
-│   ├── middleware/
-│   │   ├── errorHandler.js   # Centralized error handler
-│   │   └── notFoundHandler.js# 404 handler
-│   ├── routes/
-│   │   ├── health.routes.js  # /api/health (Database ping & latency test)
-│   │   └── index.js          # Master route registry
-│   ├── app.js                # Express app setup with middleware
-│   └── server.js             # Server lifecycle & graceful shutdown
-├── uploads/                  # Local media storage directory
-├── .env.example              # Example environment configuration
-├── .gitignore                # Git exclusions
-├── package.json              # Project scripts & dependencies
-└── README.md                 # Project documentation
+│   │   ├── db.js             # Prisma client connection manager & lifecycle hooks
+│   │   └── env.js            # Central environment schema validator
+│   ├── controllers/          # Business logic handlers for all resource routes
+│   ├── middleware/           # Auth guard, error handler, not-found handler
+│   ├── routes/               # Modular Express API route definitions
+│   ├── app.js                # Express application configuration & security headers
+│   └── server.js             # HTTP listener & graceful termination handler
+├── uploads/                  # User-uploaded assets & images
+├── .env.example              # Environment variables template
+├── package.json              # Dependencies and lifecycle scripts
+└── README.md                 # Technical documentation
 ```
 
 ---
 
-## ⚡ Quick Start
+## ⚡ Getting Started
 
-### 1. Install Dependencies
+### 1. Prerequisites
+- Node.js (v18.0 or higher)
+- PostgreSQL database instance running locally or hosted on Cloud (Neon, Supabase, Railway, Render)
+
+### 2. Installation
 ```bash
+git clone https://github.com/Saumya-01git/core-cms-api.git
+cd core-cms-api
 npm install
 ```
 
-### 2. Configure Environment Variables
-Copy `.env.example` to `.env` and configure your PostgreSQL connection:
+### 3. Environment Setup
+Create a `.env` file from the provided template:
+```bash
+cp .env.example .env
+```
+
+Configure your environment parameters:
 ```env
 PORT=5000
 NODE_ENV=development
-DATABASE_URL="postgresql://postgres:postgres@localhost:5432/core_cms_db?schema=public"
-JWT_SECRET="your_jwt_secret_key"
+DATABASE_URL="postgresql://postgres:password@localhost:5432/core_cms_db?schema=public"
+JWT_SECRET="generate_a_secure_random_secret_key"
 JWT_EXPIRES_IN="7d"
-CORS_ORIGIN="http://localhost:3000,http://localhost:5173"
+CORS_ORIGIN="http://localhost:5173,http://localhost:3000"
+UPLOAD_DIR="./uploads"
 ```
 
-### 3. Sync Database with Prisma
+### 4. Database Schema Sync
+Run Prisma to apply schema tables to PostgreSQL:
 ```bash
 npx prisma db push
 ```
 
-### 4. Run Development Server
+*(Optional) Seed default administrator profile:*
 ```bash
+node src/scripts/seed.js
+```
+
+### 5. Start Application Server
+```bash
+# Development mode (with live reload)
 npm run dev
-# Server will boot on http://localhost:5000
+
+# Production mode
+npm start
 ```
 
-### 5. Inspect Database (Visual Studio GUI)
-```bash
-npm run db:studio
-```
+* API Endpoint: `http://localhost:5000/api`
+* Health Check: `http://localhost:5000/api/health`
+* Headless Admin Portal: `http://localhost:5000/admin/`
 
 ---
 
-## 🩺 Endpoints
+## 🩺 REST API Reference
 
-| Method | Endpoint | Description | Access |
+| HTTP Method | Route | Description | Auth Required |
 | :--- | :--- | :--- | :--- |
-| `GET` | `/` | Welcome message & API discovery | Public |
-| `GET` | `/api` | API index listing endpoints | Public |
-| `GET` | `/api/health` | System health, uptime & DB latency | Public |
-| `POST` | `/api/auth/login` | Admin login & JWT token generation | Public |
-| `POST` | `/api/auth/refresh` | Issue new JWT access token | Public |
-| `GET` | `/api/auth/me` | Fetch active authenticated profile | Private (Bearer) |
-| `PUT` | `/api/auth/me` | Update admin profile & credentials | Private (Bearer) |
-| `GET, PUT` | `/api/about` | Read & update portfolio bio and profile | Public / Admin |
-| `GET, POST, PUT, DELETE` | `/api/skills` | Manage skills with proficiency & icons | Public / Admin |
-| `GET, POST, PUT, DELETE` | `/api/projects` | Project showcase with slugs & tags | Public / Admin |
-| `GET, POST, PUT, DELETE` | `/api/blogs` | Tech blog posts with views tracking | Public / Admin |
-| `GET, POST, PUT, DELETE` | `/api/experience` | Work history & education timeline | Public / Admin |
-| `GET, POST, PUT, DELETE` | `/api/testimonials` | Client reviews & endorsements | Public / Admin |
-| `GET, POST, PUT, DELETE` | `/api/services` | Service offerings & features | Public / Admin |
-| `POST, GET, PATCH, DELETE`| `/api/contact` | Public contact submission & inbox | Public / Admin |
-
-| `POST, GET, DELETE`      | `/api/upload` | Media upload (single/multi) & file manager | Private (Bearer) |
+| `GET` | `/api/health` | Service status, uptime & PostgreSQL latency | No |
+| `POST` | `/api/auth/login` | Administrator authentication & JWT token generation | No |
+| `GET` | `/api/auth/me` | Fetch active authenticated administrator profile | Yes (`Bearer <token>`) |
+| `PUT` | `/api/auth/change-password` | Update account credentials with strength validation | Yes (`Bearer <token>`) |
+| `GET` | `/api/about` | Read public bio, headline, and coordinates | No |
+| `PUT` | `/api/about` | Update portfolio bio information | Yes (`Bearer <token>`) |
+| `GET` | `/api/skills` | List all technical skills and proficiency percentages | No |
+| `POST, PUT, DELETE` | `/api/skills/:id?` | Create, update, or remove technical skills | Yes (`Bearer <token>`) |
+| `GET` | `/api/projects` | List portfolio projects (supports `?featured=true`) | No |
+| `POST, PUT, DELETE` | `/api/projects/:id?` | Create, update, or remove project showcase items | Yes (`Bearer <token>`) |
+| `GET` | `/api/blogs` | List published articles and deep-dives | No |
+| `POST, PUT, DELETE` | `/api/blogs/:id?` | Manage technical blog articles & drafts | Yes (`Bearer <token>`) |
+| `GET` | `/api/experience` | Fetch professional work history and timeline | No |
+| `POST, PUT, DELETE` | `/api/experience/:id?` | Manage career history records | Yes (`Bearer <token>`) |
+| `GET` | `/api/testimonials` | List verified client & peer testimonials | No |
+| `POST` | `/api/testimonials/submit` | Public endorsement submission for visitors | No |
+| `POST, PUT, DELETE` | `/api/testimonials/:id?` | Admin CRUD & moderation for testimonials | Yes (`Bearer <token>`) |
+| `GET` | `/api/services` | List engineering and consulting service offerings | No |
+| `POST, PUT, DELETE` | `/api/services/:id?` | Manage service catalog items | Yes (`Bearer <token>`) |
+| `POST` | `/api/contact` | Submit contact form inquiry | No |
+| `GET, PATCH, DELETE`| `/api/contact/:id?` | Admin inquiry review, mark read, and purge | Yes (`Bearer <token>`) |
+| `POST` | `/api/upload` | Upload media asset (image/document) via Multer | Yes (`Bearer <token>`) |
+| `GET, DELETE` | `/api/upload/:id?` | Browse media library & remove unused assets | Yes (`Bearer <token>`) |
 
 ---
 
-## 🗓 14-Day Roadmap Tracker
+## 🔒 Security Best Practices Implemented
 
-- [x] **Day 1: Backend + Database Setup** (`Day 1 completed -> backend setup and database connection`)
-- [x] **Day 2: CMS Authentication System** (`Day 2 completed -> CMS Authentication System with JWT and route protection`)
-- [x] **Day 3: CMS Content Models & CRUD APIs** (`Day 3 completed -> CMS Content Models and CRUD APIs`)
-- [x] **Day 4: File Upload System (Multer & Media API)** (`Day 4 completed -> File Upload System with Multer and Media API`)
-- [x] **Day 5: Admin Panel UI (Auth & Dashboard)** (`Day 5 completed -> Admin Panel UI Setup with Auth and Dashboard`)
-- [x] **Day 6: CMS CRUD Screens (About, Skills, Projects)** (`Day 6 completed -> CMS CRUD Screens for About, Skills, Projects`)
-- [x] **Day 7: Remaining CMS Screens & UI Polish** (`Day 7 completed -> Remaining CMS Screens Blogs, Experience, Testimonials, Services, Media & Messages`)
-- [x] **Day 8: Portfolio Frontend Setup (Next.js + Tailwind)** (`Day 8 completed -> Portfolio Frontend Setup with React, Tailwind and Base Layout`)
-- [x] **Day 9: Fetch Content From CMS (Dynamic Rendering)** (`Day 9 completed -> Fetch Content From CMS for Dynamic About, Skills and Projects`)
-- [x] **Day 10: Additional Sections & Experience Timeline** (`Day 10 completed -> Additional Sections for Blogs, Experience Timeline, Testimonials and Services`)
-- [x] **Day 11: Contact Form & Backend Integration** (`Day 11 completed -> Contact Form Integration with Backend API`)
-- [x] **Day 12: Deployment (Backend + CMS Admin)** (`Day 12 completed -> Backend and CMS Admin Deployment Configurations for Render and Railway`)
-- [x] **Day 13: Deploy Portfolio Frontend** (`Day 13 completed -> Portfolio Frontend Deployment Configurations for Vercel and Netlify`)
-- [x] **Day 14: Final Testing, Polish & Optimization** (`Day 14 completed -> Final Testing, Polish, Aesthetic Aurora UI Redesign and Optimizations`)
+* **Content Security & CORS:** Strict cross-origin resource sharing configured to restrict origin access to verified frontend clients.
+* **Input Sanitization & Validation:** Structured payload checks across all controller endpoints.
+* **Cryptographic Salt Hashing:** Passwords hashed with 10 bcrypt salt rounds before persistence.
+* **Token Invalidation:** Token freshness verified on every private request with instantaneous rejection of tampered tokens.
+* **Zero External Dependencies in Admin:** Offline vendor architecture completely prevents third-party CDN hijacking or supply-chain failures.
+
+---
+
+## 📄 License
+This project is licensed under the [MIT License](LICENSE).
